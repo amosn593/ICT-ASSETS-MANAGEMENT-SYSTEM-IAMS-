@@ -1,0 +1,85 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Unassigned Assets
+{% endblock %}
+
+{% block body %}
+
+<!-- Search form-->
+<h3 class="heading">Unassigned Assets</h3>
+
+<div class="container-fluid">
+
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'free_report' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label" required>Region:</label>
+      <select class="form-control" id="region" name="region" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <label for="serial" id="label" required>Station:</label>
+      <select class="form-control" id="station" name="station" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <label for="serial" id="label" required>Asset Type:</label>
+      <select class="form-control" id="asset_type" name="assettype" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <button type="submit" class="btn btn-info" id="label">Submit</button>
+    </form>
+
+  </div>
+</div>
+<script src="{% static 'asset/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'asset/js/search.js' %}"></script>
+
+<script>
+  var $j = jQuery.noConflict();
+  $j.ajax({
+    type: 'GET',
+    url: '/ict/asset_type/',
+    success: function (data) {
+      $("#asset_type").html(data);
+    },
+    error: function (error) {
+      alert('Select Asset Type!!!')
+    }
+  });
+
+  $j.ajax({
+    type: 'GET',
+    url: '/ict/region/',
+    success: function (data) {
+      $("#region").html(data);
+
+    },
+    error: function (error) {
+      alert('Select Region!!!')
+    }
+  });
+
+  $("#region").change(function () {
+    var RegionId = $(this).val();
+
+    $j.ajax({
+      type: 'GET',
+      url: '/ict/station/',
+      data: {
+        'RegionId': RegionId
+      },
+      success: function (data) {
+        $("#station").html(data);
+
+      },
+      error: function (error) {
+        alert('Select Region!!!')
+      }
+    });
+
+  });
+</script>
+
+{% endblock %}

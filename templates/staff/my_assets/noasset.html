@@ -1,0 +1,53 @@
+{% extends 'staff/base.html' %}
+{% load static %}
+
+{% block title %}
+
+User Assets
+
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid mt-2">
+      <div class="row">
+            <div class="col-md-12">
+                  <table class="table table-sm table-bordered">
+                        <thead class="thead-light">
+                              <tr>
+                                    <th>Staff Name</th>
+                                    <th>Staff Number</th>
+                                    <th>Email</th>
+                                    <th>Region</th>
+                              </tr>
+                        </thead>
+                        <tbody>
+                              <tr>
+                                    <td>{{loggedin.profile_2.name}}</td>
+                                    <td>{{loggedin.username}}</td>
+                                    <td>{{loggedin.email}}</td>
+                                    <td>{{loggedin.profile_2.region}}</td>
+                              </tr>
+                        </tbody>
+                  </table>
+            </div>
+      </div>
+      <div class="container-fluid d-flex justify-content-around mt-3 p-2"
+           style="border-bottom: 1px solid black; border-top: 1px solid black;">
+            <p>Number of Records: 0</p>
+            <h5>ICT ASSET OWNERSHIP REPORT</h5>
+            <p>Date: {{date}}</p>
+      </div>
+      <div class="container-fluis mt-3">
+            <h4 class="text-center" style="color:brown;">MY ASSETS</h4>
+            <div class="container mt-3">
+                  <p style="text-align: center;">You have not been assigned any ICT
+                        Asset!!!</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                  <input type="button" id="print" value="PRINT" class="btn btn-danger"
+                         onclick="window.print();" />
+            </div>
+      </div>
+</div>
+{% endblock %}

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Asset Relocation Report</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+
+</head>
+
+<body style="background-color: rgb(245, 240, 240); padding: 10px 30px;">
+
+  <h2 style="text-align: center; color: rgb(228, 37, 37);">ICT ASSET RELOCATION REPORT</h2>
+  <p>
+    Dear {{data.client.full_name}} - {{data.client.staff_number}}, kindly, find below details of
+    your ICT asset relocation.
+  </p>
+  <div class="row" style="display: flex;">
+    <div class="col-md-4" style="margin-right: 100px;">
+      <table>
+        <tr>
+          <th>Asset Type</th>
+          <td>{{data.assettype.name}}</td>
+        </tr>
+        <tr>
+          <th>Asset Model</th>
+          <td>{{data.asset_model}}</td>
+        </tr>
+        <tr>
+          <th>Asset Tag</th>
+          <td>{{data.asset_tag}}</td>
+        </tr>
+        <tr>
+          <th>Asset Serial</th>
+          <td>{{data.asset_serial}}</td>
+        </tr>
+        <tr>
+          <th>Monitor Model</th>
+          <td>{{data.monitor.monitor_model}}</td>
+        </tr>
+        <tr>
+          <th>Monitor Serial</th>
+          <td>{{data.monitor.monitor_serial}}</td>
+        </tr>
+      </table>
+
+    </div>
+    <div class="col-md-4" style="margin-right: 100px;">
+      <table>
+        <tr>
+          <th>Staff Name:</th>
+          <td>{{data.client.full_name}}</td>
+        </tr>
+        <tr>
+          <th>Staff Number:</th>
+          <td>{{data.client.staff_number}}</td>
+        </tr>
+        <tr>
+          <th>Department:</th>
+          <td>{{data.client.department}}</td>
+        </tr>
+        <tr>
+          <th>Section:</th>
+          <td>{{data.client.section}}</td>
+        </tr>
+      </table>
+
+    </div>
+    <div class="col-md-4">
+      <table>
+        <tr>
+          <th>HOD/Supervisor:</th>
+          <td>{{data.client.hod.hod_name}}</td>
+        </tr>
+        <tr>
+          <th>Region:</th>
+          <td>{{data.region.name}}</td>
+        </tr>
+        <tr>
+          <th>Station:</th>
+          <td>{{data.station.name}}</td>
+        </tr>
+        <tr>
+          <th>Location:</th>
+          <td>{{data.client.location}}</td>
+        </tr>
+
+      </table>
+
+    </div>
+
+  </div>
+  <div class="disclaimer" style="text-align: center; margin-top: 50px;">
+    <p style="color: red; font-weight: bold;">
+      If you did not request for ICT Asset Relocation, contact ICT department immediately.
+
+    </p>
+
+  </div>
+  <footer style="margin-top: 30px;">
+    IASSET TEAM,
+    <br>
+    Kind Regards.
+  </footer>
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Asset Repairs
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">Asset Repair</h4>
+
+
+<div class="container-fluid">
+  <!-- Search form-->
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'asset_result' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label">Search By:</label>
+      <select class="form-control" id="asset-type" name="criteria">
+        <option value="---">-------------------</option>
+        <option value="serial-no">Serial Number</option>
+        <option value="user_number">Staff Number</option>
+      </select>
+      <label for="serial" id="label">Criteria:</label>
+      <input type="text" class="form-control" id="serial" name="entry" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+
+  </div>
+
+  <section>
+    <div class="row" style="margin-left:0.1%; margin-right:0.5%;">
+
+      <table class="table table-striped" style="margin-top: 3%;">
+        <tr style="font-size: 12px;">
+          <th>IDate</th>
+          <th>Hardware</th>
+          <th>Serial No.</th>
+          <th>Staff Name</th>
+          <th>Staff Number</th>
+          <th>Problem</th>
+          <th>Officer assigned</th>
+          <th>Work Ticket</th>
+          <th>Status</th>
+          <th>ODate</th>
+        </tr>
+        <tr style="font-size: 12px;">
+          <td>{{data.cdate}}</td>
+          <td>{{data.comp.assettype.name}}</td>
+          <td>{{data.comp.asset_serial}}</td>
+          <td>{{data.comp.client.full_name}}</td>
+          <td>{{data.comp.client.staff_number}}</td>
+          <td>{{data.problem}}</td>
+          <td>{{data.officer_assigned}}</td>
+          <td>{{data.ticket_number}}</td>
+          <td>{{data.status}}</td>
+          <td>{{data.rdate}}</td>
+        </tr>
+      </table>
+
+
+      <form method="POST" action="{% url 'return_repair' %}" enctype="multipart/form-data"
+            style="margin-left:30%;">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{data.repair_pk}}">
+        Solution : <input type="text" name="solution" required>
+        <input type="submit" class="btn btn-danger">
+
+      </form>
+
+
+
+    </div>
+  </section>
+
+</div>
+
+
+
+{% endblock %}

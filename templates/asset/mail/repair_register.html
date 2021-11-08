@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+  <body style="background-color: rgb(245, 240, 240); padding: 10px 30px;">
+
+    <h2 style="text-align: center; color: rgb(228, 37, 37);">ICT ASSET REPAIR REGISTER - INCOMING - {{date}}</h2>
+      <p>
+        Dear {{name }} -  {{number }}
+        kindly, find details of your incoming ICT asset repair register.
+      </p>
+      <div class="row" style="display: flex; text-align: center;">
+          <div class="col-md-12" style="margin-right: 100px;">
+            <table>
+                <tr>
+                    <th>Asset Type:</th>
+                    <td>{{hardware}}</td>
+                </tr>
+                <tr>
+                    <th>Asset Serial Number:</th>
+                    <td>{{serial}}</td>
+                </tr>
+                <tr>
+                    <th>Problem:</th>
+                    <td>{{problem}}</td>
+                </tr>
+                <tr>
+                  <th>Incoming Date:</th>
+                  <td>{{date}}</td>
+                </tr>
+                <tr>
+                    <th>Officer Assigned:</th>
+                    <td>{{officer}}</td>
+                </tr>
+            </table>
+
+          </div>
+
+      </div>
+      <div class="disclaimer" style="text-align: center; margin-top: 50px;">
+        <p style="color: red; font-weight: bold;">
+          You will be notifed when the ICT Asset is repaired!!!.
+        </p>
+
+      </div>
+      <footer style="margin-top: 30px;">
+          IASSET TEAM,
+          <br>
+          Kind Regards.
+      </footer>
+      
+      
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

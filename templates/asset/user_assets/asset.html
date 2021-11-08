@@ -1,0 +1,33 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+User Assigned Assets
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">User Assigned Assets</h4>
+
+<div class="container-fluid">
+
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'user_assets' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label" required>Search By:</label>
+      <select class="form-control" name="criteria" required>
+        <option value="user_number">Staff Number</option>
+      </select>
+      <label for="serial" id="label" required>Entry:</label>
+      <input type="text" class="form-control" id="serial" name="entry" required
+             placeholder="Staff Number">
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+  </div>
+
+</div>
+
+
+
+{% endblock %}

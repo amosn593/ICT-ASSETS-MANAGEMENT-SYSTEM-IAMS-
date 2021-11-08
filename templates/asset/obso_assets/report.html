@@ -1,0 +1,142 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Obsolete Assets
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">Obsolete Assets</h4>
+
+<div class="main">
+  <!-- Search form-->
+  <div class="change-ownership">
+    <form action="{% url 'obso_report' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label" required>Region:</label>
+      <select class="form-control" id="region" name="region" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <label for="serial" id="label" required>Station:</label>
+      <select class="form-control" id="station" name="station" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <label for="serial" id="label" required>Asset Type:</label>
+      <select class="form-control" id="asset_type" name="assettype" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <button type="submit" class="btn btn-info" id="label">Submit</button>
+    </form>
+
+  </div>
+
+  <div class="container-fluid m-1" style="border-top: 1px solid black;">
+    <div class="container-fluid d-flex justify-content-around m-2">
+      <p>No. of Records: {{count}}</p>
+      <h5>ICT OBSOLETE ASSETS REPORT</h5>
+      <p>Date: {{date}}</p>
+    </div>
+    <div class="container-fluid">
+      <table class="table table-bordered ml-1">
+        <thead class="thead-light">
+          <tr style="font-size: 11px;">
+            <th> Asset Type:</th>
+            <th>Asset Serial </th>
+            <th>Asset Model</th>
+            <th>Mac Address</th>
+            <th>Monitor Model</th>
+            <th>Monitor Serial</th>
+            <th>IP Address</th>
+            <th>Extension</th>
+            <th>Region</th>
+            <th>Station</th>
+            <th>Date Deployed</th>
+            <th>Obso Date</th>
+            <th>Obso Officer</th>
+            <th>Obso Reason</th>
+            <th>Condition</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in data %}
+          <tr style="font-size: 11px;">
+            <td>{{d.assettype.name}}</td>
+            <td>{{d.asset_serial}}</td>
+            <td>{{d.asset_model}}</td>
+            <td>{{d.mac_address}}</td>
+            <td>{{d.monitor.monitor_model}}</td>
+            <td>{{d.monitor.monitor_serial}}</td>
+            <td>{{d.ip_address}}</td>
+            <td>{{d.extension}}</td>
+            <td>{{d.region.name}}</td>
+            <td>{{d.station.name}}</td>
+            <td>{{d.deployed_date}}</td>
+            <td>{{d.obso_date}}</td>
+            <td>{{d.obso_officer}}</td>
+            <td>{{d.obso_reason}}</td>
+            <td>{{d.condition}}</td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="{% static 'asset/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'asset/js/search.js' %}"></script>
+
+<script>
+  var $j = jQuery.noConflict();
+  $j.ajax({
+    type: 'GET',
+    url: '/ict/asset_type/',
+    success: function (data) {
+      $("#asset_type").html(data);
+    },
+    error: function (error) {
+      alert('Select Asset Type!!!')
+    }
+  });
+
+  $j.ajax({
+    type: 'GET',
+    url: '/ict/region/',
+    success: function (data) {
+      $("#region").html(data);
+
+    },
+    error: function (error) {
+      alert('Select Region!!!')
+    }
+  });
+
+  $("#region").change(function () {
+    var RegionId = $(this).val();
+
+    $j.ajax({
+      type: 'GET',
+      url: '/ict/station/',
+      data: {
+        'RegionId': RegionId
+      },
+      success: function (data) {
+        $("#station").html(data);
+
+      },
+      error: function (error) {
+        alert('Select Region!!!')
+      }
+    });
+
+  });
+</script>
+
+
+
+
+{% endblock %}

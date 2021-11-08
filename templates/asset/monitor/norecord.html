@@ -1,0 +1,37 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Replace Monitor
+{% endblock %}
+
+{% block body %}
+
+<!-- change ownership form-->
+<h4 class="heading">Replace Monitor</h4>
+
+<div class="main">
+      <div class="change-ownership">
+            <form action="{% url 'monitor_details' %}" method="post" class="form-inline"
+                  enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <label for="asset-type" id="label" required>Search By:</label>
+                  <select class="form-control" name="criteria" required>
+                        <option value="serial_no">Serial Number</option>
+                  </select>
+                  <label for="serial" id="label" required>Entry:</label>
+                  <input type="text" class="form-control" id="serial" name="entry" required>
+                  <button type="submit" class="btn btn-info" id="label">Search</button>
+            </form>
+
+      </div>
+      <div class="container">
+            <h5 class="mt-5">No record found with that serial Number!!!</h5>
+            <p>OR</p>
+            <h5>Asset Type is not A Desktop!!!</h5>
+      </div>
+</div>
+
+
+
+{% endblock %}

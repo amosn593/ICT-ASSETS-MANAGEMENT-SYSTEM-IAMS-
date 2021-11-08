@@ -1,0 +1,126 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>{% block title %}{% endblock %} | IAMS</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="{% static 'staff/image/fav.png' %}" type="image/x-icon">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'staff/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'staff/css/animated.css' %}">
+  <link rel="stylesheet" href="{% static 'staff/css/main.css' %}">
+
+</head>
+
+<body>
+  <header class="w-100">
+    <!--Intro bar-->
+    <div class="nav-top">
+      <div class="container-fluid d-flex justify-content-between">
+        <div class="col-md-2" id="image">
+          <img src="{% static 'staff/image/log2.png' %}">
+        </div>
+        <div class="col-md-8" style="text-align: center;">
+          <h2 class="head">ICT ASSETS MANAGEMENT SYSTEM</h2>
+        </div>
+        <div class="col-md-2" id="out">
+          <!-- Authentication tab -->
+          <div class="btn-group w-100 mt-2">
+            <button type="button" class="btn btn-danger dropdown-toggle " data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+              {{user.username}}
+            </button>
+            <div class="dropdown-menu">
+              {% if user.profile.is_ict %}
+              <a class="dropdown-item" href="{% url 'home' %}">Admin Portal</a>
+              {% endif %}
+              {% comment %} <a class="dropdown-item" href="{% url 'change_password' %}">Change
+                Password</a> {% endcomment %}
+              <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--Nav Bar-->
+    <div class="nav-container" id="navbar">
+    </div>
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+
+  </header>
+
+  <!---Content block-->
+  <div class="container-fluid main-1" style="padding-bottom: 3.5rem;">
+    <div class="row d-flex">
+      <div class="col-md-2 bg-dark" style="height:100vh;">
+
+        <ul class="m-2 list">
+          <li class="m-2"><a class="p-2 link" href="{% url 'staff_home' %}">My Assets</a>
+          </li>
+          <li class="m-2"><a class="p-2 link" href="{% url 'my_asset_repairs'%}">My Asset
+              Repairs</a>
+          </li>
+          <li class="m-2"><a class="p-2 link" href="{% url 'my_asset_approvals'%}">My Asset
+              Approvals</a>
+          </li>
+          <li class="m-2"><a class="p-2 link" href="{% url 'service_request' %}">Service
+              Request</a>
+          </li>
+          <br>
+          <li class="m-2"><a class="p-2 link" href="{% url 'hod_approvals'%}">HOD
+              Approvals</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-10">
+        {% comment %}
+        <!-----Flash messages--> {% endcomment %}
+        <div class="row" id="message">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <P class="text-center">{{message}}</P>
+
+            </div>
+
+            {% endfor %}
+
+            {% endif %}
+
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+        <div class="continer-fluid text-center">
+          {% block body %}{% endblock %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% comment %}
+  <!-------Footer-----> {% endcomment %}
+  <footer id="footer">
+    Copyright &copy; 2021 | AMOS NDONGA
+    <br> +254702240787, amosndonga@gmail.com
+    <br>
+
+  </footer>
+  <script src="{% static 'staff/js/jquery-3.4.0.js' %}"></script>
+  <script src="{% static 'staff/js/popper.min.js' %}"></script>
+  <script src="{% static 'staff/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'staff/js/main.js' %}"></script>
+</body>
+
+</html>

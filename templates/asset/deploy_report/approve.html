@@ -1,0 +1,31 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Deployment Report
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">Deployment Report</h4>
+
+<div class="container-fluid">
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'deploy_result' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type">Search By:</label>
+      <select class="form-control" style="margin:5px;" name="criteria">
+        <option value="serial-no">Serial Number</option>
+      </select>
+      <label for="serial" style="margin:5px;">Entry:</label>
+      <input type="text" class="form-control" name="entry" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+
+  </div>
+
+</div>
+
+
+{% endblock %}

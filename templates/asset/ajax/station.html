@@ -1,0 +1,4 @@
+<option value="">----------------------------------</option>
+{% for s in station %}
+<option value="{{ s.station_pk }}">{{ s.name }}</option>
+{% endfor %}

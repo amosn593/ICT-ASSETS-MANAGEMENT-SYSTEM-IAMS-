@@ -1,0 +1,128 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+User Assigned Assets
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">User Assigned Assets</h4>
+
+<div class="container-fluid">
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'user_assets' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label" required>Search By:</label>
+      <select class="form-control" id="asset-type" name="criteria">
+        <option value="user_number">Staff Number</option>
+      </select>
+      <label for="serial" id="label" required>Entry:</label>
+      <input type="text" class="form-control" name="entry" placeholder="Staff Number" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+
+  </div>
+  <div id="result_history" style="border-top: 1px solid black; margin:0.5%; margin-bottom:20px;">
+    <div class="d-flex justify-content-around mt-2" style="border-bottom: 1px solid black;">
+      <p>ICT-DOC-011</p>
+      <h4>ICT ASSET DEPLOYMENT REPORT</h4>
+      <p>Date: {{date}}</p>
+    </div>
+    <div class="container-fluid mt-2" style="font-size:11px;">
+      <div class="container-fluid">
+        <H5 style="text-align: center;color:brown;">Staff Details</H5>
+        <table class="table table-sm table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Full Names</th>
+              <th>P/NO.</th>
+              <th>Email</th>
+              <th>Region</th>
+              <th>Station</th>
+              <th>Location</th>
+              <th>Dept/Division</th>
+              <th>Section</th>
+              <th>HOD</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for d in data %}
+            <tr>
+              <td>{{d.client.full_name}}</td>
+              <td>{{d.client.staff_number}}</td>
+              <td>{{d.client.staff_email}}</td>
+              <td>{{d.region.name}}</td>
+              <td>{{d.station.name}}</td>
+              <td>{{d.client.location}}</td>
+              <td>{{d.client.department}}</td>
+              <td>{{d.client.section}}</td>
+              <td>{{d.client.hod.hod_name}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <div class="container-fluid mt-2" style="font-size:11px;">
+      <div class="container-fluid">
+        <H5 style="text-align: center; color:brown;">ICT Assets Assigned</H5>
+        <table class="table table-sm table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Asset Type:</th>
+              <th>Serial No.</th>
+              <th>Model No.</th>
+              <th>Asset Tag</th>
+              <th>Monitor Model</th>
+              <th>Monitor S/NO.</th>
+              <th>Monitor Tag</th>
+              <th>OS</th>
+              <th>Condition</th>
+              <th>Ip Address</th>
+              <th>Extension</th>
+              <th>Region</th>
+              <th>Station</th>
+              <th>Date Assigned</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for d in dat %}
+            <tr>
+              <td>{{d.assettype.name}}</td>
+              <td>{{d.asset_serial}}</td>
+              <td>{{d.asset_model}}</td>
+              <td>{{d.asset_tag}}</td>
+              <td>{{d.monitor.monitor_model}}</td>
+              <td>{{d.monitor.monitor_serial}}</td>
+              <td>{{d.monitor.monitor_tag}}</td>
+              <td>{{d.os}}</td>
+              <td>{{d.condition}}</td>
+              <td>{{d.ip_address}}</td>
+              <td>{{d.extension}}</td>
+              <td>{{d.region.name}}</td>
+              <td>{{d.station.name}}</td>
+              <td>{{d.client.date_assigned}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+
+      <div style="margin-left:45%;">
+        <input type="button" id="print" value="PRINT" class="btn btn-danger"
+               onclick="window.print();" />
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+{% endblock %}

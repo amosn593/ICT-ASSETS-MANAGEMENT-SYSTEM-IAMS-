@@ -1,0 +1,87 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Asset Repairs
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">Asset repairs</h4>
+
+<div class="container-fluid">
+
+      <!-- Search form-->
+      <div class="container-fluid d-flex justify-content-center">
+            <form action="{% url 'asset_result' %}" method="post" class="form-inline"
+                  enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <label for="asset-type" id="label">Search By:</label>
+                  <select class="form-control" id="asset-type" name="criteria">
+                        <option value="serial">Serial Number</option>
+                        <option value="number">Staff Number</option>
+                  </select>
+                  <label for="serial" id="label">Entry:</label>
+                  <input type="text" class="form-control" id="serial" name="entry" required>
+                  <button type="submit" class="btn btn-info" id="label">Search</button>
+            </form>
+
+      </div>
+      <CENTER>
+            <button onclick="document.getElementById('id01').style.display='block'" type="button"
+                    class="btn btn-round btn-primary"
+                    style="padding: 10px 25px; margin-bottom: 1%">INCOMING</button>
+      </CENTER>
+
+
+      {% comment %}
+      <!------Modal hidden by default---> {% endcomment %}
+      <div id="id01" class="modal " style="color: black">
+
+            <div class="modal-content animated slideInDown d-flex justify-content-center">
+                  <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                        title="Close Modal" style="margin-top: 3%;">&times;</span>
+                  <h4 style="font-size:18px; text-align:center;">Register New Asset Repair</h4>
+
+                  <div class="container d-flex justify-content-center">
+                        <form style="margin-top: 2%; width:100%;" method="POST"
+                              action="{% url 'repair_register' %}" enctype="multipart/form-data"
+                              style="font-weight: bold;">
+                              {% csrf_token %}
+
+                              Serial Number : <span class="required">*</span> <input type="text"
+                                     name="serail" required placeholder="Asset S/NO">
+
+                              <br>
+                              Staff Number: <span class="required">*</span> <input type="text"
+                                     name="employeeno" required placeholder="Staff Number">
+
+                              <br>
+
+                              Problem : <span class="required">*</span><textarea
+                                        style="margin-left: 1%;  width: 30%; margin-top: 2%;"
+                                        name="problem" required></textarea>
+
+
+                              <br>
+                              Work Ticket No.: <span class="required">*</span> <input type="text"
+                                     name="ticket" required>
+                              <br>
+                              <input type="submit" style="margin-top: 3%;" class="btn btn-danger"
+                                     value="Register">
+
+                        </form>
+                  </div>
+
+
+            </div>
+      </div>
+      <div class="container-fluid">
+            <h5 class="text-center mt-5">No Asset Repair records Found!!!</h5>
+      </div>
+
+
+</div>
+
+
+{% endblock %}

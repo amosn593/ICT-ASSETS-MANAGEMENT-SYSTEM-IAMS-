@@ -1,0 +1,64 @@
+{% extends 'staff/base.html' %}
+{% load static %}
+
+{% block title %}
+
+Hod Approvals
+
+{% endblock title %}
+
+
+{% block body %}
+
+<div class="container-fluid mt-3">
+      <H4 class="mt-2 mb-2" style="text-align: center; color:brown;">HOD Approvals</H4>
+      <table class="table table-sm table-bordered mt-4">
+            <thead class="thead-light">
+                  <tr style="font-size:11px">
+                        <th>Asset Type:</th>
+                        <th>Serial No.</th>
+                        <th>Model No.</th>
+                        <th>Monitor Model</th>
+                        <th>Monitor S/NO.</th>
+                        <th>Region</th>
+                        <th>Station</th>
+                        <th>Hod Approval</th>
+                        <th>User Approval</th>
+                        <th>ICT Approval</th>
+                        <th>Staff Name</th>
+                        <th>Staff Number</th>
+                        <th>Date Assigned</th>
+                        <th></th>
+                        <th></th>
+                  </tr>
+            </thead>
+            <tbody>
+                  {% for d in page_obj %}
+                  <tr style="font-size:11px">
+                        <td>{{d.assettype.name}}</td>
+                        <td>{{d.asset_serial}}</td>
+                        <td>{{d.asset_model}}</td>
+                        <td>{{d.monitor.monitor_model}}</td>
+                        <td>{{d.monitor.monitor_serial}}</td>
+                        <td>{{d.region.name}}</td>
+                        <td>{{d.station.name}}</td>
+                        <td>{{d.client.hod_approval}}</td>
+                        <td>{{d.client.accepted}}</td>
+                        <td>{{d.ict_approval}}</td>
+                        <td>{{d.client.full_name}}</td>
+                        <td>{{d.client.staff_number}}</td>
+                        <td>{{d.client.date_assigned}}</td>
+                        <td><a href="{%url 'hod_asset_approval'%}?serial={{d.asset_serial}}"><button
+                                            class="btn btn-primary">Approve</button></a></td>
+                        <td><a href="#"><button class="btn btn-danger">Reject</button></a></td>
+                  </tr>
+                  {% endfor %}
+            </tbody>
+      </table>
+      {% comment %} Pagination {% endcomment %}
+      {% include 'asset/pagination/pagination.html' %}
+
+
+</div>
+
+{% endblock body %}

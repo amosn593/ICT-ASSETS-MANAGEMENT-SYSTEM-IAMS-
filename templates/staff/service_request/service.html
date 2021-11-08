@@ -1,0 +1,45 @@
+{% extends 'staff/base.html' %}
+{% load static %}
+
+{% block title %}
+
+Service Request
+
+{% endblock %}
+
+{% block body %}
+
+<h4 class="text-center">Request Service</h4>
+
+<div class="d-flex justify-content-center">
+  <form action="{% url 'service_request' %}" method="post" class="form"
+        enctype="multipart/form-data">
+    {% csrf_token %}
+    {% comment %} <label for="serial" id="label" required>Staff Number:<span
+            class="required">*</span></label>
+    <input type="text" class="form-control" id="serial" name="staff_number" required
+           placeholder="Staff Number"> {% endcomment %}
+    <label for="serial" id="label" required>Asset Serial No.:<span class="required">*</span></label>
+    <input type="text" class="form-control" id="serial" name="asset_serial" required
+           placeholder="Asset Serial Number">
+    <label for="asset-type" id="label" required>Service Request:<span
+            class="required">*</span></label>
+    <select class="form-control" name="service" required>
+      <option value="ASSET RELOCATION">Asset Relocation</option>
+      <option value="ASSET SURRENDER">Asset Surrender</option>
+      <option value="ASSET CHANGE OWNERSHIP">Change Ownership</option>
+      <option value="REPLACE MONITOR">Replace Monitor</option>
+      <option value="OTHERS">OTHERS</option>
+    </select>
+
+    <label for="serial" id="label" required>Reason:<span class="required">*</span></label>
+    <textarea name="reason" id="serial" cols="30" rows="3" class="form-control"
+              placeholder="Reason for service Request" required></textarea>
+    <button type="submit" class="btn btn-info" id="label">Submit</button>
+  </form>
+</div>
+
+
+
+
+{% endblock %}

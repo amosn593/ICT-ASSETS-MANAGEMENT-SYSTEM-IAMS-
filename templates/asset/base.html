@@ -1,0 +1,174 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock %} | IAMS</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static 'asset/image/fav.png' %}" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <script src="{% static 'asset/js/jquery-3.5.1.js' %}"></script>
+    <script src="{% static 'asset/js/popper.min.js' %}"></script>
+    <script src="{% static 'asset/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'asset/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'asset/css/animated.css' %}">
+
+</head>
+
+<body>
+    <header class="w-100">
+        {% comment %}
+        <!--Intro bar--> {% endcomment %}
+        <div class="nav-top">
+            <div class="container-fluid d-flex justify-content-between">
+                <div class="col-md-2" id="image">
+                    <img src="{% static 'asset/image/log2.png' %}">
+                </div>
+                <div class="col-md-8">
+                    <h2 class="head" style="text-align: center;">ICT ASSETS MANAGEMENT SYSTEM</h2>
+                </div>
+                <div class="col-md-2" id="out">
+                    <!-- Authentication tab -->
+                    <div class="btn-group w-100 mt-2">
+                        <button type="button" class="btn btn-danger dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{user.username}}
+                        </button>
+                        <div class="dropdown-menu">
+                            {% if user.profile.is_ict %}
+                            <a class="dropdown-item" href="{% url 'staff_home' %}">Staff Portal</a>
+                            {% endif %}
+                            {% comment %} <a class="dropdown-item"
+                               href="{% url 'change_password' %}">Change
+                                Password</a> {% endcomment %}
+                            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %}
+        <!--Nav Bar--> {% endcomment %}
+        <div class="nav-container" id="navbar">
+
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="link" href="{% url 'home' %}">HOME<a>
+                </li>
+                <li class="nav-item">
+                    <a class="link" href="{% url 'deployment_old' %}">DATA CAPTURE<a>
+                </li>
+                <li class="nav-item">
+                    <a class="link" href="{% url 'approve' %}">DATA APPROVAL</a>
+                </li>
+
+                {% if user.profile.is_ict_admin %}
+                <li class="nav-item">
+                    <a class="link" href="{% url 'asset_edit' %}">DATA EDIT</a>
+                </li>
+
+                {% endif %}
+
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                style="color: white;font-weight: bold;margin: -10.5px;">
+                            ASSET MOVEMENT
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'relocate' %}">Relocate Asset</a>
+                            <a class="dropdown-item" href="{% url 'monitor' %}">Replace Monitor</a>
+                            <a class="dropdown-item" href="{% url 'ownership_search' %}">Change
+                                Ownership</a>
+                            <a class="dropdown-item" href="{% url 'surrender' %}">Surrender
+                                Asset</a>
+                            <a class="dropdown-item" href="{% url 'obsolete' %}">Declare
+                                Obselete</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="link" href="{% url 'asset_repairs' %}">ASSET REPAIRS</a>
+                </li>
+
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                                style="color: white;font-weight: bold; margin: -10.5px;">
+                            ASSET REPORTS
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'deploy_report' %}">Deployment
+                                Report</a>
+                            <a class="dropdown-item" href="{% url 'user_search' %}">User Assigned
+                                Assets</a>
+                            <a class="dropdown-item" href="{% url 'history' %}">Asset Ownership
+                                History</a>
+                            <a class="dropdown-item" href="{% url 'asset_search' %}">Assets
+                                Report</a>
+                            <a class="dropdown-item" href="{% url 'free_search' %}">Unassigned
+                                Assets</a>
+                            <a class="dropdown-item" href="{% url 'obso_search' %}">Obsolete
+                                Assets</a>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+
+    </header>
+
+    {% comment %}
+    <!---Flash messages--> {% endcomment %}
+    <div class="row m-0 p-0" id="message">
+        <div class="col-md-2 m-0 p-0"></div>
+        <div class="col-md-8 m-0 p-0">
+            {% if messages %} {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <P class="text-center">{{message}}</P>
+            </div>
+
+            {% endfor %} {% endif %}
+
+        </div>
+        <div class="col-md-2 m-0 p-0"></div>
+    </div>
+
+
+    {% comment %}
+    <!---Content block--> {% endcomment %}
+    <div class="main-1" style="padding-bottom: 3.5rem;">
+        {% block body %}{% endblock %}
+
+    </div>
+    <br> <br>
+
+    {% comment %}
+    <!-------Footer-----> {% endcomment %}
+    <footer id="footer">
+        Copyright &copy; 2021 | AMOS NDONGA
+        <br> +254702240787, amosndonga@gmail.com
+        <br>
+
+    </footer>
+
+    <script src="{% static 'asset/js/jquery-3.6.0.js' %}"></script>
+    <script src="{% static 'asset/js/popper.min.js' %}"></script>
+    <script src="{% static 'asset/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'asset/js/main.js' %}"></script>
+</body>
+
+</html>

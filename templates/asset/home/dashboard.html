@@ -1,0 +1,116 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+
+Dashboard
+
+{% endblock %}
+
+{% block body %}
+
+<!-- Search form-->
+<h4 class="heading">Asset Details</h4>
+
+<div class="main">
+
+    <div class="change-ownership">
+        <form action="{% url 'result' %}" method="post" class="form-inline" enctype="multipart/form-data">
+          {% csrf_token %}
+            <label for="asset-type" id="label">Search By:</label>
+              <select class="form-control" id="asset-type" name="criteria">
+              <option value="---">-------------------</option>
+                <option value="serial-no">Serial Number</option>
+                <option value="user_number">Staff Number</option>
+                <option value="asset_type">Asset Type</option>
+                <option value="location">Region</option>
+              </select>
+            <label for="serial" id="label">Entry:</label>
+            <input type="text" class="form-control" id="liveText" name="entry" required>
+            <button type="submit" class="btn btn-info" id="label">Search</button>
+        </form>
+
+    </div>
+
+
+<div  style="margin-bottom: 10px;border-top: 1px solid black;">
+
+  <div class="form-header" style="display: flex; margin-top:20px;justify-content:space-around; background-color: rgb(17, 95, 59);">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 style="padding: 10px; font: bold; color: white;">COMPLETE DEPLOYED ICT ASSETS</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-left: 2%;">
+    <div class="col-md-2">
+      <div class="total">
+        <p class="home-heading">Total Deployed Assets</p>
+        <p>{{num}}</p>
+
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="total">
+        <p class="home-heading">Desktops/Laptops</p>
+        <p>{{desk}}</p>
+
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="total">
+        <p class="home-heading">VDIs</p>
+        <p>{{vdi}}</p>
+
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="total">
+        <p class="home-heading">Printers</p>
+        <p>{{printer}}</p>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="total">
+        <p class="home-heading">IP Phones</p>
+        <p>{{phone}}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-header" style="display: flex; margin-top:20px;justify-content:space-around; background-color: rgb(155, 69, 69);">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 style="padding: 10px; font: bold; color: white;">PENDING TASKS</h3>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-right: 1%;">
+    <div class="col-md-6">
+      <div class="total">
+        <p class="home-heading">Incomplete ICT Assets Deployment</p>
+        <p>{{incomp}}</p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="total">
+        <p class="home-heading">Pending ICT Asset Repairs</p>
+        <p>{{task}}</p>
+      </div>
+    </div>
+
+  </div>
+  
+</div>  
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Asset Approval
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading"> Asset Approval </h4>
+
+<div class="container-fluid">
+
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'approveresult' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label style="margin:5px;" required>Search By:</label>
+      <select class="form-control" style="margin:5px;" name="criteria">
+        <option value="serial-no">Serial Number</option>
+      </select>
+      <label style="margin:5px;" required>Entry:</label>
+      <input type="text" class="form-control" style="margin:5px;" name="entry" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+
+  </div>
+
+  <div class="container-fluid mb-3" style="border-top: 1px solid black;">
+
+    <div class="container-fluid d-flex justify-content-around m-2">
+      <p>No. of Records: {{num}}</p>
+      <h5>Deployed ICT Assets Pending Approval</h5>
+      <p>Date: {{date}}</p>
+    </div>
+    <div class="container-fluid mt-2">
+      <table class="table table-sm table-bordered">
+        <thead class="thead-light">
+          <tr style="font-size:11px;">
+            <th>Asset Type:</th>
+            <th>Serial No.</th>
+            <th>Model No.</th>
+            <th>Monitor M/No.</th>
+            <th>Monitor S/NO.</th>
+            <th>IP Address</th>
+            <th>Extension</th>
+            <th>Region</th>
+            <th>Owner</th>
+            <th>P/NO.</th>
+            <th>Condition</th>
+            <th>User Approval</th>
+            <th>Hod Approval</th>
+            <th>ICT Approval</th>
+            <th>Date Assigned</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for indx in page_obj %}
+          <tr style="font-size:11px;">
+            <td>{{indx.assettype.name}}</td>
+            <td> <a
+                 href="{%url 'approveresult'%}?id={{indx.asset_serial}}">{{indx.asset_serial}}</a>
+            </td>
+            <td>{{indx.asset_model}}</td>
+            <td>{{indx.monitor.monitor_model}}</td>
+            <td>{{indx.monitor.monitor_serial}}</td>
+            <td>{{indx.ip_address}}</td>
+            <td>{{indx.extension}}</td>
+            <td>{{indx.region.name}}</td>
+            <td>{{indx.client.full_name}}</td>
+            <td>{{indx.client.staff_number}}</td>
+            <td>{{indx.condition}}</td>
+            <td id="client">{{indx.client.accepted}}</td>
+            <td id="hod">{{indx.client.hod_approval}}</td>
+            <td id="ict">{{indx.ict_approval}}</td>
+            <td>{{indx.client.date_assigned}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% comment %} Pagination {% endcomment %}
+      {% include 'asset/pagination/pagination.html' %}
+    </div>
+  </div>
+
+
+</div>
+
+{% endblock %}

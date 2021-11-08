@@ -1,0 +1,45 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Result
+{% endblock %}
+
+{% block body %}
+
+<!-- Search form-->
+<h4 class="heading">Asset Details</h4>
+
+<div class="main">
+
+    <div class="change-ownership">
+        <form action="{% url 'result' %}" method="post" class="form-inline" enctype="multipart/form-data">
+          {% csrf_token %}
+            <label for="asset-type" id="label">Search By:</label>
+              <select class="form-control" id="asset-type" name="criteria">
+              <option value="---">-------------------</option>
+                <option value="serial-no">Serial Number</option>
+                <option value="user_number">Staff Number</option>
+                <option value="asset_type">Asset Type</option>
+                <option value="location">Region</option>
+              </select>
+            <label for="serial" id="label">Entry:</label>
+            <input type="text" class="form-control" id="serial" name="entry" required>
+            <button type="submit" class="btn btn-info" id="label">Search</button>
+        </form>
+
+    </div>
+
+
+<div class="w-100" style="margin-bottom: 10px;border-top: 1px solid black;">
+
+    <p style="text-align: center;color: red;">No Results Found!!!</p>
+
+</div>  
+
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Login</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="{% static 'asset/image/fav.png' %}" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'asset/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'asset/css/animated.css' %}">
+
+</head>
+
+<body style="background-color: #435165;">
+
+    <section class="static">
+        <h1>Account Login</h1>
+        <div class="form">
+            <form method="POST" class="form-inline" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group col-md-12 mb-0">
+                    <label style="margin-right: 10px;">Staff Number</label><span
+                          style="color: red;">*</span>
+                    {{form.username }}
+                </div>
+
+                <div class="form-group col-md-12 mb-0">
+                    <label style="margin-right: 10px;">Password</label><span
+                          style="color: red;">*</span>
+                    {{form.password }}
+                </div>
+                <div class="form-group col-md-12 mb-0">
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-success">
+                        {{ error|escape }}
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-success">
+                        {{ error|escape }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-8 col-md-12" style="margin-top: 10px;">
+                    <button class="btn black" type="submit">Login</button> <span>
+                        <h5>Not Registered ? <a href="{% url 'register' %}">Register Here</a></h5>
+                    </span>
+                    <div class="#">
+                        <h5> Forgot password? <a href="{% url 'reset_password' %}"
+                               class="ml-2">Reset Here</a>
+                        </h5>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+</body>
+
+</html>

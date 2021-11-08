@@ -1,0 +1,62 @@
+{% extends 'staff/base.html' %}
+{% load static %}
+
+{% block title %}
+
+staff Asset Repairs
+
+{% endblock title %}
+
+
+{% block body %}
+
+<div class="container-fluid mt-3">
+      <h4 class="text-center heading mb-2">My Asset Repairs</h4>
+
+      <div class="container-fluid justify-content-center mt-3">
+            <table class="table table-bordered table-sm">
+                  <thead class="thead-light" style="font-size:11px;">
+                        <tr>
+                              <th>IDate</th>
+                              <th>Hardware</th>
+                              <th>Serial NO.</th>
+                              <th>Staff Name</th>
+                              <th>Staff Number</th>
+                              <th>Problem</th>
+                              <th>Officer assigned</th>
+                              <th>Work Ticket</th>
+                              <th>Solution</th>
+                              <th>Status</th>
+                              <th>Officer Returned</th>
+                              <th>ODate</th>
+                        </tr>
+                  </thead>
+                  <tbody style="font-size:11px;">
+                        {% for dat in page_obj %}
+                        <tr>
+                              <td>{{dat.cdate}}</td>
+                              <td>{{dat.comp.assettype.name}}</td>
+                              <td>{{dat.comp.asset_serial}}</td>
+                              <td>{{dat.comp.client.full_name}}</td>
+                              <td>{{dat.comp.client.staff_number}}</td>
+                              <td>{{dat.problem}}</td>
+                              <td>{{dat.officer_assigned.profile_2.name}}</td>
+                              <td>{{dat.ticket_number}}</td>
+                              <td>{{dat.solution}}</td>
+                              <td>{{dat.status}}</td>
+                              <td>{{dat.officer_returned}}</td>
+                              <td>{{dat.rdate}}</td>
+                        </tr>
+                        {% empty %}
+                        <p style="text-align: center;">You have no Asset Repair Records!!!</p>
+                        {%  endfor %}
+
+                  </tbody>
+            </table>
+
+            {% comment %} Pagination {% endcomment %}
+            {% include 'asset/pagination/pagination.html' %}
+      </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,91 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Declare Asset Obsolete
+{% endblock %}
+
+
+{% block body %}
+
+<!-- change ownership form-->
+<h4 class="heading">Declare Asset Obsolete</h4>
+
+<div class="container-fluid">
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'obsoleteback' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label" required>Search By:</label>
+      <select class="form-control" id="asset-type" name="criteria" required>
+        <option value="---">-------------------</option>
+        <option value="serial_no">Serial Number</option>
+      </select>
+      <label for="serial" id="label" required>Entry:</label>
+      <input type="text" class="form-control" id="serial" name="entry" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+  </div>
+  <div class="container-fluid mt-3 pt-2" style="border-top: 1px solid black;">
+    <h4 style="text-align: center; color:brown;">Asset Details</h4>
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr style="font-size: 11px;">
+          <th>Asset Type</th>
+          <th>Asset Model</th>
+          <th>Asset Tag</th>
+          <th>Asset S/NO.</th>
+          <th>Region</th>
+          <th>Station</th>
+          <th>Current Owner</th>
+          <th>P/NO.</th>
+          <th>Working Condition</th>
+          <th>Date Deployed</th>
+          <th>Date Obsolete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="font-size: 11px;">
+          <td>{{data.assettype.name}}</td>
+          <td>{{data.asset_model}}</td>
+          <td>{{data.asset_tag}}</td>
+          <td>{{data.asset_serial}}</td>
+          <td>{{data.region.name}}</td>
+          <td>{{data.station.name}}</td>
+          <td>{{data.client.full_name}}</td>
+          <td>{{data.client.staff_number}}</td>
+          <td>{{data.condition}}</td>
+          <td>{{data.deployed_date}}</td>
+          <td>{{data.obso_date}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <h4 style="text-align: center; margin-top: 1%;color:brown;">Obsolete Details</h4>
+  <div style="margin-left: 1%; margin-right: 1.5%;">
+    <form method="POST" action="{% url 'obso_backend' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row"
+           style="margin-left: 1%; border:1px solid black; padding-top: 1%;font-size: 13px;">
+        <div class="form-group">
+          <input type="hidden" name="serial" value="{{data.asset_serial}}">
+        </div>
+        <div class="form-group" style="margin-left: 2%;">
+          <label>Reason Obsolete: <span class="required">*</span></label>
+          <input type="text" name="reason" maxlength="100" size="150" required>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="centre">
+          <button type="submit" class="btn btn-danger">Declare Obsolete</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+
+{% endblock %}

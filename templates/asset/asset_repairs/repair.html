@@ -1,0 +1,129 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Asset Repairs
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">Asset repairs</h4>
+
+<div class="container-fluid">
+
+  <!-- Search form-->
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'asset_result' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label">Search By:</label>
+      <select class="form-control" id="asset-type" name="criteria">
+        <option value="serial">Serial Number</option>
+        <option value="number">Staff Number</option>
+      </select>
+      <label for="serial" id="label">Entry:</label>
+      <input type="text" class="form-control" id="serial" name="entry" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+
+  </div>
+  <CENTER>
+    <button onclick="document.getElementById('id01').style.display='block'" type="button"
+            class="btn btn-round btn-primary"
+            style="padding: 10px 25px; margin-bottom: 0.5%;margin-top:0.5%;">INCOMING</button>
+  </CENTER>
+
+
+  {% comment %}
+  <!------Modal hidden by default---> {% endcomment %}
+  <div id="id01" class="modal" style="color: black">
+
+    <div class="modal-content animated slideInDown">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close"
+            title="Close Modal" style="margin-top: 3%;">&times;</span>
+      <h4 style="font-size:18px; text-align:center;">Register New Asset Repair</h4>
+
+      <form style="margin-top: 2%;" method="POST" action="{% url 'repair_register' %}"
+            enctype="multipart/form-data" style="font-weight: bold;">
+        {% csrf_token %}
+
+        Serial Number : <span class="required">*</span> <input type="text" name="serail" required
+               placeholder="Asset S/NO">
+
+        <br>
+        Staff Number: <span class="required">*</span> <input type="text" name="employeeno" required
+               placeholder="Staff Number">
+
+        <br>
+
+        Problem : <span class="required">*</span><textarea
+                  style="margin-left: 1%;  width: 30%; margin-top: 2%;" name="problem"
+                  required></textarea>
+
+
+        <br>
+        Work Ticket No.: <span class="required">*</span> <input type="text" name="ticket" required>
+        <br>
+        <input type="submit" style="margin-top: 3%;" class="btn btn-danger" value="Register">
+
+      </form>
+
+
+
+    </div>
+  </div>
+
+  {% comment %}
+  <!----Display table--> {% endcomment %}
+
+
+  <div class="container-fluid">
+
+    <div class="row" style="margin-left:1%; margin-right:0.5%; font-size:11px;">
+      <table class="table table-bordered ml-1">
+        <thead class="thead-light">
+          <tr style="font-size: 11px;">
+            <th>IDate</th>
+            <th>Hardware</th>
+            <th>Serial No.</th>
+            <th>Staff Name</th>
+            <th>Staff Number</th>
+            <th>Problem</th>
+            <th>Officer assigned</th>
+            <th>Work Ticket</th>
+            <th>Solution</th>
+            <th>Status</th>
+            <th>Officer Returned</th>
+            <th>ODate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for dat in page_obj %}
+          <tr style="font-size: 11px;">
+            <td>{{dat.cdate}}</td>
+            <td>{{dat.comp.assettype.name}}</td>
+            <td> <a href="{% url 'release' %}?id={{dat.repair_pk}}">{{dat.comp.asset_serial}}</a>
+            </td>
+            <td>{{dat.comp.client.full_name}}</td>
+            <td>{{dat.comp.client.staff_number}}</td>
+            <td>{{dat.problem}}</td>
+            <td>{{dat.officer_assigned.profile_2.name}}</td>
+            <td>{{dat.ticket_number}}</td>
+            <td>{{dat.solution}}</td>
+            <td>{{dat.status}}</td>
+            <td>{{dat.officer_returned}}</td>
+            <td>{{dat.rdate}}</td>
+          </tr>
+          {%  endfor %}
+
+        </tbody>
+      </table>
+      {% comment %} Pagination {% endcomment %}
+      {% include 'asset/pagination/pagination.html' %}
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

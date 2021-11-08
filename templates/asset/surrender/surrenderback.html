@@ -1,0 +1,100 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Surrender Asset
+{% endblock %}
+
+{% block body %}
+
+<!-- change ownership form-->
+<h5 class="heading">Surrender Asset</h5>
+
+<div class="container-fluid">
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'surrenderback' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label" required>Search By:</label>
+      <select class="form-control" style="margin:5px;" name="criteria" required>
+        <option value="serial_no">Serial Number</option>
+      </select>
+      <label for="serial" required>Entry:</label>
+      <input type="text" class="form-control" style="margin:5px;" id="serial" name="entry" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+  </div>
+  <div class="container-fluid mt-3 pt-2" style="border-top: 1px solid black;">
+    <h5 style="text-align: center; color:brown;">Asset Details</h5>
+    <table class="table table-bordered ml-1">
+      <thead class="thead-light">
+        <tr style="font-size: 11px;">
+          <th>Current Owner</th>
+          <th>P/No.</th>
+          <th>Email</th>
+          <th>Region</th>
+          <th>Station</th>
+          <th>Location</th>
+          <th>Dept/Division</th>
+          <th>Section</th>
+          <th>Asset Type</th>
+          <th>Asset S/NO.</th>
+          <th>Monitor S/NO.</th>
+          <th>Date Assigned</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="font-size: 11px;">
+          <td>{{data.client.full_name}}</td>
+          <td>{{data.client.staff_number}}</td>
+          <td>{{data.client.staff_email}}</td>
+          <td>{{data.region.name}}</td>
+          <td>{{data.station.name}}</td>
+          <td>{{data.client.location}}</td>
+          <td>{{data.client.department}}</td>
+          <td>{{data.client.section}}</td>
+          <td>{{data.assettype.name}}</td>
+          <td>{{data.asset_serial}}</td>
+          <td>{{data.monitor.monitor_serial}}</td>
+          <td>{{data.client.date_assigned}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="container-fluid m-1">
+    <h5 style="text-align: center; color:brown;">Surrender Details</h5>
+    <form method="POST" action="{% url 'sur_backend' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row" style="margin:5px;border:1px solid black; padding-top: 1%; font-size:12px;">
+        <div class="form-group">
+          <input type="hidden" name="client" value="{{data.client.client_pk}}">
+        </div>
+        <div class="form-group">
+          <input type="hidden" name="serial" value="{{data.asset_serial}}">
+        </div>
+        <div class="form-group" style="margin-left: 5%;">
+          <label required>Working Condition:</label>
+          <select name="condition" required>
+            <option value="WORKING">Working</option>
+            <option value="OBSOLETE">Obsolete</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-left: 5%;">
+          <label>Reason For Surrender : <span class="required">*</span></label>
+          <input type="text" name="reason" size="100" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="container-fluid d-flex justify-content-center">
+          <button type="submit" class="btn btn-danger" id="label">Surrender Asset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+
+{% endblock %}

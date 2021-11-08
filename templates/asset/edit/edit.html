@@ -1,0 +1,341 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+
+Asset Edit
+
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading"> Asset Edit </h4>
+
+<div class="container-fluid">
+
+	<div class="container-fluid d-flex justify-content-center">
+		<form action="{% url 'edit_view' %}" method="post" class="form-inline"
+			enctype="multipart/form-data">
+			{% csrf_token %}
+			<label style="margin:5px;" required>Search By:</label>
+			<select class="form-control" style="margin:5px;" name="criteria">
+				<option value="---">-------------------</option>
+				<option value="serial-no">Serial Number</option>
+			</select>
+			<label style="margin:5px;" required>Entry:</label>
+			<input type="text" class="form-control" style="margin:5px;" name="entry" required>
+			<button type="submit" class="btn btn-info" id="label">Search</button>
+		</form>
+
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<h4 style="text-align: center; margin-top: 1%;  font-weight:bold;">ICT ASSET EDIT
+				FORM </h4>
+		</div>
+	</div>
+
+	<div class="container-fluid m-1">
+		<form method="POST" action="{% url 'edit_back' %}" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="row"
+			     style="width: 100%; border: 1px solid black; padding-top: 1%; margin:0.1%; ">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Asset type<span
+								class="required">*</span></label>
+						<select name="type" required>
+							<option value="{{data.assettype}}">{{data.assettype}}
+							</option>
+							<option value="DESKTOP">DESKTOP/LAPTOP</option>
+							<option value="VDI">VDI</option>
+							<option value="PRINTER">PRINTER</option>
+							<option value="IP PHONE">IP PHONE</option>
+							<option value="SWITCH">SWITCH</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Serial no<span class="required">*</span></label>
+						<input type="text" id="searchField" name="sno"
+							 value="{{data.asset_serial}}" required>
+					</div>
+					<div class="form-group">
+						<label>Asset Model no<span class="required">*</span></label>
+						<input type="text" name="assetmodel" required
+							 value="{{data.asset_model}}">
+					</div>
+					<div class="form-group">
+						<label>Asset tag</label>
+						<input type="text" name="assettag" value="{{data.asset_tag}}">
+					</div>
+
+				</div>
+
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>Monitor Model</label>
+						<input type="text" name="monitormodel"
+							 value="{{data.monitor.monitor_model}}" size="40">
+					</div>
+					<div class="form-group">
+						<label>Monitor Serial no</label>
+						<input type="text" name="monitorserial"
+							 value="{{data.monitor.monitor_serial}}" size="40">
+					</div>
+
+					<div class="form-group">
+						<label>Monitor Asset tag</label>
+						<input type="text" name="monitortag"
+							 value="{{data.monitor.monitor_tag}}" size="40">
+					</div>
+					<div class="form-group">
+						<label>REASON NO ANTI-VIRUS</label>
+						<input type="text" maxlength="200" name="no_kaspersky"
+							 placeholder="DESKTOP ONLY"
+							 value="{{data.reason_no_kaspersky}}" size="60">
+					</div>
+
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>DOMAIN </label>
+						<select name="domain">
+							<option value="{{data.domain}}">{{data.domain}}</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</div>
+					<div class="form-group" style="margin-top:-0.1%;">
+						<label>LAPS </label>
+						<select name="laps">
+							<option value="{{data.laps}}">{{data.laps}}</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>ADSS </label>
+						<select name="adss">
+							<option value="{{data.adss}}">{{data.adss}}</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>ANTI-VIRUS </label>
+						<select name="kaspeski">
+							<option value="{{data.kaspersky}}">{{data.kaspersky}}
+							</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>WAKE ON LAN </label>
+						<select name="WOL">
+							<option value="{{data.wol}}">{{data.wol}}</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</div>
+
+				</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group" style="margin-top: 3%;">
+						<label>Mac address<span class="required">*</span></label>
+						<input type="text" name="macaddress"
+							 placeholder="Ethernet adapter" required
+							 value="{{data.mac_address}}">
+					</div>
+
+					<div class="form-group">
+						<label>Computer Name</label>
+						<input type="text" name="compname" value="{{cpu_name}}">
+					</div>
+					<div class="form-group">
+						<label>OS</label>
+						<input type="text" name="os" value="{{data.os}}">
+					</div>
+					<div class="form-group">
+						<label>REASON NO DOMAIN</label>
+						<input type="text" maxlength="200" name="no_domain"
+							 placeholder="DESKTOP ONLY"
+							 value="{{data.reason_no_domain}}" size="60">
+					</div>
+
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>Ram</label>
+						<input type="text" name="ram" placeholder="Ram size in GB"
+							 value="{{data.ram}}">
+					</div>
+					<div class="form-group">
+						<label>IP Address</label>
+						<input type="text" name="ip" placeholder="Printers Only"
+							 value="{{data.ip_address}}">
+					</div>
+					<div class="form-group">
+						<label>EXtension</label>
+						<input type="text" name="extension" placeholder="IP phones only"
+							 value="{{data.extension}}">
+					</div>
+
+
+				</div>
+				<div class="col-md-4">
+					<p style="font-size:14px;">DETAILS OF WORK TICKET</p>
+					<div class="form-group">
+						<label>Work Ticket Number:<span
+								class="required">*</span></label>
+						<input type="text" name="ticket" required
+							 value="{{data.ticket.ticket_number}}">
+					</div>
+					<div class="form-group">
+						<label>ICT Officer Assigned:<span
+								class="required">*</span></label>
+						<input type="text" name="officer" required
+							 value="{{data.ticket.ticket_officer}}">
+					</div>
+					<div class="form-group">
+						<label>Date:<span class="required">*</span></label>
+						<input type="text" name="ticket_date_old"
+							 value="{{data.ticket.ticket_date}}">
+					</div>
+				</div>
+
+
+			</div>
+			<h4 style="text-align: center; margin-top: 1%;color:brown;">Current Owner</h4>
+			<div class="row" style="border:1px solid black; padding-top: 1%;margin:0.1%;">
+				<div class="form-group" style=" margin-left: 0.5%; margin-right:0.5%;">
+					<label>Full Name:<span class="required">*</span></label>
+					<input type="text" name="cowner" required
+						 value="{{data.client.full_name}}" size="40">
+				</div>
+				<div class="form-group" style="margin-right:0.5%;">
+					<label>P/No:<span class="required">*</span></label>
+					<input type="text" name="employeeno" required
+						 value="{{data.client.staff_number}}">
+				</div>
+				<div class="form-group" style="margin-left: 0.5%;">
+					<label>Email Address:<span class="required">*</span></label>
+					<input type="email" name="emailno" required
+						 value="{{data.client.staff_email}}" size="40">
+				</div>
+				<div class="form-group" style="margin-left: 0.5%;">
+					<label>Current Location:<span class="required">*</span></label>
+					<input type="text" name="clocation" placeholder="Floor-Room" required
+						 value="{{data.client.location}}" size="30">
+				</div>
+				<div class="form-group" style="margin-left: 0.5%;">
+					<label>Dept/Division:<span class="required">*</span></label>
+					<input type="text" name="dept" required
+						 value="{{data.client.department}}" size="30">
+				</div>
+				<div class="form-group" style="margin-left: 0.5%;">
+					<label>Section:<span class="required">*</span></label>
+					<input type="text" name="section" required
+						 value="{{data.client.section}}" size="30">
+				</div>
+				<div class="form-group"
+				     style="margin-left: 0.5%; margin-right: 1%; display:inline-block;">
+					<label for="asset-type" id="label">Region:<span
+							class="required">*</span></label>
+					<select id="asset-type" name="region">
+						<option value="{{data.region.regional}}">
+							{{data.region.name}}</option>
+						<option value="SOUTHERN REGION">SOUTHERN REGION</option>
+						<option value="NAIROBI">Nairobi</option>
+						<option value="CENTRAL">Central</option>
+					</select>
+				</div>
+				<div class="form-group" style="margin-left: 0.5%; display:inline-block;">
+					<label>Station:<span class="required">*</span></label>
+					<input type="text" name="station" required placeholder="E.G Kilindini"
+						 value="{{data.station.name}}" size="30">
+					<input type="hidden" value="{{data.client.client_pk}}"
+						 name="client_id">
+				</div>
+
+			</div>
+			<h4 style="text-align: center; margin-top: 1%;color:brown;">HOD/Supervisor(of the
+				affected user)</h4>
+			<div class="row"
+			     style="width: 100%; border:1px solid black; padding-top: 1%;margin:0.1%;">
+				<div class="form-group" style="margin-right: 0.5%; margin-left: 0.5%;">
+					<label>Full Name:<span class="required">*</span></label>
+					<input type="text" name="hod" size="40" required
+						 value="{{data.client.hod.hod_name}}">
+				</div>
+				<div class="form-group" style="margin-right: 0.5%; margin-left: 5%;">
+					<label>P/No:<span class="required">*</span></label>
+					<input type="text" name="hod_no" size="40" required
+						 value="{{data.client.hod.hod_number}}">
+				</div>
+				<div class="form-group" style="margin-right: 0.5%; margin-left: 5%;">
+					<label>Email Address:<span class="required">*</span></label>
+					<input type="email" name="hod_email" size="40" required
+						 value="{{data.client.hod.hod_email}}">
+					<input type="hidden" value="{{data.asset_pk}}" name="asset_id">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="container mt-2" style="display: flex;">
+					<table class="table table-striped ">
+						<tr style="font-size: 12px;">
+							<th style="text-align: left;">Deployed By:</th>
+							<td style="text-align: center;">{{data.deployed_by}}</td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="container mt-2">
+					<table class="table table-striped ">
+						<tr style="font-size: 12px;">
+							<th style="text-align: left;">Approved/ Rejected By:</th>
+							<td style="text-align: center;">{{data.approved_by}}</td>
+						</tr>
+					</table>
+
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="container mt-2" style="display: flex;">
+					<table class="table table-striped ">
+						<tr style="font-size: 12px;">
+							<th style="text-align: left;">Reject Reason:</th>
+							<td style="text-align: center;">{{data.reject_reason}}
+							</td>
+						</tr>
+					</table>
+
+				</div>
+
+			</div>
+
+			<div class="form-group">
+				<div class="centre">
+					<button type="submit" class="btn btn-danger" id="label">Edit
+						Asset</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+
+Asset Edit
+
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading"> Asset Edit </h4>
+
+<div class="container-fluid">
+
+      <div class="container-fluid d-flex justify-content-center">
+            <form action="{% url 'edit_view' %}" method="post" class="form-inline"
+                  enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <label style="margin:5px;" required>Search By:</label>
+                  <select class="form-control" style="margin:5px;" name="criteria">
+                        <option value="serial-no">Serial Number</option>
+                  </select>
+                  <label style="margin:5px;" required>Entry:</label>
+                  <input type="text" class="form-control" style="margin:5px;" name="entry" required>
+                  <button type="submit" class="btn btn-info" id="label">Search</button>
+            </form>
+
+      </div>
+</div>
+<div class="container text-center">
+      <h5 class="mt-5">No record Rejected By ICT Manager!!!</h5>
+      <p>OR</p>
+      <h5>Record Already Approved By ICT Manager!!!</h5>
+</div>
+
+{% endblock %}

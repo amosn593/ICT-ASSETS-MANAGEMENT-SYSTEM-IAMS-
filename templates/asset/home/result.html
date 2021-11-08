@@ -1,0 +1,95 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Result
+{% endblock %}
+
+{% block body %}
+
+<!-- Search form-->
+<h4 class="heading">Asset Details</h4>
+
+<div class="container-fluid">
+
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'result' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label">Search By:</label>
+      <select class="form-control" id="asset-type" name="criteria">
+        <option value="serial-no">Serial Number</option>
+        <option value="user_number">Staff Number</option>
+        <option value="asset_type">Asset Type</option>
+        <option value="location">Region</option>
+      </select>
+      <label for="serial" id="label">Entry:</label>
+      <input type="text" class="form-control" id="serial" name="entry" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+
+  </div>
+
+
+  <div class="container-fluid mt-2" style="border-top: 1px solid black;">
+
+    <div class="mt-2 d-flex justify-content-around">
+      <p>No. of Records: {{num}}</p>
+      <h5>Deployed ICT Assets Report</h5>
+      <p>Date: {{date}}</p>
+    </div>
+    <div class="container-fluid">
+      <table class="table table-bordered table-sm ">
+        <thead class="thead-light">
+          <tr style="font-size:11px;">
+            <th>Asset Type:</th>
+            <th>Serial No.</th>
+            <th>Model No.</th>
+            <th>Monitor S/NO.</th>
+            <th>Condition</th>
+            <th>Region</th>
+            <th>Station</th>
+            <th>Current Owner</th>
+            <th>P/NO.</th>
+            <th>Department</th>
+            <th>Section</th>
+            <th>User Approval</th>
+            <th>HOD Approval</th>
+            <th>ICT Approval</th>
+            <th>Date Assigned</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for indx in page_obj %}
+          <tr style="font-size:11px;">
+            <td>{{ indx.assettype.name}}</td>
+            <td>{{ indx.asset_serial}}</td>
+            <td>{{ indx.asset_model}}</td>
+            <td>{{ indx.monitor.monitor_serial}}</td>
+            <td>{{ indx.condition}}</td>
+            <td>{{ indx.region.name}}</td>
+            <td>{{ indx.station.name}}</td>
+            <td>{{ indx.client.full_name}}</td>
+            <td>{{ indx.client.staff_number}}</td>
+            <td>{{ indx.client.department}}</td>
+            <td>{{ indx.client.section}}</td>
+            <td>{{ indx.client.accepted}}</td>
+            <td>{{ indx.client.hod_approval}}</td>
+            <td>{{ indx.ict_approval}}</td>
+            <td>{{ indx.client.date_assigned}}</td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% comment %} Pagination {% endcomment %}
+      {% include 'asset/pagination/pagination.html' %}
+    </div>
+  </div>
+
+</div>
+
+
+
+
+{% endblock %}

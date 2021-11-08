@@ -1,0 +1,32 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Asset Ownership History
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">Asset Ownership History</h4>
+
+
+<div class="container-fluid">
+  <!-- Search form-->
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'history_report' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label">Search By:</label>
+      <select class="form-control" id="asset-type" name="criteria">
+        <option value="serial">Serial Number</option>
+      </select>
+      <label for="serial" id="label">Entry:</label>
+      <input type="text" class="form-control" placeholder="Asset Serial NO." required name="entry">
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

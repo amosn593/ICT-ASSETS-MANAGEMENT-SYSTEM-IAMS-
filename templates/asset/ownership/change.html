@@ -1,0 +1,188 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Change Ownership
+{% endblock %}
+
+{% block body %}
+
+<!-- change ownership form-->
+<h4 class="heading">Change Ownership</h4>
+
+<div class="container-fluid">
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'ownership_change' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label id="label" required>Search By:</label>
+      <select class="form-control" id="asset-type" name="criteria" required>
+        <option value="serial_no">Serial Number</option>
+      </select>
+      <label for="serial" id="label" required>Entry:</label>
+      <input type="text" class="form-control" name="entry" required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+  </div>
+  <div class="container-fluid mt-3 pt-2" style="border-top: 1px solid black;">
+    <h6 style="text-align: center; color:brown;">Current Owner</h6>
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr style="font-size: 11px;">
+          <th>Current Owner</th>
+          <th>P/NO</th>
+          <th>HOD/Supervisor</th>
+          <th>Region</th>
+          <th>Station</th>
+          <th>Location</th>
+          <th>Dept/Division</th>
+          <th>Section</th>
+          <th>Asset Type</th>
+          <th>Asset S/NO.</th>
+          <th>Monitor S/NO.</th>
+          <th>Asset Condition</th>
+          <th>Date Assigned</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="font-size: 11px;">
+          <td>{{data.client.full_name}}</td>
+          <td>{{data.client.staff_number}}</td>
+          <td>{{data.client.hod.hod_name}}</td>
+          <td>{{data.region.name}}</td>
+          <td>{{data.station.name}}</td>
+          <td>{{data.client.location}}</td>
+          <td>{{data.client.department}}</td>
+          <td>{{data.client.section}}</td>
+          <td>{{data.assettype.name}}</td>
+          <td>{{data.asset_serial}}</td>
+          <td>{{data.monitor.monitor_serial}}</td>
+          <td>{{data.condition}}</td>
+          <td>{{data.client.date_assigned}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <h6 style="text-align: center; margin-top: 1%; color:brown;">New Owner</h6>
+  <form method="POST" action="{% url 'change_back' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row"
+         style="border:1px solid black; padding-top: 1%; font-size: 12px; margin-left: 1.5%; margin-right: 1%;">
+      <div class="form-group" style="margin-right: 0.5%;; margin-left: 2%;">
+        <input type="hidden" value="{{data.asset_pk}}" name="asset_pk">
+        <label>Full Name:<span class="required">*</span></label>
+        <input type="text" name="owner" required>
+      </div>
+      <div class="form-group" style="margin-right: 0.5%;">
+        <label>P/No:<span class="required">*</span></label>
+        <input type="text" name="number" required>
+      </div>
+      <div class="form-group" style="margin-right: 0.5%;">
+        <label>Dept/Division:<span class="required">*</span></label>
+        <input type="text" name="dept" required>
+      </div>
+
+      <div class="form-group" style="margin-left: 0.5%;">
+        <label>Section:<span class="required">*</span></label>
+        <input type="text" name="section" required>
+      </div>
+      <div class="form-group" style="margin-left: 2%;">
+        <label>Email:<span class="required">*</span></label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <input type="hidden" name="owner_pk" value="{{data.client.client_pk}}">
+      </div>
+      <div class="form-group">
+        <input type="hidden" name="hod_pk" value="{{data.client.hod.hod_pk}}">
+      </div>
+      <div class="form-group">
+        <input type="hidden" name="asset_serial" value="{{data.asset_serial}}">
+      </div>
+      <div class="form-group" style="margin-left: 2%;">
+        <label for="asset-type" id="label">New Region:<span class="required">*</span></label>
+        <select name="region" id="region" required>
+          <option value="">----------------------------------</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-left: 5%;">
+        <label>Station:<span class="required">*</span></label>
+        <select name="station" id="station" required>
+          <option value="">----------------------------------</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-left: 5%; margin-right: 0.5%;">
+        <label>Current Location:<span class="required">*</span></label>
+        <input type="text" name="location" placeholder="House-Floor-Room" required>
+      </div>
+      <div class="form-group" style="margin-left: 2%;">
+        <label>Reason for Changeownership:<span class="required">*</span></label>
+        <input type="text" name="reason" required maxlength="200" size="100">
+      </div>
+
+    </div>
+    <h6 style="text-align: center; margin-top: 1%;color:brown;">HOD/Supervisor</h6>
+    <div class="row"
+         style="border:1px solid black; padding-top: 1%; font-size: 12px; margin-left: 1.5%; margin-right: 1%;">
+      <div class="form-group" style="margin-right: 0.5%;; margin-left: 2%;">
+        <label>Full Name:<span class="required">*</span></label>
+        <input type="text" name="hod_name" size="40" required>
+      </div>
+      <div class="form-group" style="margin-left: 5%;">
+        <label>P/No:<span class="required">*</span></label>
+        <input type="text" name="hod_no" required>
+      </div>
+      <div class="form-group" style="margin-left: 5%;">
+        <label>Email:<span class="required">*</span></label>
+        <input type="email" name="hod_email" size="40" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-danger" id="label">Change Ownership</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="{% static 'asset/js/jquery-3.6.0.min.js' %}"></script>
+<script>
+  var $j = jQuery.noConflict();
+
+  $j.ajax({
+    type: 'GET',
+    url: '/ict/region/',
+    success: function (data) {
+      $("#region").html(data);
+
+    },
+    error: function (error) {
+      alert('Select Region!!!')
+    }
+  });
+
+  $("#region").change(function () {
+    var RegionId = $(this).val();
+
+    $j.ajax({
+      type: 'GET',
+      url: '/ict/station/',
+      data: {
+        'RegionId': RegionId
+      },
+      success: function (data) {
+        $("#station").html(data);
+
+      },
+      error: function (error) {
+        alert('Select Region!!!')
+      }
+    });
+
+  });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,282 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Asset Deployment
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+	<div class="col-md-12">
+		<h6 style="text-align: center; margin-top: 1%;  font-weight:bold;">IT ASSET DEPLOYMENT
+			FORM (NEW ASSETS ONLY)</h6>
+	</div>
+</div>
+
+<section style="font-size: 12px; margin-left: 1.5%; margin-right: 2%;">
+
+	<form method="POST" action="{% url 'deployment_old' %}" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="row"
+		     style="width: 100%; border: 1px solid black; padding-top: 1%; margin:0.1%; ">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Asset type<span
+							class="required">*</span></label>
+					<select name="type" required id="asset_type">
+						{% comment %} <option value="">------------------</option>
+						<option value="DESKTOP">DESKTOP/LAPTOP</option>
+						<option value="VDI">VDI</option>
+						<option value="PRINTER">PRINTER</option>
+						<option value="IP PHONE">IP PHONE</option>
+						<option value="SWITCH">SWITCH</option> {% endcomment %}
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Serial no<span class="required">*</span></label>
+					<input type="text" id="searchField" name="sno" required>
+					<p id="exist" style="color:red;"></p>
+				</div>
+				<div class="form-group">
+					<label>Asset Model no<span class="required">*</span></label>
+					<input type="text" name="assetmodel" required>
+				</div>
+				<div class="form-group">
+					<label>Asset tag</label>
+					<input type="text" name="assettag">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>Monitor Model</label>
+					<input type="text" name="monitormodel">
+				</div>
+				<div class="form-group">
+					<label>Monitor Serial no</label>
+					<input type="text" name="monitorserial">
+				</div>
+				<div class="form-group">
+					<label>Monitor Asset tag</label>
+					<input type="text" name="monitortag">
+				</div>
+				<div class="form-group">
+					<label>REASON NO ANTI-VIRUS</label>
+					<input type="text" maxlength="200" name="no_kaspersky"
+						 placeholder="DESKTOP ONLY">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>DOMAIN </label>
+					<select name="domain">
+						<option value="">---------</option>
+						<option value="YES">YES</option>
+						<option value="NO">NO</option>
+					</select>
+				</div>
+				<div class="form-group" style="margin-top:-0.1%;">
+					<label>LAPS </label>
+					<select name="laps">
+						<option value="">---------</option>
+						<option value="YES">YES</option>
+						<option value="NO">NO</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>ADSS </label>
+					<select name="adss">
+						<option value="">---------</option>
+						<option value="YES">YES</option>
+						<option value="NO">NO</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>ANTI-VIRUS </label>
+					<select name="kaspeski">
+						<option value="">---------</option>
+						<option value="YES">YES</option>
+						<option value="NO">NO</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>WAKE ON LAN </label>
+					<select name="WOL">
+						<option value="">---------</option>
+						<option value="YES">YES</option>
+						<option value="NO">NO</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row"
+		     style="width: 100%; border:1px solid black; padding-top: 1%; margin:0.1%;">
+			<div class="col-md-4">
+				<div class="form-group" style="margin-top: 3%;">
+					<label>Mac address<span class="required">*</span></label>
+					<input type="text" name="macaddress" placeholder="Ethernet adapter"
+						 required>
+				</div>
+				<div class="form-group">
+					<label>Computer Name</label>
+					<input type="text" name="compname">
+				</div>
+				<div class="form-group">
+					<label>OS</label>
+					<input type="text" name="os">
+				</div>
+				<div class="form-group">
+					<label>REASON NO DOMAIN</label>
+					<input type="text" maxlength="200" name="no_domain"
+						 placeholder="DESKTOP ONLY">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>Ram</label>
+					<input type="text" name="ram" placeholder="Ram size in GB">
+				</div>
+				<div class="form-group">
+					<label>IP Address</label>
+					<input type="text" name="ip" placeholder="Printers Only">
+				</div>
+				<div class="form-group">
+					<label>EXtension</label>
+					<input type="text" name="extension" placeholder="IP phones only">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<p style="font-size:14px;">DETAILS OF WORK TICKET</p>
+				<div class="form-group">
+					<label>Work Ticket Number:<span class="required">*</span></label>
+					<input type="text" name="ticket" required>
+				</div>
+				<div class="form-group">
+					<label>ICT Officer Assigned:<span class="required">*</span></label>
+					<input type="text" name="officer" required>
+				</div>
+				<div class="form-group">
+					<label>Date:<span class="required">*</span></label>
+					<input type="date" name="ticket_date" required>
+				</div>
+			</div>
+		</div>
+		<h4 style="text-align: center; margin-top: 1%;color:brown;">Current Owner</h4>
+		<div class="row" style="border:1px solid black; padding-top: 1%;margin:0.1%;">
+			<div class="form-group" style=" margin-left: 0.5%; margin-right:0.5%;">
+				<label>Full Name:<span class="required">*</span></label>
+				<input type="text" name="cowner" required>
+			</div>
+			<div class="form-group" style="margin-right:0.5%;">
+				<label>P/No:<span class="required">*</span></label>
+				<input type="text" name="employeeno" required>
+			</div>
+			<div class="form-group" style="margin-left: 0.5%;">
+				<label>Email Address:<span class="required">*</span></label>
+				<input type="email" name="emailno" required>
+			</div>
+			<div class="form-group" style="margin-left: 0.5%;">
+				<label>Current Location:<span class="required">*</span></label>
+				<input type="text" name="clocation" placeholder="Floor-Room" required>
+			</div>
+			<div class="form-group" style="margin-left: 0.5%;">
+				<label>Dept/Division:<span class="required">*</span></label>
+				<input type="text" name="dept" required>
+			</div>
+			<div class="form-group" style="margin-left: 0.5%;">
+				<label>Section:<span class="required">*</span></label>
+				<input type="text" name="section" required>
+			</div>
+			<div class="form-group"
+			     style="margin-left: 0.5%; margin-right: 1%; display:inline-block;">
+				<label for="asset-type" id="label">Region:<span
+						class="required">*</span></label>
+				<select id="region" name="region" required>
+					{% comment %} <option value="SOUTHERN REGION">SOUTHERN REGION</option>
+					<option value="NAIROBI">Nairobi</option>
+					<option value="CENTRAL">Central</option> {% endcomment %}
+				</select>
+			</div>
+			<div class="form-group" style="margin-left: 0.5%; display:inline-block;">
+				<label>Station:<span class="required">*</span></label>
+				<select id="station" name="station" required>
+					<option value="">----------------------------------</option>
+				</select>
+			</div>
+		</div>
+		<h4 style="text-align: center; margin-top: 1%;color:brown;">HOD/Supervisor(of the
+			affected user)</h4>
+		<div class="row"
+		     style="width: 100%; border:1px solid black; padding-top: 1%;margin:0.1%;">
+			<div class="form-group" style="margin-right: 0.5%; margin-left: 0.5%;">
+				<label>Full Name:<span class="required">*</span></label>
+				<input type="text" name="hod" size="40" required>
+			</div>
+			<div class="form-group" style="margin-right: 0.5%; margin-left: 5%;">
+				<label>P/No:<span class="required">*</span></label>
+				<input type="text" name="hod_no" size="40" required>
+			</div>
+			<div class="form-group" style="margin-right: 0.5%; margin-left: 5%;">
+				<label>Email Address:<span class="required">*</span></label>
+				<input type="email" name="hod_email" size="40" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="centre">
+				<button type="submit" class="btn btn-danger" id="label">Deploy
+					Asset</button>
+			</div>
+		</div>
+	</form>
+</section>
+<script src="{% static 'asset/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'asset/js/search.js' %}"></script>
+
+<script>
+	var $j = jQuery.noConflict();
+	$j.ajax({
+		type: 'GET',
+		url: '/ict/asset_type/',
+		success: function (data) {
+			$("#asset_type").html(data);
+		},
+		error: function (error) {
+			alert('Select Asset Type!!!')
+		}
+	});
+
+	$j.ajax({
+		type: 'GET',
+		url: '/ict/region/',
+		success: function (data) {
+			$("#region").html(data);
+
+		},
+		error: function (error) {
+			alert('Select Region!!!')
+		}
+	});
+
+	$("#region").change(function () {
+		var RegionId = $(this).val();
+
+		$j.ajax({
+			type: 'GET',
+			url: '/ict/station/',
+			data: {
+				'RegionId': RegionId
+			},
+			success: function (data) {
+				$("#station").html(data);
+
+			},
+			error: function (error) {
+				alert('Select Region!!!')
+			}
+		});
+
+	});
+</script>
+
+
+{% endblock %}

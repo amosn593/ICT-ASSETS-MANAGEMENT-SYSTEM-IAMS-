@@ -1,0 +1,181 @@
+{% extends 'asset/base.html' %}
+{% load static %}
+
+{% block title %}
+Asset Ownership History
+{% endblock %}
+
+{% block body %}
+
+<h4 class="heading">Asset Ownership History</h4>
+
+<div class="container-fluid">
+
+  <div class="container-fluid d-flex justify-content-center">
+    <form action="{% url 'history_report' %}" method="post" class="form-inline"
+          enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="asset-type" id="label" required>Search By:</label>
+      <select class="form-control" id="asset-type" name="criteria">
+        <option value="serial">Serial Number</option>
+      </select>
+      <label for="serial" id="label" required>Entry:</label>
+      <input type="text" class="form-control" name="entry" placeholder="Asset Serial NO." required>
+      <button type="submit" class="btn btn-info" id="label">Search</button>
+    </form>
+
+  </div>
+  <div class="container-fluid m-1" style="border: 1px solid black;">
+    <div class="d-flex justify-content-around mt-2">
+      <p></p>
+      <h4>ICT ASSET OWNERSHIP HISTORY REPORT</h4>
+      <p>Date: {{date}}</p>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h5 style="text-align: center;color:brown;">Asset Details</h5>
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr style="font-size: 11px;">
+              <th>Asset Type</th>
+              <th>Asset Tag</th>
+              <th>Asset Model</th>
+              <th>Asset S/No.</th>
+              <th>Monitor Model</th>
+              <th>Monitor TAg</th>
+              <th>Monitor S/NO.</th>
+              <th>IP Address</th>
+              <th>Extension</th>
+              <th>Working Condition</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="font-size: 11px;">
+              <td>{{data.assettype.name}}</td>
+              <td>{{data.asset_tag}}</td>
+              <td>{{data.asset_model}}</td>
+              <td>{{data.asset_serial}}</td>
+              <td>{{data.monitor.monitor_model}}</td>
+              <td>{{data.monitor.monitor_tag}}</td>
+              <td>{{data.monitor.monitor_serial}}</td>
+              <td>{{data.ip_address}}</td>
+              <td>{{data.extension}}</td>
+              <td>{{data.condition}}</td>
+            </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+
+            <tr style="font-size: 11px;">
+              <th>Mac Address</th>
+              <th>Computer NAme</th>
+              <th>RAM SIZE</th>
+              <th>O/S</th>
+              <th>ADSS</th>
+              <th>LAPS</th>
+              <th>WAKE ON LAN</th>
+              <th>KAV</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="font-size: 11px;">
+              <td>{{data.mac_address}}</td>
+              <td>{{data.cpu_name}}</td>
+              <td>{{data.ram}}</td>
+              <td>{{data.os}}</td>
+              <td>{{data.adss}}</td>
+              <td>{{data.laps}}</td>
+              <td>{{data.wol}}</td>
+              <td>{{data.kaspersky}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <H5 style="text-align: center;color:brown;">Current Owner</H5>
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr style="font-size: 11px;">
+              <th>Full Names</th>
+              <th>P/NO.</th>
+              <th>Email</th>
+              <th>HOD</th>
+              <th>Region</th>
+              <th>Station</th>
+              <th>Location</th>
+              <th>Dept/Division</th>
+              <th>Section</th>
+              <th>Date Assigned</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr style="font-size: 11px;">
+              <td>{{data.client.full_name}}</td>
+              <td>{{data.client.staff_number}}</td>
+              <td>{{data.client.staff_email}}</td>
+              <td>{{data.client.hod.hod_name}}</td>
+              <td>{{data.region.name}}</td>
+              <td>{{data.station.name}}</td>
+              <td>{{data.client.location}}</td>
+              <td>{{data.client.department}}</td>
+              <td>{{data.client.section}}</td>
+              <td>{{data.client.date_assigned}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <H5 style="text-align: center; color:brown;">Previous Owners</H5>
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr style="font-size: 11px;">
+              <th>Full Names</th>
+              <th>P/NO.</th>
+              <th>Email</th>
+              <th>Dept/Division</th>
+              <th>Section</th>
+              <th>Date Assigned</th>
+              <th>Date Surrendered</th>
+              <th>Surrender Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for d in dat %}
+            <tr style="font-size: 11px;">
+              <td>{{d.full_name}}</td>
+              <td>{{d.staff_number}}</td>
+              <td>{{d.staff_email}}</td>
+              <td>{{d.department}}</td>
+              <td>{{d.section}}</td>
+              <td>{{d.date_assigned}}</td>
+              <td>{{d.date_changed}}</td>
+              <td>{{d.reason_changed}}</td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+{% endblock %}
