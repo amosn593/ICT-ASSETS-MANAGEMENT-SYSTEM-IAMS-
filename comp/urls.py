@@ -19,7 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('staff.urls')),
-    # path('', include('asset.urls')),
     path('ict/', include('asset.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='asset/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='asset/logout.html'), name='logout'),
