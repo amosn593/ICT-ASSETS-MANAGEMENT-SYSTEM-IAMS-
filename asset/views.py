@@ -19,41 +19,6 @@ from .decorators import *
 import json
 import csv
 
-#User registration
-# @unauthenticate_user
-# def login(request):
-#     return render(request, 'asset/login.html')
-
-@unauthenticate_user
-def register(request):
-    if request.user.is_authenticated:
-            return redirect('home')
-    else:
-        if request.method == 'POST':
-            form = UserRegistrationForm(request.POST)
-            form2 = ProfileForm(request.POST)
-            if form.is_valid()and form2.is_valid():
-                user = form.save()
-                profile = form2.save(commit=False)
-                profile.user = user
-                profile.save()
-                username = form.cleaned_data.get('username')
-                group = Group.objects.get(name='staff')
-                user.groups.add(group)
-                messages.success(request, f"Account created successfully for {username}!")
-                return redirect('login')
-            else:
-                form = UserRegistrationForm()
-                form2 = ProfileForm()
-                
-                context={'form': form, 'form2': form2}  
-                return render(request, 'asset/register.html', context)
-        else:
-            form = UserRegistrationForm()
-            form2 = ProfileForm()
-            
-            context={'form': form, 'form2': form2}
-            return render(request, 'asset/register.html', context)
 
 #Change Password
 def change_password(request):

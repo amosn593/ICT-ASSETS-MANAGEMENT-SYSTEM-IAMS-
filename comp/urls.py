@@ -20,7 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('staff.urls')),
     path('ict/', include('asset.urls')),
-    path('login/', auth_views.LoginView.as_view(template_name='asset/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='asset/logout.html'), name='logout'),
+    path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
-    ]
+]

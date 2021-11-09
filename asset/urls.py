@@ -6,17 +6,15 @@ from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('', views.index, name='home'),
-    path("register/", views.register, name = 'register'),
-    # path("change_password/", views.change_password, name = 'change_password'),
     path('result/', views.result, name='result'),
-    path('deployment_old/',views.old, name='deployment_old'),
-    path('live_search/',csrf_exempt(views.live_search), name='live_search'),
-    path('asset_type/',views.load_assettype, name='asset_type'),
-    path('region/',views.load_region, name='region'),
-    path('station/',views.load_station, name='station'),
-    path('live_mac/',csrf_exempt(views.live_mac), name='live_mac'),
-    path('client_accept/',views.client_accept, name='client_accept'),
-    path('hod_accept/',views.hod_accept, name='hod_accept'),
+    path('deployment_old/', views.old, name='deployment_old'),
+    path('live_search/', csrf_exempt(views.live_search), name='live_search'),
+    path('asset_type/', views.load_assettype, name='asset_type'),
+    path('region/', views.load_region, name='region'),
+    path('station/', views.load_station, name='station'),
+    path('live_mac/', csrf_exempt(views.live_mac), name='live_mac'),
+    path('client_accept/', views.client_accept, name='client_accept'),
+    path('hod_accept/', views.hod_accept, name='hod_accept'),
     path('approve/', views.approve, name='approve'),
     path('approveresult/', views.approveresult, name='approveresult'),
     path('ict_approval/', views.ict_approve, name='ict_approval'),
@@ -57,20 +55,5 @@ urlpatterns = [
     path('free_report/', views.free_report, name='free_report'),
     path('obso_search/', views.obso_search, name='obso_search'),
     path('obso_report/', views.obso_report, name='obso_report'),
-    
-    path('reset_password/',
-     auth_views.PasswordResetView.as_view(template_name="asset/accounts/password_reset.html"),
-     name="reset_password"),
 
-    path('reset_password_sent/', 
-        auth_views.PasswordResetDoneView.as_view(template_name="asset/accounts/password_reset_sent.html"), 
-        name="password_reset_done"),
-
-    path('reset/<uidb64>/<token>/',
-     auth_views.PasswordResetConfirmView.as_view(template_name="asset/accounts/password_reset_form.html"), 
-     name="password_reset_confirm"),
-
-    path('reset_password_complete/', 
-        auth_views.PasswordResetCompleteView.as_view(template_name="asset/accounts/password_reset_done.html"), 
-        name="password_reset_complete"),
 ]
