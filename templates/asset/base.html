@@ -26,7 +26,7 @@
       <!--Intro bar-->
       <div class="nav-top">
         <div class="container-fluid d-flex justify-content-between">
-          <div class="col-md-2" id="image">
+          <div class="col-md-2" id="log-image">
             <img src="{% static 'asset/image/log2.png' %}" />
           </div>
           <div class="col-md-8">
@@ -34,7 +34,7 @@
               ICT ASSETS MANAGEMENT SYSTEM
             </h2>
           </div>
-          <div class="col-md-2" id="out">
+          <div class="col-md-2">
             <!-- Authentication tab -->
             <ul class="mt-2" style="list-style-type: none">
               <li class="nav-item dropdown">
@@ -100,7 +100,7 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-                style="color: white; font-weight: bold; margin: -10.5px"
+                style="color: white; font-weight: 400; margin: -10.5px"
               >
                 ASSET MOVEMENT
               </button>
@@ -136,7 +136,7 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-                style="color: white; font-weight: bold; margin: -10.5px"
+                style="color: white; font-weight: 400; margin: -10.5px"
               >
                 ASSET REPORTS
               </button>
@@ -192,17 +192,17 @@
     </div>
 
     <!---Content block-->
-    <div class="main-1" style="padding-bottom: 3.5rem">
+    <div class="container-fluid  main" style="padding-bottom: 3.5rem">
       {% block body %}{% endblock %}
     </div>
-    <br />
-    <br />
 
     <!-------Footer----->
     <footer id="footer">
-      Copyright &copy; 2021 | AMOS NDONGA
-      <br />
-      +254702240787, amosndonga@gmail.com
+      <p class="my-2 py-2">Copyright &copy; 2021 | AMOS ICT SERVICES</p>
+      <p class="my-2 py-2">
+        +254702240787 | amosndonga@gmail.com | info@amosndonga.com
+      </p>
+
       <br />
     </footer>
 

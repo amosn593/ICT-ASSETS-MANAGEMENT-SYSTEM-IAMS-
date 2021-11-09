@@ -1,47 +1,24 @@
-{% extends 'asset/base.html' %}
-{% load static %}
-
-{% block title %}
-Result
-{% endblock %}
-
-{% block body %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Result {%
+endblock %} {% block body %}
 
 <!-- Search form-->
-<h4 class="heading">Asset Details</h4>
+<h4 class="text-center my-2 py-2">Asset Details</h4>
 
 <div class="container-fluid">
-
   <div class="container-fluid d-flex justify-content-center">
-    <form action="{% url 'result' %}" method="post" class="form-inline"
-          enctype="multipart/form-data">
-      {% csrf_token %}
-      <label for="asset-type" id="label">Search By:</label>
-      <select class="form-control" id="asset-type" name="criteria">
-        <option value="serial-no">Serial Number</option>
-        <option value="user_number">Staff Number</option>
-        <option value="asset_type">Asset Type</option>
-        <option value="location">Region</option>
-      </select>
-      <label for="serial" id="label">Entry:</label>
-      <input type="text" class="form-control" id="serial" name="entry" required>
-      <button type="submit" class="btn btn-info" id="label">Search</button>
-    </form>
-
+    <div>{% include "asset/home/form.html" %}</div>
   </div>
 
-
-  <div class="container-fluid mt-2" style="border-top: 1px solid black;">
-
+  <div class="container-fluid mt-2" style="border-top: 1px solid black">
     <div class="mt-2 d-flex justify-content-around">
       <p>No. of Records: {{num}}</p>
       <h5>Deployed ICT Assets Report</h5>
       <p>Date: {{date}}</p>
     </div>
     <div class="container-fluid">
-      <table class="table table-bordered table-sm ">
+      <table class="table table-bordered table-sm">
         <thead class="thead-light">
-          <tr style="font-size:11px;">
+          <tr>
             <th>Asset Type:</th>
             <th>Serial No.</th>
             <th>Model No.</th>
@@ -61,7 +38,7 @@ Result
         </thead>
         <tbody>
           {% for indx in page_obj %}
-          <tr style="font-size:11px;">
+          <tr>
             <td>{{ indx.assettype.name}}</td>
             <td>{{ indx.asset_serial}}</td>
             <td>{{ indx.asset_model}}</td>
@@ -79,17 +56,12 @@ Result
             <td>{{ indx.client.date_assigned}}</td>
           </tr>
           {% endfor %}
-
         </tbody>
       </table>
-      {% comment %} Pagination {% endcomment %}
-      {% include 'asset/pagination/pagination.html' %}
+      {% comment %} Pagination {% endcomment %} {% include
+      'asset/pagination/pagination.html' %}
     </div>
   </div>
-
 </div>
-
-
-
 
 {% endblock %}

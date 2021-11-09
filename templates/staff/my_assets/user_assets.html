@@ -1,18 +1,10 @@
-{% extends 'staff/base.html' %}
-{% load static %}
-
-{% block title %}
-
-User Assets
-
-{% endblock %}
-
-{% block body %}
+{% extends 'staff/base.html' %} {% load static %} {% block title %} User Assets
+{% endblock %} {% block body %}
 
 <div class="container-fluid mt-2">
   <div class="row">
     <div class="col-md-12">
-      <table class="table table-sm table-bordered">
+      <table class="table table-sm table-success table-bordered table-primary">
         <thead class="thead-light">
           <tr>
             <th>Staff Name</th>
@@ -32,18 +24,20 @@ User Assets
       </table>
     </div>
   </div>
-  <div class="container-fluid d-flex justify-content-around mt-3 p-2"
-       style="border-bottom: 1px solid black; border-top: 1px solid black;">
+  <div
+    class="container-fluid d-flex justify-content-around mt-3 p-2"
+    style="border-bottom: 1px solid black; border-top: 1px solid black"
+  >
     <p>Number of Records: {{num}}</p>
     <h5>ICT ASSET OWNERSHIP REPORT</h5>
     <p>Date: {{date}}</p>
   </div>
   <div class="row mt-3">
-    <div class="col-md-12 ">
-      <h4 class="mb-2 text-center" style="color:brown;">MY ASSETS</h4>
+    <div class="col-md-12">
+      <h4 class="mb-2 text-center" style="color: brown">MY ASSETS</h4>
       <table class="table table-sm table-bordered">
         <thead class="thead-light">
-          <tr style="font-size:11px;">
+          <tr>
             <th>Asset Type:</th>
             <th>Serial No.</th>
             <th>Model No.</th>
@@ -61,7 +55,7 @@ User Assets
         </thead>
         <tbody>
           {% for d in dat %}
-          <tr style="font-size:11px;">
+          <tr style="font-size: 11px">
             <td>{{d.assettype.name}}</td>
             <td>{{d.asset_serial}}</td>
             <td>{{d.asset_model}}</td>

@@ -78,34 +78,34 @@
     <!---Content block-->
     <div class="container-fluid">
       <div class="row d-flex">
-        <div class="col-md-2 h-100 bg-dark">
-          <ul class="m-2 list">
-            <li class="my-2">
+        <div class="col-md-2 bg-dark sidebar">
+          <ul class="my-2 py-2 list">
+            <li class="my-2 py-2">
               <a class="py-2 link" href="{% url 'staff_home' %}">My Assets</a>
             </li>
-            <li class="my-2">
+            <li class="my-2 py-2">
               <a class="py-2 link" href="{% url 'my_asset_repairs'%}"
                 >My Asset Repairs</a
               >
             </li>
-            <li class="my-2">
+            <li class="my-2 py-2">
               <a class="py-2 link" href="{% url 'my_asset_approvals'%}"
                 >My Asset Approvals</a
               >
             </li>
-            <li class="my-2">
+            <li class="my-2 py-2">
               <a class="py-2 link" href="{% url 'service_request' %}"
                 >Service Request</a
               >
             </li>
-            <li class="my-2">
+            <li class="my-2 py-2">
               <a class="py-2 link" href="{% url 'hod_approvals'%}"
                 >HOD Approvals</a
               >
             </li>
           </ul>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10 mainbar">
           <!-----Flash messages-->
           <div class="row" id="message">
             <div class="col-md-2"></div>
@@ -139,10 +139,13 @@
     <!-------Footer----->
     {% endcomment %}
     <footer id="footer">
-      Copyright &copy; 2021 | AMOS NDONGA
-      <br />
-      +254702240787, amosndonga@gmail.com
-      <br />
+      <p class="text-center my-2 py-2">
+        Copyright &copy; 2021 | AMOS ICT SERVICES
+      </p>
+
+      <p class="text-center my-2 py-2">
+        +254702240787 | amosndonga@gmail.com | info@amosndonga.com
+      </p>
     </footer>
     <script src="{% static 'staff/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'staff/js/main.js' %}"></script>
