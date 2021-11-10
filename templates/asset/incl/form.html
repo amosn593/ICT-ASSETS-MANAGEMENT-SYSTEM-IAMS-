@@ -1,5 +1,5 @@
 <form
-  action="{% url 'result' %}"
+  action="{% url 'rel' %}"
   method="post"
   class="form-inline d-flex"
   enctype="multipart/form-data"
@@ -8,9 +8,6 @@
   <label class="form-label w-100 mx-1 px-1">Search By:</label>
   <select class="form-select mx-1 px-3" name="criteria">
     <option value="serial-no">Serial Number</option>
-    <option value="user_number">Staff Number</option>
-    <option value="asset_type">Asset Type</option>
-    <option value="location">Region</option>
   </select>
   <label class="form-label mx-1 px-1">Entry:</label>
   <input

@@ -19,60 +19,64 @@ import json
 import csv
 
 # Home tab views
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def index(request):
     # Displaying deployed assets
     try:
-        data = Comp.objects.exclude(client__staff_number="ICT").exclude(condition__icontains='Obsolete').all().order_by('-deployed_date')
+        data = Comp.objects.exclude(client__staff_number="ICT").exclude(
+            condition__icontains='Obsolete').all().order_by('-deployed_date')
     except:
         data = []
-    
+
     if len(list(data)) > 0:
         num = data.count()
         date = datetime.today().strftime('%Y-%m-%d')
-    
-        #pagination
+
+        # pagination
         page_number = request.GET.get('page', 1)
-        paginator = Paginator(data, 15) # Show 15 contacts per page.
-    
+        paginator = Paginator(data, 15)  # Show 15 contacts per page.
+
         try:
             page_obj = paginator.page(page_number)
         except PageNotAnInteger:
             page_obj = paginator.page(1)
         except EmptyPage:
             page_obj = paginator.page(paginator.num_pages)
-    
+
         context = {
-       
-            'page_obj':page_obj, 'num':num, 'date':date
+
+            'page_obj': page_obj, 'num': num, 'date': date
         }
-    
+
         return render(request, 'asset/home/index.html', context)
     else:
         return render(request, 'asset/home/norecord.html')
 
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def result(request):
-    #searching deployed assets
+    # searching deployed assets
     if request.method == "POST":
         search = request.POST['criteria'].strip()
         entry = request.POST['entry'].strip()
-        
+
         if search == 'serial-no':
             try:
-                data = Comp.objects.exclude(client__staff_number="ICT").exclude(condition__icontains='Obsolete').filter(asset_serial__icontains=entry).order_by('-deployed_date')
+                data = Comp.objects.exclude(client__staff_number="ICT").exclude(
+                    condition__icontains='Obsolete').filter(asset_serial__icontains=entry).order_by('-deployed_date')
                 num = data.count()
             except:
                 data = []
                 num = ''
             if len(list(data)) > 0 and num != 0:
-                date = datetime.today().strftime('%Y-%m-%d')     
+                date = datetime.today().strftime('%Y-%m-%d')
                 page = request.GET.get('page', 1)
 
-                paginator = Paginator(data, 15) #Display 15 Records
+                paginator = Paginator(data, 15)  # Display 15 Records
                 try:
                     page_obj = paginator.page(page)
                 except PageNotAnInteger:
@@ -80,28 +84,29 @@ def result(request):
                 except EmptyPage:
                     page_obj = paginator.page(paginator.num_pages)
                 context = {
-                # 'data': data,
-                'page_obj':page_obj,
-                'num':num,
-                'date':date,
+                    # 'data': data,
+                    'page_obj': page_obj,
+                    'num': num,
+                    'date': date,
                 }
                 return render(request, 'asset/home/result.html', context)
             else:
                 return render(request, 'asset/home/norecord.html')
-            
+
         elif search == 'user_number':
             try:
-                data = Comp.objects.exclude(client__staff_number="ICT").exclude(condition__icontains='Obsolete').filter(client__staff_number__icontains=entry).order_by('-deployed_date')
+                data = Comp.objects.exclude(client__staff_number="ICT").exclude(condition__icontains='Obsolete').filter(
+                    client__staff_number__icontains=entry).order_by('-deployed_date')
                 num = data.count()
             except:
                 data = []
                 num = ''
-                
+
             if len(list(data)) > 0 and num != 0:
-                date = datetime.today().strftime('%Y-%m-%d')     
+                date = datetime.today().strftime('%Y-%m-%d')
                 page = request.GET.get('page', 1)
 
-                paginator = Paginator(data, 30) #Display 15 Records
+                paginator = Paginator(data, 30)  # Display 15 Records
                 try:
                     page_obj = paginator.page(page)
                 except PageNotAnInteger:
@@ -109,29 +114,30 @@ def result(request):
                 except EmptyPage:
                     page_obj = paginator.page(paginator.num_pages)
                 context = {
-                # 'data': data,
-                'page_obj':page_obj,
-                'num':num,
-                'date':date,
+                    # 'data': data,
+                    'page_obj': page_obj,
+                    'num': num,
+                    'date': date,
                 }
                 return render(request, 'asset/home/result.html', context)
             else:
                 return render(request, 'asset/home/norecord.html')
-            
+
         elif search == 'asset_type':
             try:
-                data = Comp.objects.exclude(client__staff_number="ICT").exclude(condition__icontains='Obsolete').filter(assettype__name__icontains=entry).order_by('-deployed_date')
+                data = Comp.objects.exclude(client__staff_number="ICT").exclude(
+                    condition__icontains='Obsolete').filter(assettype__name__icontains=entry).order_by('-deployed_date')
                 num = data.count()
-                
-            except :
+
+            except:
                 data = []
                 num = ''
-                
+
             if len(list(data)) > 0 and num != 0:
-                date = datetime.today().strftime('%Y-%m-%d')     
+                date = datetime.today().strftime('%Y-%m-%d')
                 page = request.GET.get('page', 1)
 
-                paginator = Paginator(data, 40) #Display 15 Records
+                paginator = Paginator(data, 40)  # Display 15 Records
                 try:
                     page_obj = paginator.page(page)
                 except PageNotAnInteger:
@@ -139,28 +145,29 @@ def result(request):
                 except EmptyPage:
                     page_obj = paginator.page(paginator.num_pages)
                 context = {
-                # 'data': data,
-                'page_obj':page_obj,
-                'num':num,
-                'date':date,
+                    # 'data': data,
+                    'page_obj': page_obj,
+                    'num': num,
+                    'date': date,
                 }
                 return render(request, 'asset/home/result.html', context)
             else:
                 return render(request, 'asset/home/norecord.html')
-                
+
         elif search == 'location':
             try:
-                data = Comp.objects.exclude(client__staff_number="ICT").exclude(condition__icontains='Obsolete').filter(region__name__icontains=entry).order_by('-deployed_date')
+                data = Comp.objects.exclude(client__staff_number="ICT").exclude(
+                    condition__icontains='Obsolete').filter(region__name__icontains=entry).order_by('-deployed_date')
                 num = data.count()
             except:
                 data = []
                 num = ''
-            
+
             if len(list(data)) > 0 and num != 0:
-                date = datetime.today().strftime('%Y-%m-%d')     
+                date = datetime.today().strftime('%Y-%m-%d')
                 page = request.GET.get('page', 1)
 
-                paginator = Paginator(data, 40) #Display 15 Records
+                paginator = Paginator(data, 40)  # Display 15 Records
                 try:
                     page_obj = paginator.page(page)
                 except PageNotAnInteger:
@@ -168,85 +175,91 @@ def result(request):
                 except EmptyPage:
                     page_obj = paginator.page(paginator.num_pages)
                 context = {
-                # 'data': data,
-                'page_obj':page_obj,
-                'num':num,
-                'date':date,
+                    # 'data': data,
+                    'page_obj': page_obj,
+                    'num': num,
+                    'date': date,
                 }
                 return render(request, 'asset/home/result.html', context)
             else:
                 return render(request, 'asset/home/norecord.html')
     else:
-        return HttpResponse("Invalid URL")    
-        
-#Deployment tab views
+        return HttpResponse("Invalid URL")
+
+# Deployment tab views
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def live_search(request):
-    #Live serial number search
+    # Live serial number search
     if request.method == 'POST':
         serial = json.loads(request.body).get('searchText')
-        
+
         response = Comp.objects.filter(asset_serial__icontains=serial)
-        
+
         data = response.values()
-        
+
         return JsonResponse(list(data), safe=False)
- 
-#Load Asset Type ajax Call
+
+# Load Asset Type ajax Call
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def load_assettype(request):
-    
+
     asset_type = Assettype.objects.all()
-    context= {
+    context = {
         'asset_type': asset_type
     }
-    return render(request, 'asset/ajax/asset_type.html', context) 
+    return render(request, 'asset/ajax/asset_type.html', context)
 
-#Load Region ajax Call
+# Load Region ajax Call
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def load_region(request):
     region = Region.objects.all()
-    context= {
+    context = {
         'region': region
     }
-    return render(request, 'asset/ajax/region.html', context) 
+    return render(request, 'asset/ajax/region.html', context)
 
 
-#Load Station ajax Call
+# Load Station ajax Call
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def load_station(request):
     id = request.GET.get('RegionId')
     station = Station.objects.filter(region__region_pk=id)
-    context= {
+    context = {
         'station': station
     }
-    return render(request, 'asset/ajax/station.html', context) 
+    return render(request, 'asset/ajax/station.html', context)
 
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def live_mac(request):
-    #Live mac address search
+    # Live mac address search
     if request.method == 'POST':
         serial = json.loads(request.body).get('searchText')
-        
+
         response = Comp.objects.filter(mac_address__icontains=serial)
-        
+
         data = response.values()
-        
+
         return JsonResponse(list(data), safe=False)
 
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
-def old(request):       
-    #processing form data
+@allowed_users(role='supervisor_ict')
+def old(request):
+    # processing form data
     if request.method == "POST":
-        #comp data
+        # comp data
         vkey = secrets.token_hex(15)
         officer = request.user
         ty = int(request.POST['type'])
@@ -270,13 +283,13 @@ def old(request):
         ram = request.POST['ram'].strip()
         ip_address = request.POST['ip'].strip()
         extension = request.POST['extension'].strip()
-        
+
         # work ticket details
         ticket = request.POST['ticket'].strip().upper()
         officer_t = request.POST['officer'].strip().upper()
         ticket_date = request.POST['ticket_date'].strip()
-        
-        #Staff details
+
+        # Staff details
         full_name = request.POST['cowner'].strip().upper()
         pno = request.POST['employeeno'].strip().upper()
         email = request.POST['emailno'].strip().upper()
@@ -287,139 +300,159 @@ def old(request):
         region = Region.objects.get(region_pk=region)
         station = int(request.POST['station'])
         station = Station.objects.get(station_pk=station)
-        
-        #Hod
+
+        # Hod
         hod_name = request.POST['hod'].strip().upper()
         hod_number = request.POST['hod_no'].strip().upper()
         hod_email = request.POST['hod_email'].strip().upper()
-        
-        #checking if serial number already captured
+
+        # checking if serial number already captured
         if Comp.objects.filter(asset_serial=serial).count() < 1:
-            #checking if hod exists
-            if Hod.objects.filter(hod_number__icontains = hod_number).count() < 1:
+            # checking if hod exists
+            if Hod.objects.filter(hod_number__icontains=hod_number).count() < 1:
                 # # insert into region
                 # r = Region(regional=region,station=station,location=location)
                 # r.save()
-                #insert into hod
-                h = Hod(hod_name=hod_name,hod_number=hod_number,hod_email=hod_email)
+                # insert into hod
+                h = Hod(hod_name=hod_name, hod_number=hod_number,
+                        hod_email=hod_email)
                 h.save()
-                #insert into ticket
-                t = Ticket(ticket_number = ticket, ticket_officer=officer_t)
+                # insert into ticket
+                t = Ticket(ticket_number=ticket, ticket_officer=officer_t)
                 t.save()
-                #insert into monitors
-                #Check if desktop
-                if ty.name == 'DESKTOP':
-                    m = Monitor(monitor_serial=monitorserial,monitor_model=monitormodel, monitor_tag=monitortag,monitor_cpu=serial,deployed_by=officer,)
+                # insert into monitors
+                # Check if desktop
+                if ty.name == 'DESKTOP/LAPTOP':
+                    m = Monitor(monitor_serial=monitorserial, monitor_model=monitormodel,
+                                monitor_tag=monitortag, monitor_cpu=serial, deployed_by=officer,)
                     m.save()
                 else:
                     m = Monitor.objects.get(monitor_pk=1)
-                #insert into clients
-                c = Client(full_name=full_name,staff_number=pno,staff_email=email,department=dept,section=section,asset_serial=serial, assigned_by=officer,ticket=ticket,hod=h, vkey=vkey, location=location)
+                # insert into clients
+                c = Client(full_name=full_name, staff_number=pno, staff_email=email, department=dept, section=section,
+                           asset_serial=serial, assigned_by=officer, ticket=ticket, hod=h, vkey=vkey, location=location)
                 c.save()
-                #insert into comp
-                comp = Comp(assettype=ty,asset_serial=serial,asset_model=model,asset_tag=assettag,mac_address=mac,cpu_name=compname,domain=domain,reason_no_domain=reason_no_domain,ram=ram,os=os,adss=adss,laps=laps,wol=wol,kaspersky=kasper,reason_no_kaspersky=no_kas,ip_address=ip_address,extension=extension,deployed_by=officer,monitor=m,client=c,region=region,station=station,ticket=t)
+                # insert into comp
+                comp = Comp(assettype=ty, asset_serial=serial, asset_model=model, asset_tag=assettag, mac_address=mac, cpu_name=compname, domain=domain, reason_no_domain=reason_no_domain, ram=ram, os=os, adss=adss,
+                            laps=laps, wol=wol, kaspersky=kasper, reason_no_kaspersky=no_kas, ip_address=ip_address, extension=extension, deployed_by=officer, monitor=m, client=c, region=region, station=station, ticket=t)
                 comp.save()
-                #Send email, Flash message and redirect to home page
-                
+                # Send email, Flash message and redirect to home page
+
                 email_hod(serial)
                 messages.success(request, f"Record inserted successfully!!!")
                 return redirect('home')
             else:
                 # get hod id and continue inserting
-                hod_id = Hod.objects.filter(hod_number__icontains=hod_number).first()
+                hod_id = Hod.objects.filter(
+                    hod_number__icontains=hod_number).first()
 
                 # # insert into region
                 # r = Region(regional=region,station=station,location=location)
                 # r.save()
-                #insert into ticket
-                t = Ticket(ticket_number = ticket, ticket_officer=officer_t)
+                # insert into ticket
+                t = Ticket(ticket_number=ticket, ticket_officer=officer_t)
                 t.save()
-                
-                #insert into monitors
-                #Check if Desktop
-                if ty.name == 'DESKTOP':
-                    m = Monitor(monitor_serial=monitorserial,monitor_model=monitormodel, monitor_tag=monitortag,monitor_cpu=serial,deployed_by=officer,)
+
+                # insert into monitors
+                # Check if Desktop
+                if ty.name == 'DESKTOP/LAPTOP':
+                    m = Monitor(monitor_serial=monitorserial, monitor_model=monitormodel,
+                                monitor_tag=monitortag, monitor_cpu=serial, deployed_by=officer,)
                     m.save()
                 else:
                     m = Monitor.objects.get(monitor_pk=1)
-                #insert into clients
-                c = Client(full_name=full_name,staff_number=pno,staff_email=email,department=dept,section=section,asset_serial=serial, assigned_by=officer,ticket=ticket,hod=hod_id, vkey=vkey, location=location)
+                # insert into clients
+                c = Client(full_name=full_name, staff_number=pno, staff_email=email, department=dept, section=section,
+                           asset_serial=serial, assigned_by=officer, ticket=ticket, hod=hod_id, vkey=vkey, location=location)
                 c.save()
-                #insert into comp
-                comp = Comp(assettype=ty,asset_serial=serial,asset_model=model,asset_tag=assettag,mac_address=mac,cpu_name=compname,domain=domain,reason_no_domain=reason_no_domain,ram=ram,os=os,adss=adss,laps=laps,wol=wol,kaspersky=kasper,reason_no_kaspersky=no_kas,ip_address=ip_address,extension=extension,deployed_by=officer,monitor=m,client=c,region=region, station=station, ticket=t)
+                # insert into comp
+                comp = Comp(assettype=ty, asset_serial=serial, asset_model=model, asset_tag=assettag, mac_address=mac, cpu_name=compname, domain=domain, reason_no_domain=reason_no_domain, ram=ram, os=os, adss=adss,
+                            laps=laps, wol=wol, kaspersky=kasper, reason_no_kaspersky=no_kas, ip_address=ip_address, extension=extension, deployed_by=officer, monitor=m, client=c, region=region, station=station, ticket=t)
                 comp.save()
-                #Send email, Flash message and redirect to home page
-                
-                email_hod(serial)
-                messages.success(request, f"Asset Record captured successfully!!!")
-                return redirect('home')
+                # Send email, Flash message and redirect to home page
+
+                try:
+                    email_hod(serial)
+                    messages.success(
+                        request, f"Asset Record captured successfully!!!")
+                    return redirect('home')
+                except:
+                    messages.success(
+                        request, f"Asset Record captured successfully!!!")
+                    return redirect('home')
         else:
-            #Flash message and redirect to home page
-            messages.info(request, f"Asset serial number already Registered!!!")
-            return redirect('deployment_old') 
-        
-    return render(request, 'asset/deployment/old.html')
+            # Flash message and redirect to home page
+            messages.info(
+                request, f"Asset serial number already Registered!!!")
+            return redirect('deployment_old')
+    else:
+        return render(request, 'asset/deployment/old.html')
 
 
 def client_accept(request):
     if request.method == 'GET':
         vkey = request.GET['vkey'].strip()
         serial = request.GET['serial'].strip()
-        
-        if Client.objects.get(comp__asset_serial=serial,vkey=vkey).accepted == 'Pending':
-            Client.objects.filter(comp__asset_serial=serial,vkey=vkey).update(accepted='Accepted')
-            
+
+        if Client.objects.get(comp__asset_serial=serial, vkey=vkey).accepted == 'Pending':
+            Client.objects.filter(comp__asset_serial=serial, vkey=vkey).update(
+                accepted='Accepted')
+
             try:
                 email_ict(serial)
-                return render(request , 'asset/mail/accept.html')
+                return render(request, 'asset/mail/accept.html')
             except:
-                return render(request , 'asset/mail/accept.html')
+                return render(request, 'asset/mail/accept.html')
         else:
-            return render(request , 'asset/mail/accept1.html')
-        
+            return render(request, 'asset/mail/accept1.html')
+
 
 def hod_accept(request):
     if request.method == 'GET':
         vkey = request.GET['vkey'].strip()
         serial = request.GET['serial'].strip()
-        
-        if Client.objects.get(comp__asset_serial=serial,vkey=vkey).hod_approval == 'Pending':
-            Client.objects.filter(comp__asset_serial=serial,vkey=vkey).update(hod_approval='Approved')
-            
+
+        if Client.objects.get(comp__asset_serial=serial, vkey=vkey).hod_approval == 'Pending':
+            Client.objects.filter(comp__asset_serial=serial, vkey=vkey).update(
+                hod_approval='Approved')
+
             try:
                 email_client(serial)
                 email_deliver(serial)
-                return render(request , 'asset/mail/hod_accept.html')
+                return render(request, 'asset/mail/hod_accept.html')
             except:
-                return render(request , 'asset/mail/hod_accept.html')
+                return render(request, 'asset/mail/hod_accept.html')
         else:
-            return render(request , 'asset/mail/hod_accept1.html')
-            
+            return render(request, 'asset/mail/hod_accept1.html')
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def new(request):
     return render(request, 'asset/deployment/new.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def batch(request):
     return render(request, 'asset/deployment/batch.html')
 
 
-#Data Approval tab
+# Data Approval tab
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def approve(request):
     try:
-        data = Comp.objects.filter(ict_approval='Pending').order_by('-client__date_assigned','assettype')
+        data = Comp.objects.filter(ict_approval='Pending').order_by(
+            '-client__date_assigned', 'assettype')
         num = data.count()
     except:
         data = []
         num = ''
-    
+
     if len(list(data)) > 0 and num != 0:
-        date = datetime.today().strftime('%Y-%m-%d')    
-        #Pagination
+        date = datetime.today().strftime('%Y-%m-%d')
+        # Pagination
         page = request.GET.get('page', 1)
 
         paginator = Paginator(data, 15)
@@ -429,100 +462,107 @@ def approve(request):
             page_obj = paginator.page(1)
         except EmptyPage:
             page_obj = paginator.page(paginator.num_pages)
-    
+
         context = {
-            'page_obj':page_obj,
-            'num':num,
-            'date':date
-            }
+            'page_obj': page_obj,
+            'num': num,
+            'date': date
+        }
         return render(request, 'asset/approval/approve.html', context)
     else:
         return render(request, 'asset/approval/norecordhome.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def approveresult(request):
-    #displaying deployment report
+    # displaying deployment report
     if request.method == "POST":
         serial = request.POST['entry'].strip()
         try:
-            data = Comp.objects.get(asset_serial__icontains=serial, ict_approval='Pending')
+            data = Comp.objects.get(
+                asset_serial__icontains=serial, ict_approval='Pending')
         except:
             data = ''
-        
+
         if data != '':
-            
+
             context = {
-                'data':data,
+                'data': data,
             }
-        
+
             return render(request, 'asset/approval/approveresult.html', context)
         else:
             return render(request, 'asset/approval/norecord.html')
-            
-    
+
     if request.method == 'GET':
         id = request.GET['id']
         data = Comp.objects.get(asset_serial=id)
-        
+
         context = {
-            'data':data
+            'data': data
         }
-        return render(request,'asset/approval/approveresult.html', context)
+        return render(request, 'asset/approval/approveresult.html', context)
+
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
-@allowed_admin(role = 'admin_ict')
+@allowed_users(role='supervisor_ict')
+@allowed_admin(role='admin_ict')
 def ict_approve(request):
     # Ict admin approves asset deployment
     if request.method == 'GET':
         id = request.GET['id']
-        
-        #check if user accepted the asset
+
+        # check if user accepted the asset
         if Comp.objects.get(asset_serial=id).client.accepted == 'Accepted':
-                #check if hod approved deployment
+            # check if hod approved deployment
             if Comp.objects.get(asset_serial=id).client.hod_approval == 'Approved':
-                #check if record already approved
+                # check if record already approved
                 if Comp.objects.get(asset_serial=id).ict_approval == 'Approved':
-                        #Flash message
-                    messages.info(request, f"Asset Already Approved by ICT Admin!!!")
+                    # Flash message
+                    messages.info(
+                        request, f"Asset Already Approved by ICT Admin!!!")
                     return redirect('approve')
                 else:
-                        #update comp table
+                    # update comp table
                     officer = request.user.profile_2.name
                     data = Comp.objects.filter(asset_serial=id)
                     data.update(ict_approval='Approved')
                     data.update(approved_by=officer)
-                        
-                        #send email, Flash message and redirect to home page
+
+                    # send email, Flash message and redirect to home page
                     try:
                         email_approve(id)
-                        messages.success(request, f"Asset approved successfully!!!")
+                        messages.success(
+                            request, f"Asset approved successfully!!!")
                         return redirect('approve')
                     except:
-                        messages.success(request, f"Asset approved successfully, but did not send final deployment report!!!")
+                        messages.success(
+                            request, f"Asset approved successfully, but did not send final deployment report!!!")
                         return redirect('approve')
             else:
-                    #Flash message and redirect to home page
-                messages.info(request, f"Asset not Approved by HOD/Supervisor!!!")
+                # Flash message and redirect to home page
+                messages.info(
+                    request, f"Asset not Approved by HOD/Supervisor!!!")
                 return redirect('approve')
         else:
-                #Flash message and redirect to home page
+            # Flash message and redirect to home page
             messages.info(request, f"Asset not Accepted by user!!!")
             return redirect('approve')
-        
-                
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
-@allowed_admin(role = 'admin_ict')
+@allowed_users(role='supervisor_ict')
+@allowed_admin(role='admin_ict')
 def ict_reject(request):
     if request.method == 'POST':
         id = request.POST['id'].strip()
         reject = request.POST['reject'].strip()
-            #check if already approved
+        # check if already approved
         if Comp.objects.get(asset_serial=id).ict_approval == 'Approved' or Comp.objects.get(asset_serial=id).ict_approval == 'Rejected':
-                #Flash message
-            messages.info(request, f"Asset Already Approved/Rejected by ICT Admin!!!")
+            # Flash message
+            messages.info(
+                request, f"Asset Already Approved/Rejected by ICT Admin!!!")
             return redirect('approve')
         else:
             officer = request.user.first_name
@@ -532,21 +572,24 @@ def ict_reject(request):
             data.update(approved_by=officer)
             messages.success(request, f"Asset Updated successfully!!!")
             return redirect('approve')
-        
-#Asset Edit
+
+# Asset Edit
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
-@allowed_admin(role = 'admin_ict')
+@allowed_users(role='supervisor_ict')
+@allowed_admin(role='admin_ict')
 # @allowed_users(allowed_roles = ['admin_ict'])
 def edit_home(request):
-    #home view
+    # home view
     try:
-        data = Comp.objects.filter(ict_approval__icontains='Rejected').order_by('-client__date_assigned')
+        data = Comp.objects.filter(ict_approval__icontains='Rejected').order_by(
+            '-client__date_assigned')
         num = data.count()
     except:
         data = []
         num = ''
-        
+
     if len(list(data)) > 0 and num != 0:
         date = datetime.today().strftime('%Y-%m-%d')
         page = request.GET.get('page', 1)
@@ -558,11 +601,11 @@ def edit_home(request):
             page_obj = paginator.page(1)
         except EmptyPage:
             page_obj = paginator.page(paginator.num_pages)
-    
+
         context = {
-            'page_obj':page_obj,
-            'num':num,
-            'date':date
+            'page_obj': page_obj,
+            'num': num,
+            'date': date
         }
         return render(request, 'asset/edit/home.html', context)
     else:
@@ -570,38 +613,39 @@ def edit_home(request):
 
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def edit_view(request):
-    #Edit view
+    # Edit view
     if request.method == 'POST':
         id = request.POST['entry'].strip()
-        
+
         try:
             data = Comp.objects.get(asset_serial=id)
         except:
             data = ''
-        
+
         if data != '':
             context = {
                 'data': data,
-                }
+            }
             return render(request, 'asset/edit/edit.html', context)
         else:
             return render(request, 'asset/edit/norecord.html')
-    
+
     if request.method == 'GET':
         id = request.GET['id']
         data = Comp.objects.get(asset_serial=id)
-        
+
         context = {
-            'data':data
+            'data': data
         }
-        return render(request,'asset/edit/edit.html', context)
+        return render(request, 'asset/edit/edit.html', context)
+
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def edit_back(request):
-    #Edit backend
+    # Edit backend
     if request.method == 'POST':
         asset_id = request.POST['asset_id']
         client_id = request.POST['client_id']
@@ -625,8 +669,8 @@ def edit_back(request):
         ram = request.POST['ram'].strip().upper()
         ip_address = request.POST['ip'].strip().upper()
         extension = request.POST['extension'].strip().upper()
-        
-        #Staff details
+
+        # Staff details
         full_name = request.POST['cowner'].strip().upper()
         pno = request.POST['employeeno'].strip().upper()
         email = request.POST['emailno'].strip().upper()
@@ -635,71 +679,85 @@ def edit_back(request):
         section = request.POST['section'].strip().upper()
         region = request.POST['region'].strip().upper()
         station = request.POST['station'].strip().upper()
-        
-        #Hod
+
+        # Hod
         hod_name = request.POST['hod'].strip().upper()
         hod_number = request.POST['hod_no'].strip().upper()
         hod_email = request.POST['hod_email'].strip().upper()
-        
-        #Get asset with that serial number
+
+        # Get asset with that serial number
         asset = Comp.objects.filter(asset_pk__icontains=asset_id)
 
-        #Update the asset record
-        #Asset
-        asset.update(asset_model=model,asset_tag=assettag,reason_no_kaspersky=no_kas,domain=domain,laps=laps,adss=adss,kaspersky=kasper, wol=wol,mac_address=mac,cpu_name=compname, os=os,reason_no_domain=reason_no_domain,ram=ram, ip_address=ip_address,extension=extension,ict_approval='Approved', reject_reason='')
-        
-        #Staff details
-        Client.objects.filter(comp__asset_pk=asset_id).update(full_name=full_name)
+        # Update the asset record
+        # Asset
+        asset.update(asset_model=model, asset_tag=assettag, reason_no_kaspersky=no_kas, domain=domain, laps=laps, adss=adss, kaspersky=kasper, wol=wol, mac_address=mac,
+                     cpu_name=compname, os=os, reason_no_domain=reason_no_domain, ram=ram, ip_address=ip_address, extension=extension, ict_approval='Approved', reject_reason='')
+
+        # Staff details
+        Client.objects.filter(comp__asset_pk=asset_id).update(
+            full_name=full_name)
         Client.objects.filter(comp__asset_pk=asset_id).update(staff_number=pno)
-        Client.objects.filter(comp__asset_pk=asset_id).update(staff_email=email)
+        Client.objects.filter(
+            comp__asset_pk=asset_id).update(staff_email=email)
         Client.objects.filter(comp__asset_pk=asset_id).update(department=dept)
         Client.objects.filter(comp__asset_pk=asset_id).update(section=section)
-        Client.objects.filter(comp__asset_pk=asset_id).update(asset_serial=serial)
-        #Region details
+        Client.objects.filter(comp__asset_pk=asset_id).update(
+            asset_serial=serial)
+        # Region details
         Region.objects.filter(comp__asset_pk=asset_id).update(regional=region)
         Region.objects.filter(comp__asset_pk=asset_id).update(station=station)
-        Region.objects.filter(comp__asset_pk=asset_id).update(location=location)
-        #Hod Details
-        Hod.objects.filter(client__client_pk=client_id).update(hod_name=hod_name)
-        Hod.objects.filter(client__client_pk=client_id).update(hod_number=hod_number)
-        Hod.objects.filter(client__client_pk=client_id).update(hod_email=hod_email)
-        
-        #Flash Message
-        messages.success(request,f"Asset Record edited Successfully!!!")
-        
-        #Redirect
+        Region.objects.filter(
+            comp__asset_pk=asset_id).update(location=location)
+        # Hod Details
+        Hod.objects.filter(client__client_pk=client_id).update(
+            hod_name=hod_name)
+        Hod.objects.filter(client__client_pk=client_id).update(
+            hod_number=hod_number)
+        Hod.objects.filter(client__client_pk=client_id).update(
+            hod_email=hod_email)
+
+        # Flash Message
+        messages.success(request, f"Asset Record edited Successfully!!!")
+
+        # Redirect
         return redirect('asset_edit')
-        
 
-#Asset Relocation
+
+# Asset Relocation
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def relocate(request):
-    return render(request, 'asset/relocate/relocate.html')
+    if request.method == 'GET':
+        return render(request, 'asset/relocate/relocate.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
+
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def rel(request):
-    #Get form data
+    # Get form data
     if request.method == 'POST':
         asset_serial = request.POST['entry'].strip()
         try:
             data = Comp.objects.get(asset_serial__icontains=asset_serial)
         except:
             data = ''
-        
-        if data != '':   
+
+        if data != '':
             context = {
-                'data':data
-                }
-        
+                'data': data
+            }
+
             return render(request, 'asset/relocate/rel.html', context)
         else:
             return render(request, 'asset/relocate/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def rel_back(request):
     if request.method == 'POST':
         id = request.POST['serial'].strip()
@@ -713,10 +771,10 @@ def rel_back(request):
         hod_no = request.POST['hod_no'].strip().upper()
         hod_name = request.POST['hod_name'].strip().upper()
         hod_email = request.POST['hod_email'].strip().upper()
-        
-        #checking if approved by ICT admin
+
+        # checking if approved by ICT admin
         if Comp.objects.get(asset_serial=id).ict_approval == 'Approved':
-            #checking if HOD exists
+            # checking if HOD exists
             if Hod.objects.filter(hod_number__icontains=hod_no).count() > 0:
                 h = Hod.objects.filter(hod_number=hod_no).first()
                 c = Client.objects.filter(comp__asset_serial=id)
@@ -727,19 +785,22 @@ def rel_back(request):
                 comp = Comp.objects.filter(asset_serial=id)
                 comp.update(region=region)
                 comp.update(station=station)
-                
-                #Send mail and flash message
+
+                # Send mail and flash message
                 try:
                     asset_relocate(id)
-                    messages.success(request,f"Asset Relocated successfully!!!")
+                    messages.success(
+                        request, f"Asset Relocated successfully!!!")
                     return redirect('relocate')
                 except:
-                    messages.info(request,f"Asset Relocated successfully, but email not send!!!")
+                    messages.info(
+                        request, f"Asset Relocated successfully, but email not send!!!")
                     return redirect('relocate')
-                    
+
             else:
-                #insert record
-                h = Hod(hod_name=hod_name,hod_number=hod_no, hod_email=hod_email)
+                # insert record
+                h = Hod(hod_name=hod_name, hod_number=hod_no,
+                        hod_email=hod_email)
                 h.save()
                 c = Client.objects.filter(comp__asset_serial=id)
                 c.update(department=dept)
@@ -749,43 +810,53 @@ def rel_back(request):
                 comp = Comp.objects.filter(asset_serial=id)
                 comp.update(region=region)
                 comp.update(station=station)
-                
-                #Send mail and flash message
+
+                # Send mail and flash message
                 try:
                     asset_relocate(id)
-                    messages.info(request,f"Record updated successfully!!!")
+                    messages.info(request, f"Record updated successfully!!!")
                     return redirect('relocate')
                 except:
-                    messages.info(request,f"Asset Relocated successfully, but email not send!!!")
+                    messages.info(
+                        request, f"Asset Relocated successfully, but email not send!!!")
                     return redirect('relocate')
-                    
+
         else:
-            messages.info(request,f"Record not approved or rejected by ICT Admin")
+            messages.info(
+                request, f"Record not approved or rejected by ICT Admin")
             return redirect('relocate')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
-#Replace monitor
+
+# Replace monitor
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def monitor(request):
-    return render(request, 'asset/monitor/monitor.html')
+    if request.method == 'GET':
+        return render(request, 'asset/monitor/monitor.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
+
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def details(request):
-    #display current monitor details
+    # display current monitor details
     if request.method == 'POST':
         officer = request.user.first_name
         id = request.POST['entry'].strip()
-        
+
         try:
-            data = Comp.objects.get(asset_serial__icontains=id, assettype__name='DESKTOP')
+            data = Comp.objects.get(
+                asset_serial__icontains=id, assettype__name__icontains='DESKTOP')
         except:
             data = ''
-        
+
         if data != '':
-            
+
             context = {
                 'data': data
             }
@@ -793,9 +864,11 @@ def details(request):
         else:
             return render(request, 'asset/monitor/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def monitor_change(request):
     if request.method == 'POST':
         officer = request.user.username
@@ -805,18 +878,19 @@ def monitor_change(request):
         serial = request.POST['serial'].strip()
         tag = request.POST['tag'].strip()
         reason = request.POST['reason'].strip()
-        
-        #getting id of old monitor
+
+        # getting id of old monitor
         mon_id = Monitor.objects.get(comp__asset_serial=id).monitor_pk
-        
-        #Checking asset approved by ICT Admin
+
+        # Checking asset approved by ICT Admin
         if Comp.objects.get(asset_serial=id).ict_approval == 'Approved' and Monitor.objects.get(comp__asset_serial=id).monitor_serial != serial:
-            #insert monitor record
-            m = Monitor(monitor_serial=serial,monitor_model=model,monitor_tag=tag, deployed_by=officer,monitor_cpu=id)
+            # insert monitor record
+            m = Monitor(monitor_serial=serial, monitor_model=model,
+                        monitor_tag=tag, deployed_by=officer, monitor_cpu=id)
             m.save()
-            #Update Comp table
+            # Update Comp table
             Comp.objects.filter(asset_serial=id).update(monitor=m)
-            #Update old monitor record
+            # Update old monitor record
             date = datetime.today().strftime('%Y-%m-%d')
             M = Monitor.objects.filter(monitor_pk=mon_id)
             M.update(cpu_assigned='NO')
@@ -824,53 +898,61 @@ def monitor_change(request):
             M.update(changed_by=officer)
             M.update(reason_changed=reason)
             M.update(date_changed=date)
-            #Send mail and flash message
+            # Send mail and flash message
             try:
                 replace_monitor(id)
                 messages.success(request, f"Replaced monitor successfully!!!")
                 return redirect('monitor')
             except:
-                messages.success(request, f"Replaced monitor successfully, but did not send email to the user!!!")
+                messages.success(
+                    request, f"Replaced monitor successfully, but did not send email to the user!!!")
                 return redirect('monitor')
         else:
-            messages.info(request, f"Record not Approved by ICT Admin Or Already Assigned to a User!!")
+            messages.info(
+                request, f"Record not Approved by ICT Admin Or Already Assigned to a User!!")
             return redirect('monitor')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTPP METHOD")
 
-#Change ownership
+# Change ownership
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def search(request):
-    return render(request, 'asset/ownership/search.html')
+    if request.method == 'GET':
+        return render(request, 'asset/ownership/search.html')
+    else:
+        return HttpResponse("Invalid HTTPP METHOD")
+
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def change(request):
     if request.method == 'POST':
         serial = request.POST['entry'].strip()
-        #Query database
+        # Query database
         try:
             data = Comp.objects.get(asset_serial__icontains=serial)
         except:
             data = ''
-        
+
         context = {
-            'data':data,
+            'data': data,
         }
-        
+
         if data != '':
             return render(request, 'asset/ownership/change.html', context)
         else:
             return render(request, 'asset/ownership/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTPP METHOD")
 
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def change_back(request):
-    #Change of ownership
+    # Change of ownership
     if request.method == 'POST':
         asset_pk = request.POST['asset_pk']
         asset_serial = request.POST['asset_serial'].strip()
@@ -892,136 +974,149 @@ def change_back(request):
         hod_email = request.POST['hod_email'].strip().upper()
         officer = request.user.profile_2.name
         date = datetime.today().strftime('%Y-%m-%d')
-        
+
         # Check if ICT asset deployment approved by ICT Admin
         if Comp.objects.get(asset_serial__icontains=asset_serial).ict_approval == 'Approved':
-            #Check if HOD already exists
+            # Check if HOD already exists
             if Hod.objects.filter(hod_number__icontains=hod_no).count() > 0:
-                #get hod pk
-                h= Hod.objects.filter(hod_number__icontains=hod_no).first()
-                
-                #Save new owner
-                c = Client(full_name=name, staff_number=number,staff_email=email,department=dept, section=section,assigned_by=officer,hod=h,location=location,
-                    asset_serial=asset_serial, accepted="Accepted", hod_approval="Approved")
+                # get hod pk
+                h = Hod.objects.filter(hod_number__icontains=hod_no).first()
+
+                # Save new owner
+                c = Client(full_name=name, staff_number=number, staff_email=email, department=dept, section=section, assigned_by=officer, hod=h, location=location,
+                           asset_serial=asset_serial, accepted="Accepted", hod_approval="Approved")
                 c.save()
-                #Update Comp table
-                comp = Comp.objects.filter(asset_pk = asset_pk)
+                # Update Comp table
+                comp = Comp.objects.filter(asset_pk=asset_pk)
                 comp.update(client=c)
                 comp.update(region=region)
                 comp.update(station=station)
-                
-                #update old owner
+
+                # update old owner
                 client = Client.objects.filter(client_pk=owner_pk)
                 client.update(date_changed=date)
                 client.update(reason_changed=reason)
                 client.update(changed_by=officer)
                 client.update(asset_assigned='No')
-                
-                #send mail and Flash message
+
+                # send mail and Flash message
                 try:
                     change_asset_ownership(asset_serial, owner_pk)
-                    messages.info(request, f"Asset Changed ownership successfully!!!")
+                    messages.info(
+                        request, f"Asset Changed ownership successfully!!!")
                     return redirect('ownership_search')
                 except:
-                    messages.info(request, f"Asset Changed ownership successfully, but email not send to user!!!")
+                    messages.info(
+                        request, f"Asset Changed ownership successfully, but email not send to user!!!")
                     return redirect('ownership_search')
             else:
-                #Save hod details
-                h = Hod(hod_name=hod_name, hod_number=hod_no, hod_email=hod_email)
+                # Save hod details
+                h = Hod(hod_name=hod_name, hod_number=hod_no,
+                        hod_email=hod_email)
                 h.save()
-                
-                #Save new owner
-                c = Client(full_name=name, staff_number=number,staff_email=email,department=dept, section=section,assigned_by=officer,hod=h,location=location,
-                    asset_serial=asset_serial, accepted="Accepted", hod_approval="Approved")
+
+                # Save new owner
+                c = Client(full_name=name, staff_number=number, staff_email=email, department=dept, section=section, assigned_by=officer, hod=h, location=location,
+                           asset_serial=asset_serial, accepted="Accepted", hod_approval="Approved")
                 c.save()
-                
-                #Update Comp table
-                comp = Comp.objects.filter(asset_pk = asset_pk)
+
+                # Update Comp table
+                comp = Comp.objects.filter(asset_pk=asset_pk)
                 comp.update(client=c)
                 comp.update(region=region)
                 comp.update(station=station)
-                
-                #update old owner
+
+                # update old owner
                 client = Client.objects.filter(client_pk=owner_pk)
                 client.update(date_changed=date)
                 client.update(reason_changed=reason)
                 client.update(changed_by=officer)
                 client.update(asset_assigned='No')
-        
-                #Flash message
+
+                # Flash message
                 try:
                     change_asset_ownership(asset_serial, owner_pk)
-                    messages.info(request, f"Asset Changed ownership successfully!!!")
+                    messages.info(
+                        request, f"Asset Changed ownership successfully!!!")
                     return redirect('ownership_search')
                 except:
-                    messages.info(request, f"Asset Changed ownership successfully, but email not send to user!!!")
+                    messages.info(
+                        request, f"Asset Changed ownership successfully, but email not send to user!!!")
                     return redirect('ownership_search')
         else:
-            messages.info(request, f"Asset Record not Approved by ICT Admin!!!")
+            messages.info(
+                request, f"Asset Record not Approved by ICT Admin!!!")
             return redirect('ownership_search')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
-#Surrender Asset
+# Surrender Asset
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def surrender(request):
     return render(request, 'asset/surrender/surrender.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def surrenderback(request):
     if request.method == 'POST':
         id = request.POST['entry'].strip()
-        
+
         try:
-            data = Comp.objects.exclude(client__staff_number="ICT").get(asset_serial__icontains=id)
+            data = Comp.objects.exclude(client__staff_number="ICT").get(
+                asset_serial__icontains=id)
         except:
             data = ''
-            
-        if data != '': 
+
+        if data != '':
             context = {
-                'data':data
-                }
+                'data': data
+            }
             return render(request, 'asset/surrender/surrenderback.html', context)
         else:
             return render(request, 'asset/surrender/norecord.html')
     else:
         return HttpResponse("Invalid URL")
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def sur_backend(request):
     if request.method == 'POST':
         id = request.POST['serial']
         client = request.POST['client']
         condition = request.POST['condition'].strip()
         reason = request.POST['reason'].strip().upper()
-        
-        #Check if approved by ICT and not already surrender
+
+        # Check if approved by ICT and not already surrender
         if Comp.objects.get(asset_serial__icontains=id).ict_approval == 'Approved':
-            #Insert record with user and p/no ICT
+            # Insert record with user and p/no ICT
             officer = request.user.profile_2.name
-            c = Client(full_name='ICT',staff_number='ICT', staff_email= 'ictmsa43@gmail.com', department='ICT',section='ICT',asset_serial=id,assigned_by=officer, accepted="Accepted", hod_approval="Approved")
-            
+            c = Client(full_name='ICT', staff_number='ICT', staff_email='ictmsa43@gmail.com', department='ICT',
+                       section='ICT', asset_serial=id, assigned_by=officer, accepted="Accepted", hod_approval="Approved")
+
             c.save()
-            #update Comp table
+            # update Comp table
             Comp.objects.filter(asset_serial=id).update(client=c)
-            #Update clients old record
+            # Update clients old record
             date = datetime.today().strftime('%Y-%m-%d')
             c = Client.objects.filter(client_pk=client)
             c.update(asset_assigned='No')
             c.update(changed_by=officer)
             c.update(reason_changed=reason)
             c.update(date_changed=date)
-            
-            #Send email and flash message
+
+            # Send email and flash message
             try:
                 surrender_asset(id, client)
                 messages.success(request, f"Asset Surrendered Successfully!!!")
                 return redirect('surrender')
             except:
-                messages.success(request, f"Asset Surrendered Successfully, but did not send email to the user!!!")
+                messages.success(
+                    request, f"Asset Surrendered Successfully, but did not send email to the user!!!")
                 return redirect('surrender')
         else:
             messages.success(request, f"Record Not Approved by ICT Admin")
@@ -1030,26 +1125,28 @@ def sur_backend(request):
         return HttpResponse("Invalid URL")
 
 
-#Declare Asset Obsolete
+# Declare Asset Obsolete
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def obso(request):
     return render(request, 'asset/obsolete/obso.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def obsoback(request):
     if request.method == 'POST':
         id = request.POST['entry']
-        
+
         try:
-            data = Comp.objects.exclude(condition="Obsolete").get(asset_serial__icontains=id, client__staff_number="ICT")
+            data = Comp.objects.exclude(condition="Obsolete").get(
+                asset_serial__icontains=id, client__staff_number="ICT")
         except:
             data = ''
-            
-        if data != '':   
+
+        if data != '':
             context = {
-                'data':data
+                'data': data
             }
             return render(request, 'asset/obsolete/obsoback.html', context)
         else:
@@ -1059,17 +1156,17 @@ def obsoback(request):
 
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def obso_backend(request):
     if request.method == 'POST':
         id = request.POST['serial']
         reason = request.POST['reason']
         officer = request.user.profile_2.name
         date = datetime.today().strftime('%Y-%m-%d')
-        
-        #checking asset already surrendered
+
+        # checking asset already surrendered
         if Client.objects.get(comp__asset_serial=id).staff_number == 'ICT' and Comp.objects.get(asset_serial=id).condition == 'Working':
-            #update comp table
+            # update comp table
             c = Comp.objects.filter(asset_serial=id)
             c.update(condition='Obsolete')
             c.update(obso_date=date)
@@ -1078,23 +1175,27 @@ def obso_backend(request):
             messages.info(request, f"Asset updated successfully!!!")
             return redirect('obsolete')
         else:
-            messages.info(request, f"Asset not surrendered or already declared obsolete!!!")
+            messages.info(
+                request, f"Asset not surrendered or already declared obsolete!!!")
             return redirect('obsolete')
     else:
-        return HttpResponse("Invalid URL")    
-    
-#Asset Repairs
+        return HttpResponse("Invalid URL")
+
+# Asset Repairs
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def repairs(request):
-    #Getting repair data from the database
+    # Getting repair data from the database
     try:
-        data = Repair.objects.exclude(status__icontains="solved").all().order_by('-cdate')
+        data = Repair.objects.exclude(
+            status__icontains="solved").all().order_by('-cdate')
     except:
         data = []
-        
+
     if len(list(data)) > 0:
-        #pagination
+        # pagination
         page = request.GET.get('page', 1)
 
         paginator = Paginator(data, 15)
@@ -1104,30 +1205,32 @@ def repairs(request):
             page_obj = paginator.page(1)
         except EmptyPage:
             page_obj = paginator.page(paginator.num_pages)
-    
+
         context = {
-            'page_obj':page_obj
-            }
-    
+            'page_obj': page_obj
+        }
+
         return render(request, 'asset/asset_repairs/repair.html', context)
     else:
         return render(request, 'asset/asset_repairs/norecord.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def result_repairs(request):
     if request.method == 'POST':
         criteria = request.POST['criteria']
         id = request.POST['entry'].strip()
-        
-        #Get data from database
+
+        # Get data from database
         if criteria == 'serial':
             try:
-                data = Repair.objects.filter(comp__asset_serial__icontains=id).order_by('-cdate')
+                data = Repair.objects.filter(
+                    comp__asset_serial__icontains=id).order_by('-cdate')
             except:
-                data = [] 
-            
-            if len(list(data)) > 0:       
+                data = []
+
+            if len(list(data)) > 0:
                 page = request.GET.get('page', 1)
 
                 paginator = Paginator(data, 15)
@@ -1137,122 +1240,131 @@ def result_repairs(request):
                     page_obj = paginator.page(1)
                 except EmptyPage:
                     page_obj = paginator.page(paginator.num_pages)
-    
+
                 context = {
-                    'page_obj':page_obj,
-            
-                    }
-        
+                    'page_obj': page_obj,
+
+                }
+
                 return render(request, 'asset/asset_repairs/result.html', context)
             else:
-                return render(request, 'asset/asset_repairs/norecord.html') 
-            
+                return render(request, 'asset/asset_repairs/norecord.html')
+
         elif criteria == 'number':
             try:
-                data = Repair.objects.filter(comp__client__staff_number=id).order_by('-cdate')
+                data = Repair.objects.filter(
+                    comp__client__staff_number=id).order_by('-cdate')
             except:
                 data = []
-              
-            if len(list(data)) > 0:       
+
+            if len(list(data)) > 0:
                 context = {
-                'data': data
+                    'data': data
                 }
-        
+
                 return render(request, 'asset/asset_repairs/result.html', context)
             else:
                 return render(request, 'asset/asset_repairs/norecord.html')
     else:
         return HttpResponse("Invalid URL")
-    
-    
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def repair_register(request):
     if request.method == 'POST':
-        #Getting form data
+        # Getting form data
         officer = request.user
         date = datetime.today().strftime('%Y-%m-%d')
         serial = request.POST['serail'].strip()
         problem = request.POST['problem'].strip()
         staff_number = request.POST['employeeno'].strip()
         ticket = request.POST['ticket'].strip()
-        
-        #Checking if asset exists in database
-        if Comp.objects.filter(asset_serial__icontains=serial).count() > 0 :
-            #check if the staff is assigned that asset
+
+        # Checking if asset exists in database
+        if Comp.objects.filter(asset_serial__icontains=serial).count() > 0:
+            # check if the staff is assigned that asset
             if Comp.objects.filter(asset_serial__icontains=serial, client__staff_number__icontains=staff_number).count() > 0:
-                
-                #Get staff details
-                c = Comp.objects.get(asset_serial__icontains=serial,client__staff_number__icontains=staff_number)
-                
+
+                # Get staff details
+                c = Comp.objects.get(
+                    asset_serial__icontains=serial, client__staff_number__icontains=staff_number)
+
                 name = c.client.full_name
                 number = c.client.staff_number
                 hardware = c.assettype.name
                 address = c.client.staff_email
-                
+
                 # send mail
                 context = {
-                    'name':name, 'number':number, 'hardware':hardware,'serial':serial,'problem':problem,'date':date,'officer':officer.profile_2.name
-                     }
-                subject = 'ASSET REPAIR' + ' - ' + ' INCOMING'+ ' ' + ' - ' + name  + ' ' + ' - '+ date
-                html_message = render_to_string('asset/mail/repair_register.html', context)
+                    'name': name, 'number': number, 'hardware': hardware, 'serial': serial, 'problem': problem, 'date': date, 'officer': officer.profile_2.name
+                }
+                subject = 'ASSET REPAIR' + ' - ' + ' INCOMING' + \
+                    ' ' + ' - ' + name + ' ' + ' - ' + date
+                html_message = render_to_string(
+                    'asset/mail/repair_register.html', context)
                 plain_message = strip_tags(html_message)
-                from_email = 'ictmsa43@gmail.com' 
+                from_email = 'ictmsa43@gmail.com'
                 to = address
-                
+
                 try:
-                    send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-                    
-                    #Insert the record in the database
+                    send_mail(subject, plain_message, from_email,
+                              [to], html_message=html_message)
+
+                    # Insert the record in the database
                     comp_id = Comp.objects.get(asset_serial__icontains=serial)
-                    #Saving form data to the database
-                    t = Repair(problem=problem,ticket_number=ticket,
-                            officer_assigned=officer, comp=comp_id)
+                    # Saving form data to the database
+                    t = Repair(problem=problem, ticket_number=ticket,
+                               officer_assigned=officer, comp=comp_id)
                     t.save()
-                    
+
                     # Flash message and redirect to home page
-                    messages.success(request, f"Asset Repair captured successfully!!")
-                    return redirect('asset_repairs')    
-                    
-                except:
-                    #Insert the record in the database
-                    comp_id = Comp.objects.get(asset_serial__icontains=serial)
-                    #Saving form data to the database
-                    t = Repair(problem=problem,ticket_number=ticket,
-                            officer_assigned=officer, comp=comp_id)
-                    t.save()
-                    # Flash message and redirect to home page
-                    messages.success(request, f"Asset Repair captured successfully, But email not Sent!!!")
-                    return redirect('asset_repairs')    
-            else:
-                #Flash message
-                    messages.success(request, f"This Asset is not assigned to this user, confirm serial number and staff number!!!")
+                    messages.success(
+                        request, f"Asset Repair captured successfully!!")
                     return redirect('asset_repairs')
-                
+
+                except:
+                    # Insert the record in the database
+                    comp_id = Comp.objects.get(asset_serial__icontains=serial)
+                    # Saving form data to the database
+                    t = Repair(problem=problem, ticket_number=ticket,
+                               officer_assigned=officer, comp=comp_id)
+                    t.save()
+                    # Flash message and redirect to home page
+                    messages.success(
+                        request, f"Asset Repair captured successfully, But email not Sent!!!")
+                    return redirect('asset_repairs')
+            else:
+                # Flash message
+                messages.success(
+                    request, f"This Asset is not assigned to this user, confirm serial number and staff number!!!")
+                return redirect('asset_repairs')
+
         else:
-            #Flash message
-            messages.success(request, f"No such Asset in the database, check the serial number and try again!!!")
+            # Flash message
+            messages.success(
+                request, f"No such Asset in the database, check the serial number and try again!!!")
             return redirect('asset_repairs')
     else:
-        return HttpResponse("Invalid URL") 
-    
-           
+        return HttpResponse("Invalid URL")
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def repair_release(request):
-    #get asset serial number
+    # get asset serial number
     if request.method == 'GET':
         id = request.GET['id'].strip()
-        data = Repair.objects.get(repair_pk = id)
-        
+        data = Repair.objects.get(repair_pk=id)
+
         context = {
-            'data':data
+            'data': data
         }
-        return render(request, 'asset/asset_repairs/outgoing.html'  , context)
-        
-         
+        return render(request, 'asset/asset_repairs/outgoing.html', context)
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def return_repair(request):
     if request.method == 'POST':
         officer = request.user.profile_2.name
@@ -1260,69 +1372,77 @@ def return_repair(request):
         solution = request.POST['solution'].strip()
         rdate = datetime.today().strftime('%Y-%m-%d')
         status = 'SOLVED'
-        
-        #cHECKING IF ASSET ALREADY REPAIRED
+
+        # cHECKING IF ASSET ALREADY REPAIRED
         if Repair.objects.get(repair_pk=id).status != 'SOLVED':
-            #Get staff details
-                c = Comp.objects.get(repair__repair_pk=id)
-                r = Repair.objects.get(repair_pk=id)
-                
-                name = c.client.full_name
-                number = c.client.staff_number
-                hardware = c.assettype.name
-                serial = c.asset_serial
-                problem = r.problem
-                idate = r.cdate
-                collect_officer = r.officer_assigned.profile_2.name
-                address = c.client.staff_email
-                
-                # send mail
-                context = {
-                    'name':name, 'number':number, 'hardware':hardware,'serial':serial,'problem':problem,'rdate':rdate,'idate':idate, 'collect_officer':collect_officer,'solution':solution,
-                        'officer':officer
-                     }
-                subject = 'ASSET REPAIR' + ' - ' + ' OUTGOING' + ' ' + ' - ' + name  + ' ' + ' - '+ rdate
-                html_message = render_to_string('asset/mail/repair_realise.html', context)
-                plain_message = strip_tags(html_message)
-                from_email = 'ictmsa43@gmail.com' 
-                to = address
-                
-                try:
-                    #send mail and update record
-                    send_mail(subject, plain_message, from_email, [to], html_message=html_message)
-                    
-                    data = Repair.objects.filter(repair_pk=id)
-                    data.update(solution=solution)
-                    data.update(rdate=rdate)
-                    data.update(status=status)
-                    data.update(officer_returned=officer)
-                    #Flash message
-                    messages.success(request, f"Repair Record updated successfully!!!")
-                    return redirect('asset_repairs')
-                except:
-                    data = Repair.objects.filter(repair_pk=id)
-                    data.update(solution=solution)
-                    data.update(rdate=rdate)
-                    data.update(status=status)
-                    data.update(officer_returned=officer)
-                    # Flash message and redirect to home page
-                    messages.success(request, f"Repair Record updated successfully, But email not sent!!!")
-                    return redirect('asset_repairs') 
+            # Get staff details
+            c = Comp.objects.get(repair__repair_pk=id)
+            r = Repair.objects.get(repair_pk=id)
+
+            name = c.client.full_name
+            number = c.client.staff_number
+            hardware = c.assettype.name
+            serial = c.asset_serial
+            problem = r.problem
+            idate = r.cdate
+            collect_officer = r.officer_assigned.profile_2.name
+            address = c.client.staff_email
+
+            # send mail
+            context = {
+                'name': name, 'number': number, 'hardware': hardware, 'serial': serial, 'problem': problem, 'rdate': rdate, 'idate': idate, 'collect_officer': collect_officer, 'solution': solution,
+                'officer': officer
+            }
+            subject = 'ASSET REPAIR' + ' - ' + ' OUTGOING' + \
+                ' ' + ' - ' + name + ' ' + ' - ' + rdate
+            html_message = render_to_string(
+                'asset/mail/repair_realise.html', context)
+            plain_message = strip_tags(html_message)
+            from_email = 'ictmsa43@gmail.com'
+            to = address
+
+            try:
+                # send mail and update record
+                send_mail(subject, plain_message, from_email,
+                          [to], html_message=html_message)
+
+                data = Repair.objects.filter(repair_pk=id)
+                data.update(solution=solution)
+                data.update(rdate=rdate)
+                data.update(status=status)
+                data.update(officer_returned=officer)
+                # Flash message
+                messages.success(
+                    request, f"Repair Record updated successfully!!!")
+                return redirect('asset_repairs')
+            except:
+                data = Repair.objects.filter(repair_pk=id)
+                data.update(solution=solution)
+                data.update(rdate=rdate)
+                data.update(status=status)
+                data.update(officer_returned=officer)
+                # Flash message and redirect to home page
+                messages.success(
+                    request, f"Repair Record updated successfully, But email not sent!!!")
+                return redirect('asset_repairs')
         else:
-            #Flash message
+            # Flash message
             messages.success(request, f"Asset Already Repaired!!!")
             return redirect('asset_repairs')
     else:
-        return HttpResponse("Invalid URL")        
-                   
-#Deployment_report
+        return HttpResponse("Invalid URL")
+
+# Deployment_report
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def deploy_report(request):
     return render(request, 'asset/deploy_report/approve.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def deploy_result(request):
     if request.method == 'POST':
         id = request.POST['entry']
@@ -1331,11 +1451,11 @@ def deploy_result(request):
             data = Comp.objects.get(asset_serial__icontains=id)
         except:
             data = ''
-    
+
         if data != '':
             context = {
                 'data': data,
-                'date':date,
+                'date': date,
             }
             return render(request, 'asset/deploy_report/report.html', context)
         else:
@@ -1343,64 +1463,70 @@ def deploy_result(request):
     else:
         return HttpResponse("Invalid URL")
 
-#User Assets
+# User Assets
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def user(request):
     return render(request, 'asset/user_assets/asset.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def user_report(request):
     if request.method == 'POST':
         client_number = request.POST['entry'].strip()
         date = datetime.today().strftime('%Y-%m-%d')
-        #get user details
+        # get user details
         try:
             data = Comp.objects.filter(client__staff_number__icontains=client_number,
-                client__asset_assigned = 'Yes')[:1]
-            
-            
+                                       client__asset_assigned='Yes')[:1]
+
             dat = Comp.objects.filter(client__staff_number__icontains=client_number,
-                client__asset_assigned = 'Yes')
+                                      client__asset_assigned='Yes')
         except:
             data = ""
-            
+
             dat = ""
-        
-        if len(list(data)) > 0 and len(list(dat)) > 0:  
+
+        if len(list(data)) > 0 and len(list(dat)) > 0:
             context = {
                 'data': data,
                 'dat': dat,
-                'date':date,
-                }
+                'date': date,
+            }
             return render(request, 'asset/user_assets/report.html', context)
         else:
             return render(request, 'asset/user_assets/norecord.html')
     else:
         return HttpResponse("Invalid URL")
 
-#Asset ownership history
+# Asset ownership history
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def history(request):
     return render(request, 'asset/owner_history/search.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def history_report(request):
     if request.method == 'POST':
         serial = request.POST['entry']
         date = datetime.today().strftime('%Y-%m-%d')
-        #Get current owner details
+        # Get current owner details
         try:
             data = Comp.objects.get(asset_serial__icontains=serial)
-            dat = Client.objects.filter(asset_assigned__icontains = 'NO',asset_serial__icontains=serial).order_by('-client_pk')
+            dat = Client.objects.filter(
+                asset_assigned__icontains='NO', asset_serial__icontains=serial).order_by('-client_pk')
         except:
             data = ''
             dat = ''
-        
-        if  data != '' and len(list(dat)) >= 0: 
+
+        if data != '' and len(list(dat)) >= 0:
             context = {
                 'data': data,
                 'date': date,
@@ -1412,14 +1538,17 @@ def history_report(request):
     else:
         return HttpResponse("Invalid URL")
 
-#Asset Report
+# Asset Report
+
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def asset_search(request):
     return render(request, 'asset/report/search.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def asset_report(request):
     if request.method == 'POST':
         date = datetime.today().strftime('%Y-%m-%d')
@@ -1429,25 +1558,26 @@ def asset_report(request):
         # station = Station.objects.get(station_pk=station)
         assettype = int(request.POST['asset_type'])
         # assettype = Assettype.objects.get(assettype_pk=station)
-        
-        #Get data
+
+        # Get data
         try:
-            data = Comp.objects.filter(region=region,station=station,assettype=assettype, condition__icontains = 'Working')
-            
+            data = Comp.objects.filter(
+                region=region, station=station, assettype=assettype, condition__icontains='Working')
+
             count = data.count()
         except:
             data = ''
-            
+
             count = ''
-        
-        if len(list(data)) > 0: 
+
+        if len(list(data)) > 0:
             context = {
-                'data':data,
-                'date':date,
-                'count':count,
-                'region':region,
-                'station':station,
-                'assettype':assettype,
+                'data': data,
+                'date': date,
+                'count': count,
+                'region': region,
+                'station': station,
+                'assettype': assettype,
             }
             return render(request, 'asset/report/report.html', context)
         else:
@@ -1457,7 +1587,7 @@ def asset_report(request):
 
 
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def excel_export(request):
     if request.method == 'POST':
         date = datetime.today().strftime('%Y-%m-%d')
@@ -1467,8 +1597,10 @@ def excel_export(request):
         response = HttpResponse(content_type='text/csv')
         response['content-Disposition'] = 'attachment; filename="Asset_Report.csv" '
         writer = csv.writer(response)
-        writer.writerow(['Asset Type', 'Asset Serial','Asset Model','Monitor Model','Monitor Serial','OS','Domain','ADSS','LAPS','KAV','WOL','IP ADDRESS','EXTENSION','CONDITION','Staff Name','Staff Number','Department','Section','Region','Station','Date Assigned'])
-        data = Comp.objects.filter(region=region,station=station,assettype=assettype).values_list('assettype__name','asset_serial','asset_model','monitor__monitor_model','monitor__monitor_serial','os','domain','adss','laps','kaspersky','wol','ip_address','extension','condition','client__full_name','client__staff_number','client__department','client__section','region__name','station__name','client__date_assigned')
+        writer.writerow(['Asset Type', 'Asset Serial', 'Asset Model', 'Monitor Model', 'Monitor Serial', 'OS', 'Domain', 'ADSS', 'LAPS', 'KAV', 'WOL',
+                        'IP ADDRESS', 'EXTENSION', 'CONDITION', 'Staff Name', 'Staff Number', 'Department', 'Section', 'Region', 'Station', 'Date Assigned'])
+        data = Comp.objects.filter(region=region, station=station, assettype=assettype).values_list('assettype__name', 'asset_serial', 'asset_model', 'monitor__monitor_model', 'monitor__monitor_serial', 'os', 'domain', 'adss',
+                                                                                                    'laps', 'kaspersky', 'wol', 'ip_address', 'extension', 'condition', 'client__full_name', 'client__staff_number', 'client__department', 'client__section', 'region__name', 'station__name', 'client__date_assigned')
         for d in data:
             writer.writerow(d)
         return response
@@ -1476,34 +1608,36 @@ def excel_export(request):
         return HttpResponse("Invalid URL")
 
 
-#Unassigned assets
+# Unassigned assets
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def free_search(request):
     return render(request, 'asset/free_assets/search.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def free_report(request):
     if request.method == 'POST':
         date = datetime.today().strftime('%Y-%m-%d')
         region = request.POST['region']
         station = request.POST['station']
         assettype = request.POST['assettype']
-        #Get data from database
-        
+        # Get data from database
+
         try:
-            data = Comp.objects.filter(condition__icontains = 'Working',region=region, station=station, client__staff_number='ICT')
+            data = Comp.objects.filter(
+                condition__icontains='Working', region=region, station=station, client__staff_number='ICT')
             count = data.count()
         except:
-                data = ''
-                count = ''
-        
-        if len(list(data)) > 0 and count != 0:   
+            data = ''
+            count = ''
+
+        if len(list(data)) > 0 and count != 0:
             context = {
-                'data':data,
-                'count':count,
-                'date':date,
+                'data': data,
+                'count': count,
+                'date': date,
             }
             return render(request, 'asset/free_assets/report.html', context)
         else:
@@ -1512,34 +1646,36 @@ def free_report(request):
         return HttpResponse("Invalid URL")
 
 
-#Obsolete Assets
+# Obsolete Assets
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def obso_search(request):
     return render(request, 'asset/obso_assets/search.html')
 
+
 @login_required
-@allowed_users(role = 'supervisor_ict')
+@allowed_users(role='supervisor_ict')
 def obso_report(request):
     if request.method == 'POST':
         date = datetime.today().strftime('%Y-%m-%d')
         region = request.POST['region']
         station = request.POST['station']
         assettype = request.POST['assettype']
-        #Get data from database
-        
+        # Get data from database
+
         try:
-            data = Comp.objects.filter(condition__icontains = 'OBSOLETE',region=region,station=station,assettype=assettype,client__staff_number='ICT')
+            data = Comp.objects.filter(condition__icontains='OBSOLETE', region=region,
+                                       station=station, assettype=assettype, client__staff_number='ICT')
             count = data.count()
         except:
             data = ''
             count = ''
-            
-        if len(list(data)) > 0 and count != 0:    
+
+        if len(list(data)) > 0 and count != 0:
             context = {
-                'data':data,
-                'count':count,
-                'date':date,
+                'data': data,
+                'count': count,
+                'date': date,
             }
             return render(request, 'asset/obso_assets/report.html', context)
         else:

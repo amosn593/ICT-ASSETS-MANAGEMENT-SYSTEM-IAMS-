@@ -1,34 +1,18 @@
-{% extends 'asset/base.html' %}
-{% load static %}
-
-{% block title %}
-Replace Monitor
-{% endblock %}
-
-{% block body %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Replace
+Monitor {% endblock %} {% block body %}
 
 <!-- change ownership form-->
-<h4 class="heading">Replace Monitor</h4>
+<h4 class="text-center">Replace Monitor</h4>
 
-<div class="container-fluid">
+<div class="container-fluid mb-5 pb-5">
   <div class="d-flex justify-content-center">
-    <form action="{% url 'monitor_details' %}" method="post" class="form-inline"
-          enctype="multipart/form-data">
-      {% csrf_token %}
-      <label for="asset-type" id="label" required>Search By:</label>
-      <select class="form-control" id="asset-type" name="criteria" required>
-        <option value="serial_no">Serial Number</option>
-      </select>
-      <label for="serial" id="label" required>Criteria:</label>
-      <input type="text" class="form-control" id="serial" name="entry" required>
-      <button type="submit" class="btn btn-info" id="label">Search</button>
-    </form>
+    <div>{% include "asset/monitor/form.html" %}</div>
   </div>
-  <div class="container-fluid mt-3 pt-2" style="border-top: 1px solid black;">
-    <h5 style="text-align: center; color:brown;">Monitor Details</h5>
-    <table class="table table-bordered ">
+  <div class="container-fluid mt-3 pt-2" style="border-top: 1px solid black">
+    <h5 class="text-center" style="color: brown">Monitor Details</h5>
+    <table class="table table-bordered">
       <thead class="thead-light">
-        <tr style="font-size: 11px;">
+        <tr>
           <th>Asset Type</th>
           <th>Asset Model</th>
           <th>Asset Tag</th>
@@ -42,7 +26,7 @@ Replace Monitor
         </tr>
       </thead>
       <tbody>
-        <tr style="font-size: 11px;">
+        <tr>
           <td>{{data.assettype.name}}</td>
           <td>{{data.asset_model}}</td>
           <td>{{data.asset_tag}}</td>
@@ -56,60 +40,72 @@ Replace Monitor
         </tr>
       </tbody>
     </table>
-
   </div>
 
   <div class="container-fluid">
-    <h5 style="text-align: center; color:brown;">New Monitor Details</h5>
-    <form method="post" action="{% url 'monitor_change' %}" enctype="multipart/form-data">
+    <h5 class="text-center" style="color: brown">New Monitor Details</h5>
+    <form
+      method="post"
+      action="{% url 'monitor_change' %}"
+      enctype="multipart/form-data"
+    >
       {% csrf_token %}
-      <div class="row" style="margin:5px;border:1px solid black; padding-top: 1%; font-size:13px;">
-        <div class="form-group">
-          <input type="hidden" name="no" value="">
+      <div class="row mx-1" style="border: 1px solid black">
+        <div class="col-md-3 my-2">
+          <div class="form-group">
+            <input type="hidden" name="no" value="" />
+          </div>
+          <div class="form-group">
+            <input type="hidden" name="id" value="{{data.asset_serial}}" />
+          </div>
+          <div class="form-group my-2">
+            <label
+              >Condition Old Monitor: <span class="required">*</span></label
+            >
+            <select name="condition" required>
+              <option value="--------">----------------</option>
+              <option value="Working">Working</option>
+              <option value="Obsolete">Obsolete</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <input type="hidden" name="id" value="{{data.asset_serial}}">
+        <div class="col-md-3 my-1">
+          <div class="form-group my-1">
+            <label>New Monitor Model: <span class="required">*</span></label>
+            <input type="text" name="model" required />
+          </div>
         </div>
-        <div class="form-group" style="margin-left: 1.5%;">
-          <label>Condition Old Monitor: <span class="required">*</span></label>
-          <select name="condition" required>
-            <option value="--------">----------------</option>
-            <option value="Working">Working</option>
-            <option value="Obsolete">Obsolete</option>
-          </select>
+        <div class="col-md-3 my-1">
+          <div class="form-group my-1">
+            <label
+              >New Monitor Serial NO.: <span class="required">*</span></label
+            >
+            <input type="text" name="serial" required />
+          </div>
         </div>
-        <br>
-        <div class="form-group" style="margin-left: 1.5%;">
-          <label>New Monitor Model: <span class="required">*</span></label>
-          <input type="text" name="model" required>
+        <div class="col-md-3 my-1">
+          <div class="form-group my-1">
+            <label>New Monitor Asset Tag</label>
+            <input type="text" name="tag" />
+          </div>
         </div>
-        <div class="form-group" style="margin-left: 0.8%;">
-          <label style="font:bolder;">New Monitor Serial NO.: <span
-                  class="required">*</span></label>
-          <input type="text" name="serial" required>
+        <div class="col-md-12 my-1">
+          <div class="form-group my-2 w-100">
+            <label>Reason for Change: <span class="required">*</span></label>
+            <input type="text" name="reason" maxlength="100" size="100" />
+          </div>
         </div>
-        <div class="form-group" style="margin-left: 1.5%;">
-          <label>New Monitor Asset Tag</label>
-          <input type="text" name="tag">
-        </div>
-        <div class="form-group" style="margin-left: 1%;">
-          <label>Reason for Change: <span class="required">*</span></label>
-          <input type="text" name="reason" maxlength="100" size="100">
-        </div>
-        <br>
-
       </div>
 
       <div class="form-group">
         <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-danger" id="label">Replace Monitor</button>
+          <button type="submit" class="btn btn-danger my-4">
+            Replace Monitor
+          </button>
         </div>
-
       </div>
     </form>
   </div>
-
 </div>
-
 
 {% endblock %}

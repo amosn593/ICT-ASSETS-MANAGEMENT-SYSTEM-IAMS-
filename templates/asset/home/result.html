@@ -1,5 +1,5 @@
-{% extends 'asset/base.html' %} {% load static %} {% block title %} Result {%
-endblock %} {% block body %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Result 
+{% endblock %} {% block body %}
 
 <!-- Search form-->
 <h4 class="text-center my-2 py-2">Asset Details</h4>
@@ -58,8 +58,7 @@ endblock %} {% block body %}
           {% endfor %}
         </tbody>
       </table>
-      {% comment %} Pagination {% endcomment %} {% include
-      'asset/pagination/pagination.html' %}
+      <div>{% include 'asset/pagination/pagination.html' %}</div>
     </div>
   </div>
 </div>

@@ -1,36 +1,17 @@
-{% extends 'asset/base.html' %}
-{% load static %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Data
+Approval {% endblock %} {% block body %}
 
-{% block title %}
-
-Data Approval
-
-{% endblock %}
-
-{% block body %}
-
-
-<h4 class="heading">Asset Approval</h4>
+<h4 class="text-center">Asset Approval</h4>
 
 <section class="container-fluid">
-      <div class="container-fluid d-flex justify-content-center">
-            <form action="{% url 'approveresult' %}" method="post" class="form-inline"
-                  enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <label style="margin:5px;" required>Search By:</label>
-                  <select class="form-control" style="margin:5px;" name="criteria">
-                        <option value="serial-no">Serial Number</option>
-                  </select>
-                  <label style="margin:5px;" required>Entry:</label>
-                  <input type="text" class="form-control" style="margin:5px;" name="entry" required>
-                  <button type="submit" class="btn btn-info" id="label">Search</button>
-            </form>
-
-      </div>
-      <div class="container">
-            <h5 class="text-center mt-5">No records Pending ICT Manager Approvals!!!</h5>
-      </div>
-
+  <div class="container-fluid d-flex justify-content-center">
+    <div>{% include 'asset/approval/form.html' %}</div>
+  </div>
+  <div class="container">
+    <h5 class="text-center mt-5">
+      No records Pending ICT Manager Approvals!!!
+    </h5>
+  </div>
 </section>
 
 {% endblock %}

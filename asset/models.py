@@ -18,7 +18,10 @@ class Profile(models.Model):
 
 class Region(models.Model):
     region_pk = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20, null=False)
+    name = models.CharField(max_length=20, null=False, unique=True)
+
+    class Meta:
+        ordering = ('region_pk',)
 
     def __str__(self):
         return f"{self.name}"
@@ -40,7 +43,10 @@ class Profile_2(models.Model):
 class Station(models.Model):
     station_pk = models.AutoField(primary_key=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    name = models.CharField(max_length=30, null=False)
+    name = models.CharField(max_length=30, null=False, unique=True)
+
+    class Meta:
+        ordering = ('station_pk',)
 
     def __str__(self):
         return f"ID: {self.station_pk} - {self.name}"
@@ -131,6 +137,9 @@ class Client(models.Model):
 class Assettype(models.Model):
     assettype_pk = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20, null=False)
+
+    class Meta:
+        ordering = ('assettype_pk',)
 
     def __str__(self):
         return f"ID: {self.assettype_pk} - {self.name}"

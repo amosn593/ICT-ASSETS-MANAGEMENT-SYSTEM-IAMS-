@@ -1,34 +1,16 @@
-{% extends 'asset/base.html' %}
-{% load static %}
-
-{% block title %}
-Change Ownership
-{% endblock %}
-
-{% block body %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Change
+Ownership {% endblock %} {% block body %}
 
 <!-- change ownership form-->
-<h4 class="heading">Change Ownership</h4>
+<h4 class="text-center">Change Ownership</h4>
 
 <div class="container-fluid">
-      <div class="container-fluid d-flex justify-content-center">
-            <form action="{% url 'ownership_change' %}" method="post" class="form-inline"
-                  enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <label id="label" required>Search By:</label>
-                  <select class="form-control" id="asset-type" name="criteria" required>
-                        <option value="serial_no">Serial Number</option>
-                  </select>
-                  <label for="serial" id="label" required>Entry:</label>
-                  <input type="text" class="form-control" id="serial" name="entry" required>
-                  <button type="submit" class="btn btn-info" id="label">Search</button>
-            </form>
-
-      </div>
+  <div class="container-fluid d-flex justify-content-center">
+    <div>{% include "asset/ownership/form.html" %}</div>
+  </div>
 </div>
 <div class="container-fluid">
-
-      <h5 class="text-center mt-5">No record found with that serial Number!!!</h5>
+  <h5 class="text-center mt-5">No record found with that serial Number!!!</h5>
 </div>
 
 {% endblock %}

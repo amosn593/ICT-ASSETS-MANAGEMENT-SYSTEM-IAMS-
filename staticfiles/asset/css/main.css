@@ -21,6 +21,13 @@ body {
   background: #f8f6f6;
 }
 
+.main {
+  margin-bottom: 30px;
+  width: 100vw;
+  min-height: 90vh;
+  text-align: center;
+}
+
 /* Navbar */
 
 .nav-top {
@@ -98,19 +105,24 @@ body {
   pointer-events: none;
 }
 
-.home-heading {
-  border-bottom: 3px solid wheat;
+input {
+  padding-left: 5px !important;
 }
 
-/* search form */
-
 /* Table Data */
+label {
+  font-size: 12px !important;
+}
 
+input,
+option {
+  font-size: 16px !important;
+}
 table,
 tr,
 th,
 td {
-  font-size: 12px;
+  font-size: 11px !important;
 }
 
 #myBtn {
@@ -171,26 +183,8 @@ td {
 
 /* change ownership */
 
-.centre {
-  margin-top: 10px;
-  text-align: center;
-}
-
 #btn {
   display: inline-block;
-}
-
-.main {
-  margin-bottom: 10px;
-  width: 100vw;
-  min-height: 90vh;
-  text-align: center;
-}
-
-.change-ownership {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: bold;
 }
 
 /* Asset Repairs*/

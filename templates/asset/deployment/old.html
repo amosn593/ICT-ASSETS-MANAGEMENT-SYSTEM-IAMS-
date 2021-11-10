@@ -20,7 +20,7 @@ Deployment {% endblock %} {% block body %}
       <div class="col-md-4 py-2">
         <div class="form-group my-1">
           <label>Asset type<span class="required">*</span></label>
-          <select class="px-3" name="type">
+          <select id="asset_type" class="px-3" name="type">
             <option value="">------------------</option>
             <option value="DESKTOP">DESKTOP/LAPTOP</option>
             <option value="VDI">VDI</option>
@@ -109,17 +109,9 @@ Deployment {% endblock %} {% block body %}
         </div>
       </div>
     </div>
-    <div
-      class="row"
-      style="
-        width: 100%;
-        border: 1px solid black;
-        padding-top: 1%;
-        margin: 0.1%;
-      "
-    >
+    <div class="row mx-1 my-1 py-2" style="border: 1px solid black">
       <div class="col-md-4">
-        <div class="form-group" style="margin-top: 3%">
+        <div class="form-group my-2">
           <label>Mac address<span class="required">*</span></label>
           <input
             type="text"
@@ -128,15 +120,15 @@ Deployment {% endblock %} {% block body %}
             required
           />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>Computer Name</label>
           <input type="text" name="compname" />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>OS</label>
           <input type="text" name="os" />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>REASON NO DOMAIN</label>
           <input
             type="text"
@@ -147,115 +139,114 @@ Deployment {% endblock %} {% block body %}
         </div>
       </div>
       <div class="col-md-4">
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>Ram</label>
           <input type="text" name="ram" placeholder="Ram size in GB" />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>IP Address</label>
           <input type="text" name="ip" placeholder="Printers Only" />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>EXtension</label>
           <input type="text" name="extension" placeholder="IP phones only" />
         </div>
       </div>
       <div class="col-md-4">
         <p style="font-size: 14px">DETAILS OF WORK TICKET</p>
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>Work Ticket Number:<span class="required">*</span></label>
           <input type="text" name="ticket" required />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>ICT Officer Assigned:<span class="required">*</span></label>
           <input type="text" name="officer" required />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
           <label>Date:<span class="required">*</span></label>
           <input type="date" name="ticket_date" required />
         </div>
       </div>
     </div>
-    <h4 style="text-align: center; margin-top: 1%; color: brown">
-      Current Owner
-    </h4>
-    <div
-      class="row"
-      style="border: 1px solid black; padding-top: 1%; margin: 0.1%"
-    >
-      <div class="form-group" style="margin-left: 0.5%; margin-right: 0.5%">
-        <label>Full Name:<span class="required">*</span></label>
-        <input type="text" name="cowner" required />
+    <h4 class="text-center my-2 py-2" style="color: brown">Current Owner</h4>
+    <div class="row d-flex mx-1 my-1 py-1" style="border: 1px solid black">
+      <div class="col-md-4 my-1">
+        <div class="form-group my-2">
+          <label>Full Name:<span class="required">*</span></label>
+          <input type="text" name="cowner" required />
+        </div>
+        <div class="form-group my-2">
+          <label>P/No:<span class="required">*</span></label>
+          <input type="text" name="employeeno" required />
+        </div>
+        <div class="form-group my-2">
+          <label>Email Address:<span class="required">*</span></label>
+          <input type="email" name="emailno" required />
+        </div>
       </div>
-      <div class="form-group" style="margin-right: 0.5%">
-        <label>P/No:<span class="required">*</span></label>
-        <input type="text" name="employeeno" required />
+      <div class="col-md-4 my-1">
+        <div class="form-group my-2">
+          <label>Current Location:<span class="required">*</span></label>
+          <input
+            type="text"
+            name="clocation"
+            placeholder="Floor-Room"
+            required
+          />
+        </div>
+        <div class="form-group my-2">
+          <label>Dept/Division:<span class="required">*</span></label>
+          <input type="text" name="dept" required />
+        </div>
+        <div class="form-group my-2">
+          <label>Section:<span class="required">*</span></label>
+          <input type="text" name="section" required />
+        </div>
       </div>
-      <div class="form-group" style="margin-left: 0.5%">
-        <label>Email Address:<span class="required">*</span></label>
-        <input type="email" name="emailno" required />
-      </div>
-      <div class="form-group" style="margin-left: 0.5%">
-        <label>Current Location:<span class="required">*</span></label>
-        <input type="text" name="clocation" placeholder="Floor-Room" required />
-      </div>
-      <div class="form-group" style="margin-left: 0.5%">
-        <label>Dept/Division:<span class="required">*</span></label>
-        <input type="text" name="dept" required />
-      </div>
-      <div class="form-group" style="margin-left: 0.5%">
-        <label>Section:<span class="required">*</span></label>
-        <input type="text" name="section" required />
-      </div>
-      <div
-        class="form-group"
-        style="margin-left: 0.5%; margin-right: 1%; display: inline-block"
-      >
-        <label for="asset-type" id="label"
-          >Region:<span class="required">*</span></label
-        >
-        <select id="region" name="region" required>
-          {% comment %}
-          <option value="SOUTHERN REGION">SOUTHERN REGION</option>
-          <option value="NAIROBI">Nairobi</option>
-          <option value="CENTRAL">Central</option>
-          {% endcomment %}
-        </select>
-      </div>
-      <div class="form-group" style="margin-left: 0.5%; display: inline-block">
-        <label>Station:<span class="required">*</span></label>
-        <select id="station" name="station" required>
-          <option value="">----------------------------------</option>
-        </select>
+      <div class="col-md-4 my-1">
+        <div class="form-group my-3">
+          <label for="asset-type" id="label"
+            >Region:<span class="required">*</span></label
+          >
+          <select id="region" name="region" required>
+            <option value="SOUTHERN REGION">SOUTHERN REGION</option>
+            <option value="NAIROBI">Nairobi</option>
+            <option value="CENTRAL">Central</option>
+          </select>
+        </div>
+        <div class="form-group my-3">
+          <label>Station:<span class="required">*</span></label>
+          <select id="station" name="station" required>
+            <option value="">----------------------------------</option>
+          </select>
+        </div>
       </div>
     </div>
-    <h4 style="text-align: center; margin-top: 1%; color: brown">
+    <h4 class="text-center my-2 py-2" style="color: brown">
       HOD/Supervisor(of the affected user)
     </h4>
-    <div
-      class="row"
-      style="
-        width: 100%;
-        border: 1px solid black;
-        padding-top: 1%;
-        margin: 0.1%;
-      "
-    >
-      <div class="form-group" style="margin-right: 0.5%; margin-left: 0.5%">
-        <label>Full Name:<span class="required">*</span></label>
-        <input type="text" name="hod" size="40" required />
+    <div class="row mx-1 my-2 py-2" style="border: 1px solid black">
+      <div class="col-md-4 my-1">
+        <div class="form-group my-2">
+          <label>Full Name:<span class="required">*</span></label>
+          <input type="text" name="hod" size="40" required />
+        </div>
       </div>
-      <div class="form-group" style="margin-right: 0.5%; margin-left: 5%">
-        <label>P/No:<span class="required">*</span></label>
-        <input type="text" name="hod_no" size="40" required />
+      <div class="col-md-4 my-1">
+        <div class="form-group my-2">
+          <label>P/No:<span class="required">*</span></label>
+          <input type="text" name="hod_no" size="40" required />
+        </div>
       </div>
-      <div class="form-group" style="margin-right: 0.5%; margin-left: 5%">
-        <label>Email Address:<span class="required">*</span></label>
-        <input type="email" name="hod_email" size="40" required />
+      <div class="col-md-4 my-2">
+        <div class="form-group my-2">
+          <label>Email Address:<span class="required">*</span></label>
+          <input type="email" name="hod_email" size="40" required />
+        </div>
       </div>
     </div>
-    <div class="form-group">
-      <div class="centre">
+    <div class="form-group my-2">
+      <div class="text-center">
         <button type="submit" class="btn btn-danger my-3 py-2" id="label">
           Deploy Asset
         </button>
@@ -267,44 +258,46 @@ Deployment {% endblock %} {% block body %}
 <script src="{% static 'asset/js/search.js' %}"></script>
 
 <script>
-  var $j = jQuery.noConflict();
-  $j.ajax({
-    type: "GET",
-    url: "/ict/asset_type/",
-    success: function (data) {
-      $("#asset_type").html(data);
-    },
-    error: function (error) {
-      alert("Select Asset Type!!!");
-    },
-  });
-
-  $j.ajax({
-    type: "GET",
-    url: "/ict/region/",
-    success: function (data) {
-      $("#region").html(data);
-    },
-    error: function (error) {
-      alert("Select Region!!!");
-    },
-  });
-
-  $("#region").change(function () {
-    var RegionId = $(this).val();
+  jQuery(document).ready(function ($) {
+    var $j = jQuery.noConflict();
+    $j.ajax({
+      type: "GET",
+      url: "/ict/asset_type/",
+      success: function (data) {
+        $("#asset_type").html(data);
+      },
+      error: function (error) {
+        alert("Select Asset Type!!!");
+      },
+    });
 
     $j.ajax({
       type: "GET",
-      url: "/ict/station/",
-      data: {
-        RegionId: RegionId,
-      },
+      url: "/ict/region/",
       success: function (data) {
-        $("#station").html(data);
+        $("#region").html(data);
       },
       error: function (error) {
         alert("Select Region!!!");
       },
+    });
+
+    $("#region").change(function () {
+      var RegionId = $(this).val();
+
+      $j.ajax({
+        type: "GET",
+        url: "/ict/station/",
+        data: {
+          RegionId: RegionId,
+        },
+        success: function (data) {
+          $("#station").html(data);
+        },
+        error: function (error) {
+          alert("Select Region!!!");
+        },
+      });
     });
   });
 </script>

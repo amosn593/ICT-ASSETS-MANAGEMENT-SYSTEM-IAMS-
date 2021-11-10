@@ -1,5 +1,5 @@
-{% extends 'asset/base.html' %} {% load static %} {% block title %} Home {%
-endblock %} {% block body %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Home
+{%endblock %} {% block body %}
 
 <!-- Search form-->
 <h4 class="text-center my-2 py-2">Asset Details</h4>
@@ -16,7 +16,7 @@ endblock %} {% block body %}
     <div class="container-fluid">
       <table class="table table-bordered table-sm">
         <thead class="thead-light">
-          <tr style="font-size: 11px">
+          <tr>
             <th>Asset Type:</th>
             <th>Serial No.</th>
             <th>Model No.</th>
@@ -36,7 +36,7 @@ endblock %} {% block body %}
         </thead>
         <tbody>
           {% for indx in page_obj %}
-          <tr style="font-size: 11px">
+          <tr>
             <td>{{ indx.assettype.name}}</td>
             <td>{{ indx.asset_serial}}</td>
             <td>{{ indx.asset_model}}</td>
@@ -56,8 +56,7 @@ endblock %} {% block body %}
           {% endfor %}
         </tbody>
       </table>
-      {% comment %} Pagination {% endcomment %} {% include
-      'asset/pagination/pagination.html' %}
+      <div>{% include 'asset/pagination/pagination.html' %}</div>
     </div>
   </div>
 </div>
