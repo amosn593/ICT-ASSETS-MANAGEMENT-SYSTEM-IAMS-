@@ -1,93 +1,19 @@
-{% extends 'asset/base.html' %}
-{% load static %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Obsolete
+Assets {% endblock %} {% block body %}
 
-{% block title %}
-Obsolete Assets
-{% endblock %}
+<h4 class="text-center my-2">Obsolete Assets</h4>
 
-{% block body %}
-
-<h4 class="heading">Obsolete Assets</h4>
-
-
-<div class="main">
-      <div class="change-ownership">
-            <form action="{% url 'obso_report' %}" method="post" class="form-inline"
-                  enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <label for="asset-type" id="label" required>Region:</label>
-                  <select class="form-control" id="region" name="region" required>
-                        <option value="">----------------------------------</option>
-                  </select>
-                  <label for="serial" id="label" required>Station:</label>
-                  <select class="form-control" id="station" name="station" required>
-                        <option value="">----------------------------------</option>
-                  </select>
-                  <label for="serial" id="label" required>Asset Type:</label>
-                  <select class="form-control" id="asset_type" name="assettype" required>
-                        <option value="">----------------------------------</option>
-                  </select>
-                  <button type="submit" class="btn btn-info" id="label">Submit</button>
-            </form>
-
-      </div>
-
+<div class="container-fluid my-2">
+  <div class="container-fluid">
+    <div>{% include "asset/obso_assets/form.html" %}</div>
+  </div>
 </div>
 
 <div class="container-fluid">
-      <h5 class="text-center mt-5">No records Found!!!</h5>
+  <h5 class="text-center mt-5">No records Found!!!</h5>
 </div>
 
 <script src="{% static 'asset/js/jquery-3.6.0.min.js' %}"></script>
-<script src="{% static 'asset/js/search.js' %}"></script>
-
-<script>
-      var $j = jQuery.noConflict();
-      $j.ajax({
-            type: 'GET',
-            url: '/ict/asset_type/',
-            success: function (data) {
-                  $("#asset_type").html(data);
-            },
-            error: function (error) {
-                  alert('Select Asset Type!!!')
-            }
-      });
-
-      $j.ajax({
-            type: 'GET',
-            url: '/ict/region/',
-            success: function (data) {
-                  $("#region").html(data);
-
-            },
-            error: function (error) {
-                  alert('Select Region!!!')
-            }
-      });
-
-      $("#region").change(function () {
-            var RegionId = $(this).val();
-
-            $j.ajax({
-                  type: 'GET',
-                  url: '/ict/station/',
-                  data: {
-                        'RegionId': RegionId
-                  },
-                  success: function (data) {
-                        $("#station").html(data);
-
-                  },
-                  error: function (error) {
-                        alert('Select Region!!!')
-                  }
-            });
-
-      });
-</script>
-
-
-
+<script src="{% static 'asset/js/apis.js' %}"></script>
 
 {% endblock %}

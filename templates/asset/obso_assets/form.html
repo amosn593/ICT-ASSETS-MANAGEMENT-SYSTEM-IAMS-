@@ -1,0 +1,21 @@
+<form
+  action="{% url 'obso_report' %}"
+  method="post"
+  class="form-inline d-flex"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+  <label class="mx-1" required>Region:</label>
+  <select class="form-control mx-1" id="region" name="region" required>
+    <option value="">----------------------------------</option>
+  </select>
+  <label class="mx-1" required>Station:</label>
+  <select class="form-control" id="station" name="station" required>
+    <option value="">----------------------------------</option>
+  </select>
+  <label class="mx-1" required>Asset Type:</label>
+  <select class="form-control mx-1" id="asset_type" name="assettype" required>
+    <option value="">----------------------------------</option>
+  </select>
+  <button type="submit" class="btn btn-danger mx-1" id="label">Submit</button>
+</form>

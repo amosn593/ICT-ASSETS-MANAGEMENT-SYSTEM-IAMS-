@@ -1,90 +1,83 @@
-{% extends 'asset/base.html' %}
-{% load static %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Asssets
+Report {% endblock %} {% block body %}
 
-{% block title %}
-Asssets Report
-{% endblock %}
-
-{% block body %}
-
-<h4 class="heading">Assets Report</h4>
+<h4 class="text-center">Assets Report</h4>
 
 <div class="container-fluid">
-      <!-- Search form-->
-      <div class="container-fluid d-flex justify-content-center">
-            <form action="{% url 'asset_report' %}" method="post" class="form-inline"
-                  enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <label for="asset-type" id="label" required>Region:</label>
-                  <select class="form-control" id="region" name="region" required>
-                        <option value="">----------------------------------</option>
-                  </select>
-                  <label for="serial" id="label" required>Station:</label>
-                  <select class="form-control" id="station" name="station" required>
-                        <option value="">----------------------------------</option>
-                  </select>
-                  <label for="serial" id="label" required>Asset Type:</label>
-                  <select class="form-control" id="asset_type" name="asset_type" required>
-                        <option value="">----------------------------------</option>
-                  </select>
-                  <button type="submit" class="btn btn-info" id="label">Submit</button>
-            </form>
-
-
-      </div>
-
+  <!-- Search form-->
+  <div class="container-fluid d-flex justify-content-center">
+    <form
+      action="{% url 'asset_report' %}"
+      method="post"
+      class="form-inline d-flex"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <label class="mx-1" required>Region:</label>
+      <select class="form-control mx-1" id="region" name="region" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <label for="serial" id="label" required>Station:</label>
+      <select class="form-control" id="station" name="station" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <label class="mx-1" required>Asset Type:</label>
+      <select class="form-control mx-1" id="asset_type" name="asset_type" required>
+        <option value="">----------------------------------</option>
+      </select>
+      <button type="submit" class="btn btn-danger mx-1" >Submit</button>
+    </form>
+  </div>
 </div>
 <div class="container mt-5">
-      <h5 class="text-center mt-3">No Record Found!!!</h5>
+  <h5 class="text-center mt-3">No Record Found!!!</h5>
 </div>
 <script src="{% static 'asset/js/jquery-3.6.0.min.js' %}"></script>
 <script src="{% static 'asset/js/search.js' %}"></script>
 
 <script>
-      var $j = jQuery.noConflict();
-      $j.ajax({
-            type: 'GET',
-            url: '/ict/asset_type/',
-            success: function (data) {
-                  $("#asset_type").html(data);
-            },
-            error: function (error) {
-                  alert('Select Asset Type!!!')
-            }
-      });
+  jQuery(document).ready(function ($) {
+    var $j = jQuery.noConflict();
+    $j.ajax({
+      type: "GET",
+      url: "/ict/asset_type/",
+      success: function (data) {
+        $("#asset_type").html(data);
+      },
+      error: function (error) {
+        alert("Select Asset Type!!!");
+      },
+    });
+
+    $j.ajax({
+      type: "GET",
+      url: "/ict/region/",
+      success: function (data) {
+        $("#region").html(data);
+      },
+      error: function (error) {
+        alert("Select Region!!!");
+      },
+    });
+
+    $("#region").change(function () {
+      var RegionId = $(this).val();
 
       $j.ajax({
-            type: 'GET',
-            url: '/ict/region/',
-            success: function (data) {
-                  $("#region").html(data);
-
-            },
-            error: function (error) {
-                  alert('Select Region!!!')
-            }
+        type: "GET",
+        url: "/ict/station/",
+        data: {
+          RegionId: RegionId,
+        },
+        success: function (data) {
+          $("#station").html(data);
+        },
+        error: function (error) {
+          alert("Select Region!!!");
+        },
       });
-
-      $("#region").change(function () {
-            var RegionId = $(this).val();
-
-            $j.ajax({
-                  type: 'GET',
-                  url: '/ict/station/',
-                  data: {
-                        'RegionId': RegionId
-                  },
-                  success: function (data) {
-                        $("#station").html(data);
-
-                  },
-                  error: function (error) {
-                        alert('Select Region!!!')
-                  }
-            });
-
-      });
+    });
+  });
 </script>
-
 
 {% endblock %}

@@ -22,7 +22,7 @@ body {
 }
 
 .main {
-  margin-bottom: 110px;
+  margin-bottom: 120px !important;
   width: 100vw;
   min-height: 90vh;
   text-align: center;

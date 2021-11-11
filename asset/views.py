@@ -1528,7 +1528,7 @@ def user_report(request):
         else:
             return render(request, 'asset/user_assets/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 # Asset ownership history
 
@@ -1536,7 +1536,10 @@ def user_report(request):
 @login_required
 @allowed_users(role='supervisor_ict')
 def history(request):
-    return render(request, 'asset/owner_history/search.html')
+    if request.method == 'GET':
+        return render(request, 'asset/owner_history/search.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1564,7 +1567,7 @@ def history_report(request):
         else:
             return render(request, 'asset/owner_history/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 # Asset Report
 
@@ -1572,7 +1575,10 @@ def history_report(request):
 @login_required
 @allowed_users(role='supervisor_ict')
 def asset_search(request):
-    return render(request, 'asset/report/search.html')
+    if request.method == 'GET':
+        return render(request, 'asset/report/search.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1611,7 +1617,7 @@ def asset_report(request):
         else:
             return render(request, 'asset/report/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1633,14 +1639,17 @@ def excel_export(request):
             writer.writerow(d)
         return response
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 # Unassigned assets
 @login_required
 @allowed_users(role='supervisor_ict')
 def free_search(request):
-    return render(request, 'asset/free_assets/search.html')
+    if request.method == 'GET':
+        return render(request, 'asset/free_assets/search.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1671,14 +1680,17 @@ def free_report(request):
         else:
             return render(request, 'asset/free_assets/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 # Obsolete Assets
 @login_required
 @allowed_users(role='supervisor_ict')
 def obso_search(request):
-    return render(request, 'asset/obso_assets/search.html')
+    if request.method == 'GET':
+        return render(request, 'asset/obso_assets/search.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1709,4 +1721,4 @@ def obso_report(request):
         else:
             return render(request, 'asset/obso_assets/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")

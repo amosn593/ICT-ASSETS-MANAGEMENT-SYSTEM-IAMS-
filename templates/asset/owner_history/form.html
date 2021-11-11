@@ -1,0 +1,21 @@
+<form
+  action="{% url 'history_report' %}"
+  method="post"
+  class="form-inline d-flex my-2"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+  <label for="asset-type" id="label">Search By:</label>
+  <select class="form-control mx-1"  name="criteria">
+    <option value="serial">Serial Number</option>
+  </select>
+  <label class="mx-1">Entry:</label>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Asset Serial NO."
+    required
+    name="entry"
+  />
+  <button type="submit" class="btn btn-danger mx-2">Search</button>
+</form>

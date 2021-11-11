@@ -1,42 +1,24 @@
-{% extends 'asset/base.html' %}
-{% load static %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Asset
+Ownership History {% endblock %} {% block body %}
 
-{% block title %}
-Asset Ownership History
-{% endblock %}
+<h4 class="text-center my-3">Asset Ownership History</h4>
 
-{% block body %}
-
-<h4 class="heading">Asset Ownership History</h4>
-
-<div class="container-fluid">
-
-  <div class="container-fluid d-flex justify-content-center">
-    <form action="{% url 'history_report' %}" method="post" class="form-inline"
-          enctype="multipart/form-data">
-      {% csrf_token %}
-      <label for="asset-type" id="label" required>Search By:</label>
-      <select class="form-control" id="asset-type" name="criteria">
-        <option value="serial">Serial Number</option>
-      </select>
-      <label for="serial" id="label" required>Entry:</label>
-      <input type="text" class="form-control" name="entry" placeholder="Asset Serial NO." required>
-      <button type="submit" class="btn btn-info" id="label">Search</button>
-    </form>
-
+<div class="container-fluid mt-3 mb-5 pb-5">
+  <div class="container-fluid d-flex justify-content-center my-3">
+    <div>{% include "asset/owner_history/form.html" %}</div>
   </div>
-  <div class="container-fluid m-1" style="border: 1px solid black;">
-    <div class="d-flex justify-content-around mt-2">
+  <div class="container-fluid mb-5 pb-5" style="border: 1px solid black">
+    <div class="d-flex justify-content-around my-3">
       <p></p>
       <h4>ICT ASSET OWNERSHIP HISTORY REPORT</h4>
       <p>Date: {{date}}</p>
     </div>
     <div class="row">
-      <div class="col-md-12">
-        <h5 style="text-align: center;color:brown;">Asset Details</h5>
+      <div class="col-md-12 my-2">
+        <h5 class="text-center" style="color: brown">Asset Details</h5>
         <table class="table table-bordered">
           <thead class="thead-light">
-            <tr style="font-size: 11px;">
+            <tr>
               <th>Asset Type</th>
               <th>Asset Tag</th>
               <th>Asset Model</th>
@@ -47,11 +29,10 @@ Asset Ownership History
               <th>IP Address</th>
               <th>Extension</th>
               <th>Working Condition</th>
-
             </tr>
           </thead>
           <tbody>
-            <tr style="font-size: 11px;">
+            <tr>
               <td>{{data.assettype.name}}</td>
               <td>{{data.asset_tag}}</td>
               <td>{{data.asset_model}}</td>
@@ -63,17 +44,16 @@ Asset Ownership History
               <td>{{data.extension}}</td>
               <td>{{data.condition}}</td>
             </tr>
+          </tbody>
         </table>
       </div>
-
     </div>
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 my-2">
         <table class="table table-bordered">
           <thead class="thead-light">
-
-            <tr style="font-size: 11px;">
+            <tr style="font-size: 11px">
               <th>Mac Address</th>
               <th>Computer NAme</th>
               <th>RAM SIZE</th>
@@ -85,7 +65,7 @@ Asset Ownership History
             </tr>
           </thead>
           <tbody>
-            <tr style="font-size: 11px;">
+            <tr>
               <td>{{data.mac_address}}</td>
               <td>{{data.cpu_name}}</td>
               <td>{{data.ram}}</td>
@@ -98,14 +78,13 @@ Asset Ownership History
           </tbody>
         </table>
       </div>
-
     </div>
     <div class="row">
-      <div class="col-md-12">
-        <H5 style="text-align: center;color:brown;">Current Owner</H5>
+      <div class="col-md-12 my-2">
+        <h5 class="text-center" style="color: brown">Current Owner</h5>
         <table class="table table-bordered">
           <thead class="thead-light">
-            <tr style="font-size: 11px;">
+            <tr>
               <th>Full Names</th>
               <th>P/NO.</th>
               <th>Email</th>
@@ -119,8 +98,7 @@ Asset Ownership History
             </tr>
           </thead>
           <tbody>
-
-            <tr style="font-size: 11px;">
+            <tr>
               <td>{{data.client.full_name}}</td>
               <td>{{data.client.staff_number}}</td>
               <td>{{data.client.staff_email}}</td>
@@ -134,15 +112,14 @@ Asset Ownership History
             </tr>
           </tbody>
         </table>
-
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
-        <H5 style="text-align: center; color:brown;">Previous Owners</H5>
+      <div class="col-md-12 my-2">
+        <h5 class="text-center" style="color: brown">Previous Owners</h5>
         <table class="table table-bordered">
           <thead class="thead-light">
-            <tr style="font-size: 11px;">
+            <tr>
               <th>Full Names</th>
               <th>P/NO.</th>
               <th>Email</th>
@@ -155,7 +132,7 @@ Asset Ownership History
           </thead>
           <tbody>
             {% for d in dat %}
-            <tr style="font-size: 11px;">
+            <tr>
               <td>{{d.full_name}}</td>
               <td>{{d.staff_number}}</td>
               <td>{{d.staff_email}}</td>
@@ -166,16 +143,11 @@ Asset Ownership History
               <td>{{d.reason_changed}}</td>
             </tr>
             {% endfor %}
-
           </tbody>
         </table>
-
       </div>
     </div>
   </div>
-
 </div>
-
-
 
 {% endblock %}
