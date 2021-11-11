@@ -1,34 +1,20 @@
-{% extends 'asset/base.html' %}
-{% load static %}
-
-{% block title %}
-Surrender Asset
-{% endblock %}
-
-{% block body %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Surrender
+Asset {% endblock %} {% block body %}
 
 <!-- change ownership form-->
-<h5 class="heading">Surrender Asset</h5>
+<h5 class="text-center">Surrender Asset</h5>
 
 <div class="container-fluid">
   <div class="container-fluid d-flex justify-content-center">
-    <form action="{% url 'surrenderback' %}" method="post" class="form-inline"
-          enctype="multipart/form-data">
-      {% csrf_token %}
-      <label for="asset-type" id="label" required>Search By:</label>
-      <select class="form-control" style="margin:5px;" name="criteria" required>
-        <option value="serial_no">Serial Number</option>
-      </select>
-      <label for="serial" required>Entry:</label>
-      <input type="text" class="form-control" style="margin:5px;" id="serial" name="entry" required>
-      <button type="submit" class="btn btn-info" id="label">Search</button>
-    </form>
+    <div>{% include "asset/surrender/form.html" %}</div>
   </div>
-  <div class="container-fluid mt-3 pt-2" style="border-top: 1px solid black;">
-    <h5 style="text-align: center; color:brown;">Asset Details</h5>
-    <table class="table table-bordered ml-1">
+  <div class="container-fluid mt-3 pt-2">
+    <h5 class="text-center border-bottom my-1" style="color: brown">
+      Asset Details
+    </h5>
+    <table class="table table-bordered my-2">
       <thead class="thead-light">
-        <tr style="font-size: 11px;">
+        <tr>
           <th>Current Owner</th>
           <th>P/No.</th>
           <th>Email</th>
@@ -44,7 +30,7 @@ Surrender Asset
         </tr>
       </thead>
       <tbody>
-        <tr style="font-size: 11px;">
+        <tr>
           <td>{{data.client.full_name}}</td>
           <td>{{data.client.staff_number}}</td>
           <td>{{data.client.staff_email}}</td>
@@ -60,41 +46,54 @@ Surrender Asset
         </tr>
       </tbody>
     </table>
-
   </div>
   <div class="container-fluid m-1">
-    <h5 style="text-align: center; color:brown;">Surrender Details</h5>
-    <form method="POST" action="{% url 'sur_backend' %}" enctype="multipart/form-data">
+    <h5 class="text-center" style="color: brown">Surrender Details</h5>
+    <form
+      method="POST"
+      action="{% url 'sur_backend' %}"
+      enctype="multipart/form-data"
+    >
       {% csrf_token %}
-      <div class="row" style="margin:5px;border:1px solid black; padding-top: 1%; font-size:12px;">
-        <div class="form-group">
-          <input type="hidden" name="client" value="{{data.client.client_pk}}">
+      <div class="row mx-1" style="border: 1px solid black">
+        <div class="col-md-3 my-2">
+          <div class="form-group">
+            <input
+              type="hidden"
+              name="client"
+              value="{{data.client.client_pk}}"
+            />
+          </div>
+          <div class="form-group">
+            <input type="hidden" name="serial" value="{{data.asset_serial}}" />
+          </div>
+          <div class="form-group my-2">
+            <label required>Working Condition:</label>
+            <select name="condition" required>
+              <option value="WORKING">Working</option>
+              <option value="OBSOLETE">Obsolete</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <input type="hidden" name="serial" value="{{data.asset_serial}}">
-        </div>
-        <div class="form-group" style="margin-left: 5%;">
-          <label required>Working Condition:</label>
-          <select name="condition" required>
-            <option value="WORKING">Working</option>
-            <option value="OBSOLETE">Obsolete</option>
-          </select>
-        </div>
-        <div class="form-group" style="margin-left: 5%;">
-          <label>Reason For Surrender : <span class="required">*</span></label>
-          <input type="text" name="reason" size="100" required>
+        <div class="col-md-3 my-2">
+          <div class="form-group my-2">
+            <label
+              >Reason For Surrender : <span class="required">*</span></label
+            >
+            <input type="text" name="reason" size="100" required />
+          </div>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group my-2">
         <div class="container-fluid d-flex justify-content-center">
-          <button type="submit" class="btn btn-danger" id="label">Surrender Asset</button>
+          <button type="submit" class="btn btn-danger my-2 py-2">
+            Surrender Asset
+          </button>
         </div>
       </div>
     </form>
   </div>
-
 </div>
-
 
 {% endblock %}

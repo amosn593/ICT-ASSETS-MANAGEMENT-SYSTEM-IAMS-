@@ -1,27 +1,11 @@
-{% extends 'asset/base.html' %}
-{% load static %}
-
-{% block title %}
-Surrender Asset
-{% endblock %}
-
-{% block body %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Surrender
+Asset {% endblock %} {% block body %}
 
 <!-- change ownership form-->
-<h5 class="heading">Surrender Asset</h5>
+<h5 class="text-center">Surrender Asset</h5>
 <div class="container-fluid">
   <div class="container-fluid d-flex justify-content-center">
-    <form action="{% url 'surrenderback' %}" method="post" class="form-inline"
-          enctype="multipart/form-data">
-      {% csrf_token %}
-      <label for="asset-type" required>Search By:</label>
-      <select class="form-control" style="margin:5px;" name="criteria" required>
-        <option value="serial_no">Serial Number</option>
-      </select>
-      <label for="serial" required>Entry:</label>
-      <input type="text" class="form-control" style="margin:5px;" id="serial" name="entry" required>
-      <button type="submit" class="btn btn-info" id="label">Search</button>
-    </form>
+    <div>{% include "asset/surrender/form.html" %}</div>
   </div>
 </div>
 

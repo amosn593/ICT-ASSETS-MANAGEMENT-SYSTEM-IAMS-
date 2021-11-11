@@ -1,225 +1,199 @@
-{% extends 'asset/base.html' %}
-{% load static %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Deployment
+Report {% endblock %} {% block body %}
+<h4 class="text-center">Deployment Report</h4>
 
-{% block title %}
-Deployment Report
-{% endblock %}
-
-{% block body %}
-
-<body>
-    <h4 class="heading">Deployment Report</h4>
-
-    <div class="container-fluid">
-        <div class="container-fluid d-flex justify-content-center">
-            <form action="{% url 'deploy_result' %}" method="post" class="form-inline"
-                  enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="asset-type" style="margin:5px;" required>Search By:</label>
-                <select class="form-control" name="criteria">
-                    <option value="serial-no">Serial Number</option>
-                </select>
-                <label for="serial" style="margin:5px;" required>Entry:</label>
-                <input type="text" class="form-control" style="margin:5px;" name="entry" required>
-                <button type="submit" class="btn btn-info" id="label">Search</button>
-            </form>
-
-        </div>
-        <div id="deployment_report"
-             style="border: 1px solid black; margin-left:1.5%; margin-right: 1%; margin-bottom: 15px;; padding-top:0.5%;">
-
-            <div class="form-header"
-                 style="display: flex; margin-top:20px;justify-content: space-around; margin-bottom:15px; border-top: 1px solid black;border-bottom: 1px solid black;">
-                <p style="margin-left: -1%;">ICT-DOC-011</p>
-                <h4>ICT ASSET DEPLOYMENT REPORT</h4>
-                <p>Date: {{date}}</p>
-            </div>
-            <div class="row" style=" width: 100%;margin:0.1%;">
-                <div class="col-md-4">
-                    <h6 style="text-align: center;">Asset Details</h6>
-                    <table class="table table-bordered" style="font-size: 11px;">
-                        <tr>
-                            <th>Asset Type</th>
-                            <td>{{data.assettype.name}}</td>
-                        </tr>
-                        <tr>
-                            <th>Monitor Model</th>
-                            <td>{{data.monitor.monitor_model}}</td>
-                        </tr>
-                        <tr>
-                            <th>Monitor Asset TAg</th>
-                            <td>{{data.monitor.monitor_tag}}</td>
-                        </tr>
-                        <tr>
-                            <th>Monitor S/NO.</th>
-                            <td>{{data.monitor.monitor_serial}}</td>
-                        </tr>
-                        <tr>
-                            <th>Asset Tag</th>
-                            <td>{{data.asset_tag}}</td>
-                        </tr>
-                        <tr>
-                            <th>CPU/Asset Model No.</th>
-                            <td>{{data.asset_model}}</td>
-                        </tr>
-                        <tr>
-                            <th>CPU/Asset S/No.</th>
-                            <td>{{data.asset_serial}}</td>
-                        </tr>
-                    </table>
-
-                </div>
-                <div class="col-md-4" style="margin-top: 0px;">
-                    <h6 style="text-align: center;">Details of Work Ticket</h6>
-                    <table class="table table-bordered" style="font-size: 11px;">
-                        <tr>
-                            <th>Work Ticket No.</th>
-                            <td>{{data.ticket.ticket_number}}</td>
-                        </tr>
-                        <tr>
-                            <th>ICT Officer Assigned</th>
-                            <td>{{data.ticket.ticket_officer}}</td>
-                        </tr>
-                        <tr>
-                            <th>Date</th>
-                            <td>{{data.ticket.ticket_date}}</td>
-                        </tr>
-
-                    </table>
-
-                </div>
-                <div class="col-md-4" style="margin-top: 0px;">
-                    <h6 style="text-align: center;">HOD/Supervisor of affected user</h6>
-                    <table class="table table-bordered" style="font-size: 11px;">
-                        <tr>
-                            <th>Name</th>
-                            <td>{{data.client.hod.hod_name}}</td>
-                        </tr>
-                        <tr>
-                            <th>P/No.</th>
-                            <td>{{data.client.hod.hod_number}}</td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td>{{data.client.hod.hod_email}}</td>
-                        </tr>
-
-                    </table>
-
-                </div>
-
-            </div>
-            <div class="row" style="font-size:11px;  width: 100%;margin:0.1%;">
-                <div class="col-md-12">
-                    <table class="table table-bordered">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Mac Address</th>
-                                <th>Computer NAme</th>
-                                <th>Condition</th>
-                                <th>RAM SIZE</th>
-                                <th>O/S</th>
-                                <th>IP Address</th>
-                                <th>ADSS</th>
-                                <th>LAPS</th>
-                                <th>WAKE ON LAN</th>
-                                <th>KAV</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{data.mac_address}}</td>
-                                <td>{{data.cpu_name}}</td>
-                                <td>{{data.condition}}</td>
-                                <td>{{data.ram}}</td>
-                                <td>{{data.os}}</td>
-                                <td>{{data.ip_address}}</td>
-                                <td>{{data.adss}}</td>
-                                <td>{{data.laps}}</td>
-                                <td>{{data.wol}}</td>
-                                <td>{{data.kaspersky}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-            <div class="row"
-                 style="font-size:11px;  width: 100%;margin-left:0.1%; margin-right: 1.5%;">
-                <div class="col-md-12">
-                    <H5 style="text-align: center;color:brown; margin-top: 15px;">Current Owner</H5>
-                    <table class="table table-bordered">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Full Names</th>
-                                <th>P/NO.</th>
-                                <th>Email</th>
-                                <th>Region</th>
-                                <th>Station</th>
-                                <th>Current Location</th>
-                                <th>Dept/Division</th>
-                                <th>Section</th>
-                                <th>User Approved</th>
-                                <th>HOD Approved</th>
-                                <th>ICT Approved</th>
-                                <th>Deployment Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>{{data.client.full_name}}</td>
-                                <td>{{data.client.staff_number}}</td>
-                                <td>{{data.client.staff_email}}</td>
-                                <td>{{data.region.name}}</td>
-                                <td>{{data.station.name}}</td>
-                                <td>{{data.client.location}}</td>
-                                <td>{{data.client.department}}</td>
-                                <td>{{data.client.section}}</td>
-                                <td>{{data.client.accepted}}</td>
-                                <td>{{data.client.hod_approval}}</td>
-                                <td>{{data.ict_approval}}</td>
-                                <td>{{data.client.date_assigned}}</td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-            <div class="container" style="display: flex;">
-                <table class="table table-striped ">
-                    <tr style="font-size: 12px;">
-                        <th style="text-align: left;">Reject Reason:</th>
-                        <td style="text-align: center;">{{data.reject_reason}}</td>
-                    </tr>
-                </table>
-
-            </div>
-
-            <div class="container" style="display: flex;">
-                <table class="table table-striped ">
-                    <tr style="font-size: 12px;">
-                        <th style="text-align: left;">Deployed By:</th>
-                        <td style="text-align: center;">{{data.deployed_by.profile_2.name}}</td>
-                    </tr>
-                </table>
-                <table class="table table-striped ">
-                    <tr style="font-size: 12px;">
-                        <th style="text-align: left;">Approved/Rejected By:</th>
-                        <td style="text-align: center;">{{data.approved_by}}</td>
-                    </tr>
-                </table>
-            </div>
-            <div style="text-align: center; margin-bottom:15px;">
-                <input type="button" id="print" value="print" class="btn btn-danger"
-                       onclick="window.print();" />
-            </div>
-        </div>
-
+<div class="container-fluid mb-5 pb-5">
+  <div class="container-fluid d-flex justify-content-center">
+    <div>{% include "asset/deploy_report/form.html" %}</div>
+  </div>
+  <div
+    class="container-fluid"
+    id="deployment_report"
+    style="border: 1px solid black"
+  >
+    <div
+      class="container-fluid d-flex justify-content-between my-3"
+      style="border-bottom: 1px solid black"
+    >
+      <p>ICT-DOC-011</p>
+      <h4>ICT ASSET DEPLOYMENT REPORT</h4>
+      <p>Date: {{date}}</p>
+    </div>
+    <div class="row mx-1">
+      <div class="col-md-4 my-2">
+        <h6 class="text-center">Asset Details</h6>
+        <table class="table table-bordered">
+          <tr>
+            <th>Asset Type</th>
+            <td>{{data.assettype.name}}</td>
+          </tr>
+          <tr>
+            <th>Monitor Model</th>
+            <td>{{data.monitor.monitor_model}}</td>
+          </tr>
+          <tr>
+            <th>Monitor Asset TAg</th>
+            <td>{{data.monitor.monitor_tag}}</td>
+          </tr>
+          <tr>
+            <th>Monitor S/NO.</th>
+            <td>{{data.monitor.monitor_serial}}</td>
+          </tr>
+          <tr>
+            <th>Asset Tag</th>
+            <td>{{data.asset_tag}}</td>
+          </tr>
+          <tr>
+            <th>CPU/Asset Model No.</th>
+            <td>{{data.asset_model}}</td>
+          </tr>
+          <tr>
+            <th>CPU/Asset S/No.</th>
+            <td>{{data.asset_serial}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-4 my-2">
+        <h6 class="text-center">Details of Work Ticket</h6>
+        <table class="table table-bordered">
+          <tr>
+            <th>Work Ticket No.</th>
+            <td>{{data.ticket.ticket_number}}</td>
+          </tr>
+          <tr>
+            <th>ICT Officer Assigned</th>
+            <td>{{data.ticket.ticket_officer}}</td>
+          </tr>
+          <tr>
+            <th>Date</th>
+            <td>{{data.ticket.ticket_date}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-4 my-2">
+        <h6 class="text-center">HOD/Supervisor of affected user</h6>
+        <table class="table table-bordered" style="font-size: 11px">
+          <tr>
+            <th>Name</th>
+            <td>{{data.client.hod.hod_name}}</td>
+          </tr>
+          <tr>
+            <th>P/No.</th>
+            <td>{{data.client.hod.hod_number}}</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>{{data.client.hod.hod_email}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row mx-1">
+      <div class="col-md-12 my-2">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Mac Address</th>
+              <th>Computer NAme</th>
+              <th>Condition</th>
+              <th>RAM SIZE</th>
+              <th>O/S</th>
+              <th>IP Address</th>
+              <th>ADSS</th>
+              <th>LAPS</th>
+              <th>WAKE ON LAN</th>
+              <th>KAV</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{data.mac_address}}</td>
+              <td>{{data.cpu_name}}</td>
+              <td>{{data.condition}}</td>
+              <td>{{data.ram}}</td>
+              <td>{{data.os}}</td>
+              <td>{{data.ip_address}}</td>
+              <td>{{data.adss}}</td>
+              <td>{{data.laps}}</td>
+              <td>{{data.wol}}</td>
+              <td>{{data.kaspersky}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row mx-1 my-2">
+      <div class="col-md-12 my-2">
+        <h5 class="text-center" style="color: brown">Current Owner</h5>
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Full Names</th>
+              <th>P/NO.</th>
+              <th>Email</th>
+              <th>Region</th>
+              <th>Station</th>
+              <th>Current Location</th>
+              <th>Dept/Division</th>
+              <th>Section</th>
+              <th>User Approved</th>
+              <th>HOD Approved</th>
+              <th>ICT Approved</th>
+              <th>Deployment Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{data.client.full_name}}</td>
+              <td>{{data.client.staff_number}}</td>
+              <td>{{data.client.staff_email}}</td>
+              <td>{{data.region.name}}</td>
+              <td>{{data.station.name}}</td>
+              <td>{{data.client.location}}</td>
+              <td>{{data.client.department}}</td>
+              <td>{{data.client.section}}</td>
+              <td>{{data.client.accepted}}</td>
+              <td>{{data.client.hod_approval}}</td>
+              <td>{{data.ict_approval}}</td>
+              <td>{{data.client.date_assigned}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="container" style="display: flex">
+      <table class="table table-striped">
+        <tr style="font-size: 12px">
+          <th class="text-start">Reject Reason:</th>
+          <td class="text-center">{{data.reject_reason}}</td>
+        </tr>
+      </table>
     </div>
 
+    <div class="container" style="display: flex">
+      <table class="table table-striped">
+        <tr>
+          <th class="text-start">Deployed By:</th>
+          <td class="text-center">{{data.deployed_by.profile_2.name}}</td>
+        </tr>
+      </table>
+      <table class="table table-striped">
+        <tr style="font-size: 12px">
+          <th class="text-start">Approved/Rejected By:</th>
+          <td class="text-center">{{data.approved_by}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="text-center my-3">
+      <input
+        type="button"
+        id="print"
+        value="print"
+        class="btn btn-danger"
+        onclick="window.print();"
+      />
+    </div>
+  </div>
+</div>
 
-
-    {% endblock %}
+{% endblock %}

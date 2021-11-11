@@ -22,7 +22,7 @@ body {
 }
 
 .main {
-  margin-bottom: 30px;
+  margin-bottom: 110px;
   width: 100vw;
   min-height: 90vh;
   text-align: center;
@@ -153,11 +153,11 @@ td {
   }
   #deployment_report,
   #deployment_report {
-    margin-top: 0;
+    margin-top: -15px !important;
   }
   #deployment_report,
   #deployment_report * {
-    width: 100%;
+    width: 100% !important;
     height: auto;
     visibility: visible;
   }

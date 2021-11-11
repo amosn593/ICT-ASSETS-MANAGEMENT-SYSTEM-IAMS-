@@ -1,0 +1,15 @@
+<form
+  action="{% url 'deploy_result' %}"
+  method="post"
+  class="form-inline d-flex my-2"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+  <label class="mx-1">Search By:</label>
+  <select class="form-control" name="criteria">
+    <option value="serial-no">Serial Number</option>
+  </select>
+  <label for="serial" class="mx-1">Entry:</label>
+  <input type="text" class="form-control" name="entry" required />
+  <button type="submit" class="btn btn-danger mx-2">Search</button>
+</form>

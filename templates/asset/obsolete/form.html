@@ -1,0 +1,20 @@
+<form
+  action="{% url 'obsoleteback' %}"
+  method="post"
+  class="form-inline d-flex"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+  <label class="form-label w-100 mx-1 px-1">Search By:</label>
+  <select class="form-select mx-1 px-3" name="criteria">
+    <option value="serial-no">Serial Number</option>
+  </select>
+  <label class="form-label mx-1 px-1">Entry:</label>
+  <input
+    type="text"
+    class="form-control w-100 mx-1 px-3"
+    name="entry"
+    required
+  />
+  <button type="submit" class="btn btn-danger mx-1 px-3">Search</button>
+</form>

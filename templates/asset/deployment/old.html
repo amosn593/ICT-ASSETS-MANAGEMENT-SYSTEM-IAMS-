@@ -2,18 +2,17 @@
 Deployment {% endblock %} {% block body %}
 
 <div class="row">
-  <div class="col-md-12">
-    <h6 style="text-align: center; margin-top: 1%; font-weight: bold">
-      IT ASSET DEPLOYMENT FORM (NEW ASSETS ONLY)
-    </h6>
+  <div class="col-md-12 my-2">
+    <h6 class="text-center my-2">IT ASSET DEPLOYMENT FORM (NEW ASSETS ONLY)</h6>
   </div>
 </div>
 
-<div class="container-fluid mb-5 pb-5" style="font-size: 12px">
+<div class="container-fluid mb-5 pb-5">
   <form
     method="POST"
     action="{% url 'deployment_old' %}"
     enctype="multipart/form-data"
+    class="mb-4 pb-4"
   >
     {% csrf_token %}
     <div class="row mx-1 my-1 py-2" style="border: 1px solid black">
@@ -245,9 +244,9 @@ Deployment {% endblock %} {% block body %}
         </div>
       </div>
     </div>
-    <div class="form-group my-2">
+    <div class="form-group my-4 py-3">
       <div class="text-center">
-        <button type="submit" class="btn btn-danger my-3 py-2" id="label">
+        <button type="submit" class="btn btn-danger my-4 py-3" id="label">
           Deploy Asset
         </button>
       </div>

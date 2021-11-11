@@ -322,7 +322,7 @@ def old(request):
                 t.save()
                 # insert into monitors
                 # Check if desktop
-                if ty.name == 'DESKTOP/LAPTOP':
+                if ty.name == 'DESKTOP':
                     m = Monitor(monitor_serial=monitorserial, monitor_model=monitormodel,
                                 monitor_tag=monitortag, monitor_cpu=serial, deployed_by=officer,)
                     m.save()
@@ -355,7 +355,7 @@ def old(request):
 
                 # insert into monitors
                 # Check if Desktop
-                if ty.name == 'DESKTOP/LAPTOP':
+                if ty.name == 'DESKTOP':
                     m = Monitor(monitor_serial=monitorserial, monitor_model=monitormodel,
                                 monitor_tag=monitortag, monitor_cpu=serial, deployed_by=officer,)
                     m.save()
@@ -1056,7 +1056,10 @@ def change_back(request):
 @login_required
 @allowed_users(role='supervisor_ict')
 def surrender(request):
-    return render(request, 'asset/surrender/surrender.html')
+    if request.method == 'GET':
+        return render(request, 'asset/surrender/surrender.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1079,7 +1082,7 @@ def surrenderback(request):
         else:
             return render(request, 'asset/surrender/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1122,14 +1125,17 @@ def sur_backend(request):
             messages.success(request, f"Record Not Approved by ICT Admin")
             return redirect('surrender')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 # Declare Asset Obsolete
 @login_required
 @allowed_users(role='supervisor_ict')
 def obso(request):
-    return render(request, 'asset/obsolete/obso.html')
+    if request.method == 'GET':
+        return render(request, 'asset/obsolete/obso.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1152,7 +1158,7 @@ def obsoback(request):
         else:
             return render(request, 'asset/obsolete/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1179,7 +1185,7 @@ def obso_backend(request):
                 request, f"Asset not surrendered or already declared obsolete!!!")
             return redirect('obsolete')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 # Asset Repairs
 
@@ -1188,31 +1194,34 @@ def obso_backend(request):
 @allowed_users(role='supervisor_ict')
 def repairs(request):
     # Getting repair data from the database
-    try:
-        data = Repair.objects.exclude(
-            status__icontains="solved").all().order_by('-cdate')
-    except:
-        data = []
-
-    if len(list(data)) > 0:
-        # pagination
-        page = request.GET.get('page', 1)
-
-        paginator = Paginator(data, 15)
+    if request.method == "GET":
         try:
-            page_obj = paginator.page(page)
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)
+            data = Repair.objects.exclude(
+                status__icontains="solved").all().order_by('-cdate')
+        except:
+            data = []
 
-        context = {
-            'page_obj': page_obj
-        }
+        if len(list(data)) > 0:
+            # pagination
+            page = request.GET.get('page', 1)
 
-        return render(request, 'asset/asset_repairs/repair.html', context)
+            paginator = Paginator(data, 15)
+            try:
+                page_obj = paginator.page(page)
+            except PageNotAnInteger:
+                page_obj = paginator.page(1)
+            except EmptyPage:
+                page_obj = paginator.page(paginator.num_pages)
+
+            context = {
+                'page_obj': page_obj
+            }
+
+            return render(request, 'asset/asset_repairs/repair.html', context)
+        else:
+            return render(request, 'asset/asset_repairs/norecord.html')
     else:
-        return render(request, 'asset/asset_repairs/norecord.html')
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1253,20 +1262,31 @@ def result_repairs(request):
         elif criteria == 'number':
             try:
                 data = Repair.objects.filter(
-                    comp__client__staff_number=id).order_by('-cdate')
+                    comp__client__staff_number__icontains=id).order_by('-cdate')
             except:
                 data = []
 
             if len(list(data)) > 0:
+                page = request.GET.get('page', 1)
+
+                paginator = Paginator(data, 15)
+                try:
+                    page_obj = paginator.page(page)
+                except PageNotAnInteger:
+                    page_obj = paginator.page(1)
+                except EmptyPage:
+                    page_obj = paginator.page(paginator.num_pages)
+
                 context = {
-                    'data': data
+                    'page_obj': page_obj,
+
                 }
 
                 return render(request, 'asset/asset_repairs/result.html', context)
             else:
                 return render(request, 'asset/asset_repairs/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1346,7 +1366,7 @@ def repair_register(request):
                 request, f"No such Asset in the database, check the serial number and try again!!!")
             return redirect('asset_repairs')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1361,6 +1381,7 @@ def repair_release(request):
             'data': data
         }
         return render(request, 'asset/asset_repairs/outgoing.html', context)
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1430,7 +1451,7 @@ def return_repair(request):
             messages.success(request, f"Asset Already Repaired!!!")
             return redirect('asset_repairs')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 # Deployment_report
 
@@ -1438,7 +1459,10 @@ def return_repair(request):
 @login_required
 @allowed_users(role='supervisor_ict')
 def deploy_report(request):
-    return render(request, 'asset/deploy_report/approve.html')
+    if request.method == 'GET':
+        return render(request, 'asset/deploy_report/approve.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
@@ -1448,7 +1472,8 @@ def deploy_result(request):
         id = request.POST['entry']
         date = datetime.today().strftime('%Y-%m-%d')
         try:
-            data = Comp.objects.get(asset_serial__icontains=id)
+            data = Comp.objects.exclude(
+                condition="Obsolete").get(asset_serial__icontains=id, ict_approval="Approved")
         except:
             data = ''
 
@@ -1461,7 +1486,7 @@ def deploy_result(request):
         else:
             return render(request, 'asset/deploy_report/norecord.html')
     else:
-        return HttpResponse("Invalid URL")
+        return HttpResponse("Invalid HTTP METHOD")
 
 # User Assets
 
@@ -1469,7 +1494,10 @@ def deploy_result(request):
 @login_required
 @allowed_users(role='supervisor_ict')
 def user(request):
-    return render(request, 'asset/user_assets/asset.html')
+    if request.method == 'GET':
+        return render(request, 'asset/user_assets/asset.html')
+    else:
+        return HttpResponse("Invalid HTTP METHOD")
 
 
 @login_required
