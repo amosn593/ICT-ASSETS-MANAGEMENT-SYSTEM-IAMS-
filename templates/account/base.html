@@ -12,20 +12,9 @@
     <link rel="stylesheet" href="{% static 'account/css/main.css' %}" />
   </head>
   <body>
-    <div class="container text-center my-4 py-3">
-      {% block body %} {% if messages %}
-      <div>
-        <strong>Messages:</strong>
-        <ul style="list-style-type: none">
-          {% for message in messages %}
-          <li>{{message}}</li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% endif %} {% block content %} {% endblock %} {% endblock %}
-       {% block extra_body %} {% endblock %}
+    <div class="container main-div text-center my-5 py-5">
+      {% block content %} {% endblock %} {% block extra_body %} {% endblock %}
     </div>
     <script src="{% static 'asset/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'asset/js/main.js' %}"></script>
   </body>
 </html>
