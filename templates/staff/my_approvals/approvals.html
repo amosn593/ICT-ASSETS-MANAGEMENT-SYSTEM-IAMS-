@@ -8,7 +8,8 @@ Approvals {% endblock title %} {% block body %}
 
   <table class="table table-sm table-bordered">
     <thead class="thead-light">
-      <tr style="font-size: 11px">
+      <tr>
+        <th>#</th>
         <th>Asset Type:</th>
         <th>Serial No.</th>
         <th>Model No.</th>
@@ -25,10 +26,11 @@ Approvals {% endblock title %} {% block body %}
         <th></th>
       </tr>
     </thead>
-    <tbody style="font-size: 11px">
+    <tbody>
       {% for d in dat %}
 
-      <tr style="font-size: 11px">
+      <tr>
+        <td>{{forloop.counter}}</td>
         <td>{{d.assettype.name}}</td>
         <td>{{d.asset_serial}}</td>
         <td>{{d.asset_model}}</td>

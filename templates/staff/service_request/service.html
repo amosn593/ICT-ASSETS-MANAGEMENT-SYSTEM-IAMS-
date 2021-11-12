@@ -3,14 +3,14 @@ Request {% endblock %} {% block body %}
 
 <h4 class="text-center my-2 py-2">Request Service</h4>
 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mb-5 pb-5">
   <form
     action="{% url 'service_request' %}"
     method="post"
     class="my-2 py-2 form"
     enctype="multipart/form-data"
   >
-    {% csrf_token %} {% comment %}
+    {% csrf_token %}
     <label class="my-1" for="serial" id="label" required
       >Staff Number:<span class="required">*</span></label
     >
@@ -22,7 +22,7 @@ Request {% endblock %} {% block body %}
       required
       placeholder="Staff Number"
     />
-    {% endcomment %}
+
     <label class="my-1" for="serial" id="label" required
       >Asset Serial No.:<span class="required">*</span></label
     >
@@ -57,7 +57,7 @@ Request {% endblock %} {% block body %}
       placeholder="Reason for service Request"
       required
     ></textarea>
-    <button type="submit" class="btn btn-info my-3 py-2" id="label">
+    <button type="submit" class="btn btn-danger my-3 py-2" id="label">
       Submit
     </button>
   </form>

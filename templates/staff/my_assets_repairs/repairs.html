@@ -1,13 +1,14 @@
 {% extends 'staff/base.html' %} {% load static %} {% block title %} staff Asset
 Repairs {% endblock title %} {% block body %}
 
-<div class="container-fluid mt-3">
-  <h4 class="text-center heading mb-2">My Asset Repairs</h4>
+<div class="container-fluid my-3">
+  <h4 class="text-center heading my-2">My Asset Repairs</h4>
 
-  <div class="container-fluid justify-content-center mt-3">
+  <div class="container-fluid justify-content-center my-3">
     <table class="table table-bordered table-sm">
-      <thead class="thead-light" style="font-size: 11px">
+      <thead class="thead-light">
         <tr>
+          <th>#</th>
           <th>IDate</th>
           <th>Hardware</th>
           <th>Serial NO.</th>
@@ -22,9 +23,10 @@ Repairs {% endblock title %} {% block body %}
           <th>ODate</th>
         </tr>
       </thead>
-      <tbody style="font-size: 11px">
+      <tbody>
         {% for dat in page_obj %}
         <tr>
+          <td>{{forloop.counter}}</td>
           <td>{{dat.cdate}}</td>
           <td>{{dat.comp.assettype.name}}</td>
           <td>{{dat.comp.asset_serial}}</td>
@@ -39,13 +41,11 @@ Repairs {% endblock title %} {% block body %}
           <td>{{dat.rdate}}</td>
         </tr>
         {% empty %}
-        <p style="text-align: center">You have no Asset Repair Records!!!</p>
+        <p class="text-center">You have no Asset Repair Records!!!</p>
         {% endfor %}
       </tbody>
     </table>
-
-    {% comment %} Pagination {% endcomment %} {% include
-    'asset/pagination/pagination.html' %}
+    <div>{% include 'asset/pagination/pagination.html' %}</div>
   </div>
 </div>
 

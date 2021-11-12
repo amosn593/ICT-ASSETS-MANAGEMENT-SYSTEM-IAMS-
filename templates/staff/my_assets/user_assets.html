@@ -4,7 +4,7 @@
 <div class="container-fluid mt-2">
   <div class="row">
     <div class="col-md-12">
-      <table class="table table-sm table-success table-bordered table-primary">
+      <table class="table table-sm table-success table-bordered">
         <thead class="thead-light">
           <tr>
             <th>Staff Name</th>
@@ -38,6 +38,7 @@
       <table class="table table-sm table-bordered">
         <thead class="thead-light">
           <tr>
+            <th>#</th>
             <th>Asset Type:</th>
             <th>Serial No.</th>
             <th>Model No.</th>
@@ -55,7 +56,8 @@
         </thead>
         <tbody>
           {% for d in dat %}
-          <tr style="font-size: 11px">
+          <tr>
+            <td>{{forloop.counter}}</td>
             <td>{{d.assettype.name}}</td>
             <td>{{d.asset_serial}}</td>
             <td>{{d.asset_model}}</td>

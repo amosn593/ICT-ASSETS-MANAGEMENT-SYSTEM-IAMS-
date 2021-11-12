@@ -28,7 +28,8 @@ input:hover {
 }
 
 input:focus {
-  border: 1px solid red !important;
+  outline: none !important;
+  border: 1 px solid red;
 }
 
 label {

@@ -1,23 +1,15 @@
-{% extends 'staff/base.html' %}
-{% load static %}
-
-{% block title %}
-
-Hod Approvals
-
-{% endblock title %}
-
-
-{% block body %}
+{% extends 'staff/base.html' %} {% load static %} {% block title %} Hod
+Approvals {% endblock title %} {% block body %}
 
 <div class="container-fluid mt-3">
-      <H4 class="mt-2 mb-2" style="text-align: center; color:brown;">HOD Approvals</H4>
-      <div class="container-fluid mt-5">
-            <H6 class="text-center mt-4">There are no Records to Approve!!!</H6>
-            <p class="text-center mt-2">OR</p>
-            <H6 class="text-center mt-2">You are not HOD!!!</H6>
-      </div>
-
+  <h4 class="mt-2 mb-2" style="text-align: center; color: brown">
+    HOD Approvals
+  </h4>
+  <div class="container-fluid mt-5">
+    <h6 class="text-center mt-4">There are no Records to Approve!!!</h6>
+    <p class="text-center mt-2">OR</p>
+    <h6 class="text-center mt-2">You are not HOD!!!</h6>
+  </div>
 </div>
 
 {% endblock body %}

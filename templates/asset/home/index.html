@@ -17,6 +17,7 @@
       <table class="table table-bordered table-sm">
         <thead class="thead-light">
           <tr>
+            <th>#</th>
             <th>Asset Type:</th>
             <th>Serial No.</th>
             <th>Model No.</th>
@@ -37,6 +38,7 @@
         <tbody>
           {% for indx in page_obj %}
           <tr>
+            <td>{{forloop.counter}}</td>
             <td>{{ indx.assettype.name}}</td>
             <td>{{ indx.asset_serial}}</td>
             <td>{{ indx.asset_model}}</td>

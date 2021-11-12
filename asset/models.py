@@ -189,6 +189,9 @@ class Comp(models.Model):
     obso_officer = models.CharField(
         max_length=40, null=True, blank=True, default=None)
 
+    class Meta:
+        ordering = ('-deployed_date',)
+
     def __str__(self):
         return f"{self.assettype.name}, {self.asset_serial}, {self.asset_model}, {self.asset_tag}, {self.condition}"
 

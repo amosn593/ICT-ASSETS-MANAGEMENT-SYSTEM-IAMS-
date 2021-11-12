@@ -1,5 +1,5 @@
-{% extends 'asset/base.html' %} {% load static %} {% block title %} Result 
-{% endblock %} {% block body %}
+{% extends 'asset/base.html' %} {% load static %} {% block title %} Result
+ {% endblock %} {% block body %}
 
 <!-- Search form-->
 <h4 class="text-center my-2 py-2">Asset Details</h4>
@@ -19,6 +19,7 @@
       <table class="table table-bordered table-sm">
         <thead class="thead-light">
           <tr>
+            <th>#</th>
             <th>Asset Type:</th>
             <th>Serial No.</th>
             <th>Model No.</th>
@@ -39,6 +40,7 @@
         <tbody>
           {% for indx in page_obj %}
           <tr>
+            <td>{{forloop.counter}}</td>
             <td>{{ indx.assettype.name}}</td>
             <td>{{ indx.asset_serial}}</td>
             <td>{{ indx.asset_model}}</td>
