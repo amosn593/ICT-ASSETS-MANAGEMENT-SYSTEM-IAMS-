@@ -12,6 +12,7 @@ from django.contrib import messages
 from datetime import datetime, date
 import secrets
 from .models import *
+from .asset_filter import *
 from .communications import *
 from .decorators import *
 import json
@@ -26,17 +27,19 @@ def index(request):
     # Displaying deployed assets
     try:
         data = Comp.objects.exclude(client__staff_number="ICT").exclude(
-            condition__icontains='Obsolete').all().order_by('-deployed_date')
+            condition__icontains='Obsolete').all()
+
     except:
         data = []
 
     if len(list(data)) > 0:
         num = data.count()
         date = datetime.today().strftime('%Y-%m-%d')
-
+        data = AssetFilter(request.GET, data)
+        num = len(data.qs)
         # pagination
         page_number = request.GET.get('page', 1)
-        paginator = Paginator(data, 15)  # Show 15 contacts per page.
+        paginator = Paginator(data.qs, 15)  # Show 15 contacts per page.
 
         try:
             page_obj = paginator.page(page_number)
@@ -47,7 +50,7 @@ def index(request):
 
         context = {
 
-            'page_obj': page_obj, 'num': num, 'date': date
+            'page_obj': page_obj, 'num': num, 'date': date, 'filter': data
         }
 
         return render(request, 'asset/home/index.html', context)

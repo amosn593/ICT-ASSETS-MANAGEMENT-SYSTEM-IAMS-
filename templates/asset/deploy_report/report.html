@@ -1,16 +1,12 @@
 {% extends 'asset/base.html' %} {% load static %} {% block title %} Deployment
 Report {% endblock %} {% block body %}
-<h4 class="text-center">Deployment Report</h4>
+<h4 class="text-center my-2">Deployment Report</h4>
 
 <div class="container-fluid mb-5 pb-5">
   <div class="container-fluid d-flex justify-content-center">
     <div>{% include "asset/deploy_report/form.html" %}</div>
   </div>
-  <div
-    class="container-fluid"
-    id="deployment_report"
-    style="border: 1px solid black"
-  >
+  <div class="container" id="report" style="border: 1px solid black">
     <div
       class="container-fluid d-flex justify-content-between my-3"
       style="border-bottom: 1px solid black"
@@ -72,7 +68,7 @@ Report {% endblock %} {% block body %}
       </div>
       <div class="col-md-4 my-2">
         <h6 class="text-center">HOD/Supervisor of affected user</h6>
-        <table class="table table-bordered" style="font-size: 11px">
+        <table class="table table-bordered">
           <tr>
             <th>Name</th>
             <td>{{data.client.hod.hod_name}}</td>
@@ -123,7 +119,7 @@ Report {% endblock %} {% block body %}
       </div>
     </div>
     <div class="row mx-1 my-2">
-      <div class="col-md-12 my-2">
+      <div class="col-md-12 my-2 mx-1">
         <h5 class="text-center" style="color: brown">Current Owner</h5>
         <table class="table table-bordered">
           <thead class="thead-light">
@@ -161,16 +157,16 @@ Report {% endblock %} {% block body %}
         </table>
       </div>
     </div>
-    <div class="container" style="display: flex">
+    <div class="container d-flex">
       <table class="table table-striped">
-        <tr style="font-size: 12px">
+        <tr>
           <th class="text-start">Reject Reason:</th>
           <td class="text-center">{{data.reject_reason}}</td>
         </tr>
       </table>
     </div>
 
-    <div class="container" style="display: flex">
+    <div class="container d-flex">
       <table class="table table-striped">
         <tr>
           <th class="text-start">Deployed By:</th>
@@ -178,13 +174,13 @@ Report {% endblock %} {% block body %}
         </tr>
       </table>
       <table class="table table-striped">
-        <tr style="font-size: 12px">
+        <tr>
           <th class="text-start">Approved/Rejected By:</th>
           <td class="text-center">{{data.approved_by}}</td>
         </tr>
       </table>
     </div>
-    <div class="text-center my-3">
+    <!-- <div class="text-center my-3">
       <input
         type="button"
         id="print"
@@ -192,8 +188,20 @@ Report {% endblock %} {% block body %}
         class="btn btn-danger"
         onclick="window.print();"
       />
-    </div>
+    </div> -->
+  </div>
+  <div class="text-center my-3">
+    <button class="btn btn-danger" id="download">Download Pdf</button>
   </div>
 </div>
+
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"
+  integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script src="{% static 'asset/js/deployment_report_pdf.js' %}"></script>
 
 {% endblock %}

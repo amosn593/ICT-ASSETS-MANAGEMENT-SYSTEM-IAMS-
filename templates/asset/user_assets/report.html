@@ -9,7 +9,7 @@ Assigned Assets {% endblock %} {% block body %}
   </div>
   <div
     class="container-fluid mt-3"
-    id="result_history"
+    id="user_assets"
     style="border-top: 1px solid black"
   >
     <div
@@ -63,6 +63,7 @@ Assigned Assets {% endblock %} {% block body %}
         <table class="table table-sm table-bordered">
           <thead class="thead-light">
             <tr>
+              <th>#</th>
               <th>Asset Type:</th>
               <th>Serial No.</th>
               <th>Model No.</th>
@@ -82,6 +83,7 @@ Assigned Assets {% endblock %} {% block body %}
           <tbody>
             {% for d in dat %}
             <tr>
+              <td>{{forloop.counter}}</td>
               <td>{{d.assettype.name}}</td>
               <td>{{d.asset_serial}}</td>
               <td>{{d.asset_model}}</td>
@@ -101,18 +103,40 @@ Assigned Assets {% endblock %} {% block body %}
           </tbody>
         </table>
       </div>
-
-      <div class="text-center">
-        <input
-          type="button"
-          id="print"
-          value="PRINT"
-          class="btn btn-danger"
-          onclick="window.print();"
-        />
-      </div>
     </div>
   </div>
+  <div class="text-center my-4 py-4">
+    <button class="btn btn-danger" id="download">Download Pdf</button>
+  </div>
 </div>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"
+  integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script>
+  window.onload = function () {
+    document.getElementById("download").addEventListener("click", () => {
+      const element = this.document.getElementById("user_assets");
+
+      var opt = {
+        margin: 2,
+        filename: "User_assets.pdf",
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: { scale: 8 },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "landscape",
+          putOnlyUsedFonts: true,
+          compress: true,
+        },
+      };
+
+      html2pdf().set(opt).from(element).save();
+    });
+  };
+</script>
 
 {% endblock %}

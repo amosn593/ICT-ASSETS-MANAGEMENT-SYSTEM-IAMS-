@@ -136,7 +136,7 @@
       {% if messages %}
       {% for msg in messages%}
 
-          toastr.{{msg.tags}}("{{msg}}", {timeOut: 5000})
+          toastr.{{msg.tags}}("{{msg}}", {timeOut: 3000})
       {% endfor%}
       {% endif %}
     </script>

@@ -47,7 +47,7 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  {{user.username}}
+                  Hello, {{user.username}}
                 </a>
                 <ul
                   class="dropdown-menu"
@@ -193,9 +193,7 @@
     </div>
 
     <!---Content block-->
-    <div class="container-fluid  main">
-      {% block body %}{% endblock %}
-    </div>
+    <div class="container-fluid main">{% block body %}{% endblock %}</div>
 
     <!-------Footer----->
     <footer id="footer">
