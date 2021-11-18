@@ -1,5 +1,3 @@
-
-
 window.onload = function () {
   document.getElementById("download").addEventListener("click", () => {
     const element = this.document.getElementById("report");
@@ -7,7 +5,7 @@ window.onload = function () {
     // console.log(window);
     var opt = {
       margin: 2,
-      filename: "myfile.pdf",
+      filename: "Asset_Deployment_Report.pdf",
       image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 6 },
       jsPDF: {
